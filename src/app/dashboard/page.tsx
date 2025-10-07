@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { TrendingUp, TrendingDown, DollarSign, Plus, LogOut } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency, formatDate } from '@/lib/utils';
@@ -22,8 +23,9 @@ export default function DashboardPage() {
   });
   const [recentTransactions, setRecentTransactions] = useState<TransactionWithCategory[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const router = useRouter();
 
   useEffect(() => {
@@ -73,17 +75,17 @@ export default function DashboardPage() {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 1) return 'Today';
-    if (diffDays === 2) return 'Yesterday';
-    if (diffDays <= 7) return `${diffDays - 1} days ago`;
+
+    if (diffDays === 1) return t.dashboard.today;
+    if (diffDays === 2) return t.dashboard.yesterday;
+    if (diffDays <= 7) return `${diffDays - 1} ${t.dashboard.daysAgo}`;
     return formatDate(date);
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading dashboard...</p>
+        <p>{t.dashboard.loadingDashboard}</p>
       </div>
     );
   }
@@ -94,9 +96,9 @@ export default function DashboardPage() {
       <header className="bg-white border-b border-gray-200">
         <div className="flex items-center justify-between p-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Spendo</h1>
+            <h1 className="text-xl font-bold text-gray-900">{t.dashboard.spendo}</h1>
             <p className="text-sm text-gray-500">
-              Welcome back, {user?.displayName || user?.email}
+              {t.dashboard.welcomeBack}, {user?.displayName || user?.email}
             </p>
           </div>
         </div>
@@ -108,7 +110,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Balance</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.dashboard.balance}</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -116,14 +118,14 @@ export default function DashboardPage() {
                 {formatCurrency(monthlyStats.balance)}
               </div>
               <p className="text-xs text-muted-foreground">
-                This month
+                {t.dashboard.thisMonth}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Income</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.dashboard.income}</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -131,14 +133,14 @@ export default function DashboardPage() {
                 {formatCurrency(monthlyStats.totalIncome)}
               </div>
               <p className="text-xs text-muted-foreground">
-                This month
+                {t.dashboard.thisMonth}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Expenses</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.dashboard.expenses}</CardTitle>
               <TrendingDown className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -146,7 +148,7 @@ export default function DashboardPage() {
                 {formatCurrency(monthlyStats.totalExpenses)}
               </div>
               <p className="text-xs text-muted-foreground">
-                This month
+                {t.dashboard.thisMonth}
               </p>
             </CardContent>
           </Card>
@@ -156,20 +158,20 @@ export default function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              Recent Transactions
+              {t.dashboard.recentTransactions}
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/transactions">View All</Link>
+                <Link href="/transactions">{t.common.viewAll}</Link>
               </Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {recentTransactions.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground mb-4">No transactions yet</p>
+                <p className="text-muted-foreground mb-4">{t.dashboard.noTransactions}</p>
                 <Button asChild>
                   <Link href="/add">
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Your First Transaction
+                    {t.dashboard.addFirstTransaction}
                   </Link>
                 </Button>
               </div>

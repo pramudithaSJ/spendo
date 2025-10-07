@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BarChart3, TrendingUp, TrendingDown, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
@@ -20,8 +21,9 @@ export default function ReportsPage() {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(true);
-  
+
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (user) {
@@ -67,8 +69,9 @@ export default function ReportsPage() {
   };
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    t.months.january, t.months.february, t.months.march, t.months.april,
+    t.months.may, t.months.june, t.months.july, t.months.august,
+    t.months.september, t.months.october, t.months.november, t.months.december
   ];
 
   const expenseCategories = Object.entries(categoryStats).filter(([_, data]) => data.type === 'expense');
@@ -77,7 +80,7 @@ export default function ReportsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading reports...</p>
+        <p>{t.reports.loadingReports}</p>
       </div>
     );
   }
@@ -87,7 +90,7 @@ export default function ReportsPage() {
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-2xl font-bold">Reports</h1>
+          <h1 className="text-2xl font-bold">{t.reports.reports}</h1>
           <BarChart3 className="h-6 w-6" />
         </div>
       </header>
@@ -99,7 +102,7 @@ export default function ReportsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              Period
+              {t.reports.period}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -134,7 +137,7 @@ export default function ReportsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.reports.totalIncome}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
@@ -145,7 +148,7 @@ export default function ReportsPage() {
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.reports.totalExpenses}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">
@@ -156,7 +159,7 @@ export default function ReportsPage() {
 
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">Net Balance</CardTitle>
+              <CardTitle className="text-sm font-medium">{t.reports.netBalance}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -172,7 +175,7 @@ export default function ReportsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingDown className="h-5 w-5 text-red-600" />
-                Expense Categories
+                {t.reports.expenseCategories}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -188,17 +191,17 @@ export default function ReportsPage() {
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium">{categoryName}</span>
                           <span className="text-sm text-muted-foreground">
-                            {formatCurrency(data.amount)} ({data.count} transactions)
+                            {formatCurrency(data.amount)} ({data.count} {t.reports.transactions})
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
+                          <div
                             className="bg-red-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(percentage, 100)}%` }}
                           ></div>
                         </div>
                         <div className="text-xs text-muted-foreground mt-1">
-                          {percentage.toFixed(1)}% of total expenses
+                          {percentage.toFixed(1)}% {t.reports.ofTotalExpenses}
                         </div>
                       </div>
                     );
@@ -214,7 +217,7 @@ export default function ReportsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-green-600" />
-                Income Categories
+                {t.reports.incomeCategories}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -230,17 +233,17 @@ export default function ReportsPage() {
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium">{categoryName}</span>
                           <span className="text-sm text-muted-foreground">
-                            {formatCurrency(data.amount)} ({data.count} transactions)
+                            {formatCurrency(data.amount)} ({data.count} {t.reports.transactions})
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
+                          <div
                             className="bg-green-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(percentage, 100)}%` }}
                           ></div>
                         </div>
                         <div className="text-xs text-muted-foreground mt-1">
-                          {percentage.toFixed(1)}% of total income
+                          {percentage.toFixed(1)}% {t.reports.ofTotalIncome}
                         </div>
                       </div>
                     );
@@ -253,7 +256,7 @@ export default function ReportsPage() {
         {monthlyStats.transactionCount === 0 && (
           <div className="text-center py-8">
             <p className="text-muted-foreground">
-              No transactions found for {monthNames[selectedMonth - 1]} {selectedYear}
+              {t.reports.noTransactionsFound} {monthNames[selectedMonth - 1]} {selectedYear}
             </p>
           </div>
         )}

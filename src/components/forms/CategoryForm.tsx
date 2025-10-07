@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Banknote, 
   Laptop, 
@@ -46,6 +47,7 @@ export default function CategoryForm({ category, defaultType, onSubmit, onCancel
   const [name, setName] = useState(category?.name || '');
   const [type, setType] = useState<'income' | 'expense'>(category?.type || defaultType || 'expense');
   const [selectedIcon, setSelectedIcon] = useState(category?.icon || 'Plus');
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,24 +64,24 @@ export default function CategoryForm({ category, defaultType, onSubmit, onCancel
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle>
-          {category ? 'Edit Category' : 'Add Category'}
+          {category ? t.categories.editCategory : t.categories.addCategory}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="name">Category Name</Label>
+            <Label htmlFor="name">{t.forms.categoryName}</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter category name"
+              placeholder={t.forms.categoryNamePlaceholder}
               required
             />
           </div>
 
           <div className="space-y-3">
-            <Label>Type</Label>
+            <Label>{t.forms.type}</Label>
             <div className="flex gap-2">
               <Button
                 type="button"
@@ -87,7 +89,7 @@ export default function CategoryForm({ category, defaultType, onSubmit, onCancel
                 className="flex-1"
                 onClick={() => setType('income')}
               >
-                Income
+                {t.dashboard.income}
               </Button>
               <Button
                 type="button"
@@ -95,13 +97,13 @@ export default function CategoryForm({ category, defaultType, onSubmit, onCancel
                 className="flex-1"
                 onClick={() => setType('expense')}
               >
-                Expense
+                {t.dashboard.expenses}
               </Button>
             </div>
           </div>
 
           <div className="space-y-3">
-            <Label>Icon</Label>
+            <Label>{t.forms.icon}</Label>
             <div className="grid grid-cols-6 gap-2">
               {availableIcons.map((iconName) => {
                 const IconComponent = iconMap[iconName];
@@ -132,14 +134,14 @@ export default function CategoryForm({ category, defaultType, onSubmit, onCancel
               onClick={onCancel}
               disabled={loading}
             >
-              Cancel
+              {t.common.cancel}
             </Button>
             <Button
               type="submit"
               className="flex-1"
               disabled={loading || !name.trim()}
             >
-              {loading ? 'Saving...' : 'Save'}
+              {loading ? t.forms.saving : t.common.save}
             </Button>
           </div>
         </form>

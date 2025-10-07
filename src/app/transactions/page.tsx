@@ -8,6 +8,7 @@ import { Plus, Search, Edit, Trash2, ArrowLeft } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import TransactionForm from '@/components/forms/TransactionForm';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency, formatDate } from '@/lib/utils';
@@ -22,8 +23,9 @@ export default function TransactionsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<TransactionWithCategory | null>(null);
   const [formLoading, setFormLoading] = useState(false);
-  
+
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadTransactions();
@@ -68,21 +70,21 @@ export default function TransactionsPage() {
       setShowForm(false);
     } catch (error) {
       console.error('Error updating transaction:', error);
-      alert('Failed to update transaction');
+      alert(t.transactions.updateFailed);
     } finally {
       setFormLoading(false);
     }
   };
 
   const handleDeleteTransaction = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this transaction?')) return;
-    
+    if (!confirm(t.transactions.deleteConfirm)) return;
+
     try {
       await transactionService.deleteTransaction(id);
       await loadTransactions();
     } catch (error) {
       console.error('Error deleting transaction:', error);
-      alert('Failed to delete transaction');
+      alert(t.transactions.deleteFailed);
     }
   };
 
@@ -94,7 +96,7 @@ export default function TransactionsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading transactions...</p>
+        <p>{t.transactions.loadingTransactions}</p>
       </div>
     );
   }
@@ -112,12 +114,12 @@ export default function TransactionsPage() {
             }}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
+            {t.common.back}
           </Button>
         </div>
         
         <TransactionForm
-          transaction={editingTransaction}
+          transaction={editingTransaction || undefined}
           onSubmit={handleEditTransaction}
           onCancel={() => {
             setShowForm(false);
@@ -135,13 +137,13 @@ export default function TransactionsPage() {
       <header className="bg-white border-b border-gray-200">
         <div className="flex items-center justify-between p-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Transactions</h1>
-            <p className="text-sm text-gray-500">View and manage your transactions</p>
+            <h1 className="text-xl font-bold text-gray-900">{t.transactions.transactions}</h1>
+            <p className="text-sm text-gray-500">{t.transactions.viewManage}</p>
           </div>
           <Button size="sm" asChild className="bg-black text-white hover:bg-gray-800">
             <Link href="/add">
               <Plus className="h-4 w-4 mr-2" />
-              Add
+              {t.common.add}
             </Link>
           </Button>
         </div>
@@ -153,7 +155,7 @@ export default function TransactionsPage() {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
-            placeholder="Search transactions..."
+            placeholder={t.transactions.searchPlaceholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -165,13 +167,13 @@ export default function TransactionsPage() {
           {filteredTransactions.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground mb-4">
-                {searchTerm ? 'No transactions found' : 'No transactions yet'}
+                {searchTerm ? t.transactions.noTransactionsFound : t.dashboard.noTransactions}
               </p>
               {!searchTerm && (
                 <Button asChild>
                   <Link href="/add">
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Your First Transaction
+                    {t.dashboard.addFirstTransaction}
                   </Link>
                 </Button>
               )}
