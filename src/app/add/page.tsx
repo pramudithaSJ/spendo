@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import TransactionForm from '@/components/forms/TransactionForm';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { transactionService } from '@/lib/transactionService';
 
 export default function AddTransactionPage() {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const { t } = useLanguage();
   const router = useRouter();
 
   const handleSubmit = async (data: {
@@ -56,8 +58,8 @@ export default function AddTransactionPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Add Transaction</h1>
-              <p className="text-sm text-gray-500">Record a new income or expense</p>
+              <h1 className="text-xl font-bold text-gray-900">{t.transactions.addTransaction}</h1>
+              <p className="text-sm text-gray-500">{t.transactions.recordNew}</p>
             </div>
           </div>
         </div>

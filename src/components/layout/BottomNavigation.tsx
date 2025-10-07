@@ -3,17 +3,19 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Home, Plus, List, User } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { href: '/dashboard', icon: Home, label: 'Home' },
-  { href: '/transactions', icon: List, label: 'History' },
-  { href: '/add', icon: Plus, label: 'Add', isMainAction: true },
-  { href: '/profile', icon: User, label: 'Profile' },
-];
 
 export default function BottomNavigation() {
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { href: '/dashboard', icon: Home, label: t.nav.home },
+    { href: '/transactions', icon: List, label: t.nav.history },
+    { href: '/add', icon: Plus, label: t.nav.add, isMainAction: true },
+    { href: '/profile', icon: User, label: t.nav.profile },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb">

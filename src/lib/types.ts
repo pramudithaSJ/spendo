@@ -28,3 +28,5 @@ export interface Transaction {
 export interface TransactionWithCategory extends Transaction {
   category: Category;
 }
+
+export type Language = 'en' | 'ta';

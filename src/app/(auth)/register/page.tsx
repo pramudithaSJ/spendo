@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { UserPlus, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,6 +22,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   
   const { signUp } = useAuth();
+  const { t } = useLanguage();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,13 +31,13 @@ export default function RegisterPage() {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t.auth.passwordsDontMatch);
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(t.auth.passwordMinLength);
       setLoading(false);
       return;
     }
@@ -46,11 +48,11 @@ export default function RegisterPage() {
     } catch (error: unknown) {
       const firebaseError = error as { code?: string };
       if (firebaseError.code === 'auth/email-already-in-use') {
-        setError('Email is already registered');
+        setError(t.auth.emailInUse);
       } else if (firebaseError.code === 'auth/weak-password') {
-        setError('Password is too weak');
+        setError(t.auth.weakPassword);
       } else {
-        setError('Failed to create account');
+        setError(t.auth.failedToCreate);
       }
     } finally {
       setLoading(false);
@@ -66,19 +68,19 @@ export default function RegisterPage() {
               <UserPlus className="h-6 w-6 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Create Account</CardTitle>
+          <CardTitle className="text-2xl">{t.auth.createAccount}</CardTitle>
           <CardDescription>
-            Sign up for Spendo to start tracking your expenses
+            {t.auth.createAccountDescription}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">{t.auth.fullName}</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder={t.auth.fullNamePlaceholder}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -86,24 +88,24 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.auth.email}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t.auth.emailPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.auth.password}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Create a password"
+                  placeholder={t.auth.createPasswordPlaceholder}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -125,12 +127,12 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">{t.auth.confirmPassword}</Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
-                  placeholder="Confirm your password"
+                  placeholder={t.auth.confirmPasswordPlaceholder}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -155,19 +157,19 @@ export default function RegisterPage() {
               <div className="text-sm text-red-600 text-center">{error}</div>
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full"
               disabled={loading}
             >
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? t.auth.creatingAccount : t.auth.createAccount}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Already have an account? </span>
+            <span className="text-muted-foreground">{t.auth.alreadyHaveAccount} </span>
             <Link href="/login" className="text-primary hover:underline">
-              Sign in
+              {t.auth.signIn}
             </Link>
           </div>
         </CardContent>

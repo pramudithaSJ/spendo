@@ -7,6 +7,7 @@ import { Plus, Edit, Trash2, ArrowLeft } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import CategoryForm from '@/components/forms/CategoryForm';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { categoryService, defaultCategories } from '@/lib/categoryService';
 import { Category } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -20,8 +21,9 @@ export default function CategoriesPage() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [activeTab, setActiveTab] = useState<'income' | 'expense'>('expense');
   const [formLoading, setFormLoading] = useState(false);
-  
+
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadCategories();
@@ -98,8 +100,8 @@ export default function CategoriesPage() {
   };
 
   const handleDeleteCategory = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this category?')) return;
-    
+    if (!confirm(t.categories.deleteConfirm)) return;
+
     try {
       await categoryService.deleteCategory(id);
       await loadCategories();
@@ -118,7 +120,7 @@ export default function CategoriesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading categories...</p>
+        <p>{t.categories.loadingCategories}</p>
       </div>
     );
   }
@@ -136,12 +138,12 @@ export default function CategoriesPage() {
             }}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
+            {t.common.back}
           </Button>
         </div>
         
         <CategoryForm
-          category={editingCategory}
+          category={editingCategory || undefined}
           defaultType={activeTab}
           onSubmit={editingCategory ? handleEditCategory : handleAddCategory}
           onCancel={() => {
@@ -169,8 +171,8 @@ export default function CategoriesPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Categories</h1>
-              <p className="text-sm text-gray-500">Manage your expense categories</p>
+              <h1 className="text-xl font-bold text-gray-900">{t.categories.categories}</h1>
+              <p className="text-sm text-gray-500">{t.categories.manageCategories}</p>
             </div>
           </div>
           <Button
@@ -179,7 +181,7 @@ export default function CategoriesPage() {
             className="bg-black text-white hover:bg-gray-800"
           >
             <Plus className="h-4 w-4 mr-2" />
-            Add
+            {t.common.add}
           </Button>
         </div>
       </header>
@@ -193,14 +195,14 @@ export default function CategoriesPage() {
             className="flex-1"
             onClick={() => setActiveTab('expense')}
           >
-            Expenses ({categories.filter(c => c.type === 'expense').length})
+            {t.categories.expenses} ({categories.filter(c => c.type === 'expense').length})
           </Button>
           <Button
             variant={activeTab === 'income' ? 'default' : 'outline'}
             className="flex-1"
             onClick={() => setActiveTab('income')}
           >
-            Income ({categories.filter(c => c.type === 'income').length})
+            {t.categories.income} ({categories.filter(c => c.type === 'income').length})
           </Button>
         </div>
 
@@ -248,14 +250,16 @@ export default function CategoriesPage() {
 
         {filteredCategories.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-muted-foreground">No {activeTab} categories yet</p>
+            <p className="text-muted-foreground">
+              {activeTab === 'expense' ? t.categories.noExpenseCategories : t.categories.noIncomeCategories}
+            </p>
             <Button
               variant="outline"
               className="mt-4"
               onClick={() => setShowForm(true)}
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add Your First Category
+              {t.categories.addFirstCategory}
             </Button>
           </div>
         )}
