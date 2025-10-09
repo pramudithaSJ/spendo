@@ -142,6 +142,8 @@ export const ta: TranslationKeys = {
     builtWith: 'சிறந்த செலவு கண்காணிப்புக்காக ❤️ உடன் உருவாக்கப்பட்டது',
     language: 'மொழி',
     languageDesc: 'உங்களுக்கு விருப்பமான மொழியை தேர்வு செய்யவும்',
+    currency: 'நாணயம்',
+    currencyDesc: 'உங்களுக்கு விருப்பமான நாணயத்தை தேர்வு செய்யவும்',
   },
 
   // Forms

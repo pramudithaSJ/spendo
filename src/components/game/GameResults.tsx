@@ -11,12 +11,13 @@ interface GameResultsProps {
 }
 
 export default function GameResults({ result, language, groupNumber }: GameResultsProps) {
+  // Game always uses LKR with Rs format
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-LK', {
       style: 'currency',
-      currency: 'INR',
+      currency: 'LKR',
       maximumFractionDigits: 0,
-    }).format(amount);
+    }).format(amount).replace('LKR', 'Rs');
   };
 
   const getOutcomeColor = (outcome: GameResult['outcome']) => {

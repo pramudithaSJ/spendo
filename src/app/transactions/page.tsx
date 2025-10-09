@@ -9,6 +9,7 @@ import BottomNavigation from '@/components/layout/BottomNavigation';
 import TransactionForm from '@/components/forms/TransactionForm';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency, formatDate } from '@/lib/utils';
@@ -26,6 +27,7 @@ export default function TransactionsPage() {
 
   const { user } = useAuth();
   const { t } = useLanguage();
+  const { currency } = useCurrency();
 
   useEffect(() => {
     loadTransactions();
@@ -206,12 +208,12 @@ export default function TransactionsPage() {
                       <div className="flex items-center space-x-2">
                         <div className="text-right">
                           <p className={`font-medium ${
-                            transaction.type === 'income' 
-                              ? 'text-green-600' 
+                            transaction.type === 'income'
+                              ? 'text-green-600'
                               : 'text-red-600'
                           }`}>
                             {transaction.type === 'income' ? '+' : '-'}
-                            {formatCurrency(transaction.amount)}
+                            {formatCurrency(transaction.amount, currency)}
                           </p>
                         </div>
                         

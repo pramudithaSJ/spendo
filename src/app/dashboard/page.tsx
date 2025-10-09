@@ -7,6 +7,7 @@ import { TrendingUp, TrendingDown, DollarSign, Plus, LogOut } from 'lucide-react
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency, formatDate } from '@/lib/utils';
@@ -26,6 +27,7 @@ export default function DashboardPage() {
 
   const { user, logout } = useAuth();
   const { t } = useLanguage();
+  const { currency } = useCurrency();
   const router = useRouter();
 
   useEffect(() => {
@@ -115,7 +117,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(monthlyStats.balance)}
+                {formatCurrency(monthlyStats.balance, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
                 {t.dashboard.thisMonth}
@@ -130,7 +132,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
-                {formatCurrency(monthlyStats.totalIncome)}
+                {formatCurrency(monthlyStats.totalIncome, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
                 {t.dashboard.thisMonth}
@@ -145,7 +147,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">
-                {formatCurrency(monthlyStats.totalExpenses)}
+                {formatCurrency(monthlyStats.totalExpenses, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
                 {t.dashboard.thisMonth}
@@ -198,7 +200,7 @@ export default function DashboardPage() {
                         transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {transaction.type === 'income' ? '+' : '-'}
-                        {formatCurrency(transaction.amount)}
+                        {formatCurrency(transaction.amount, currency)}
                       </span>
                     </div>
                   );

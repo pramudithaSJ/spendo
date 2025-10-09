@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart3, TrendingUp, TrendingDown, Calendar } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { transactionService } from '@/lib/transactionService';
 import { TransactionWithCategory } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
@@ -24,6 +25,7 @@ export default function ReportsPage() {
 
   const { user } = useAuth();
   const { t } = useLanguage();
+  const { currency } = useCurrency();
 
   useEffect(() => {
     if (user) {
@@ -141,7 +143,7 @@ export default function ReportsPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
-                {formatCurrency(monthlyStats.totalIncome)}
+                {formatCurrency(monthlyStats.totalIncome, currency)}
               </div>
             </CardContent>
           </Card>
@@ -152,7 +154,7 @@ export default function ReportsPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">
-                {formatCurrency(monthlyStats.totalExpenses)}
+                {formatCurrency(monthlyStats.totalExpenses, currency)}
               </div>
             </CardContent>
           </Card>
@@ -163,7 +165,7 @@ export default function ReportsPage() {
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatCurrency(monthlyStats.balance)}
+                {formatCurrency(monthlyStats.balance, currency)}
               </div>
             </CardContent>
           </Card>
@@ -191,7 +193,7 @@ export default function ReportsPage() {
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium">{categoryName}</span>
                           <span className="text-sm text-muted-foreground">
-                            {formatCurrency(data.amount)} ({data.count} {t.reports.transactions})
+                            {formatCurrency(data.amount, currency)} ({data.count} {t.reports.transactions})
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
@@ -233,7 +235,7 @@ export default function ReportsPage() {
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium">{categoryName}</span>
                           <span className="text-sm text-muted-foreground">
-                            {formatCurrency(data.amount)} ({data.count} {t.reports.transactions})
+                            {formatCurrency(data.amount, currency)} ({data.count} {t.reports.transactions})
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">

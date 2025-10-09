@@ -30,3 +30,5 @@ export interface TransactionWithCategory extends Transaction {
 }
 
 export type Language = 'en' | 'ta';
+
+export type Currency = 'USD' | 'LKR';

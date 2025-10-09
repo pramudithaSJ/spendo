@@ -140,6 +140,8 @@ export const en = {
     builtWith: 'Built with ❤️ for better expense tracking',
     language: 'Language',
     languageDesc: 'Choose your preferred language',
+    currency: 'Currency',
+    currencyDesc: 'Choose your preferred currency',
   },
 
   // Forms
