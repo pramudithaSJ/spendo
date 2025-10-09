@@ -13,11 +13,13 @@ import {
   Shield,
   HelpCircle,
   Mail,
-  Languages
+  Languages,
+  DollarSign
 } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -25,6 +27,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
   const { user, logout } = useAuth();
   const { t, language, setLanguage } = useLanguage();
+  const { currency, setCurrency } = useCurrency();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -161,6 +164,39 @@ export default function ProfilePage() {
                   className="min-w-[60px]"
                 >
                   தமிழ்
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Currency Selector */}
+        <Card className="bg-white border-gray-200">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-green-600 bg-green-50">
+                <DollarSign className="h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900">{t.profile.currency}</h3>
+                <p className="text-sm text-gray-500">{t.profile.currencyDesc}</p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant={currency === 'USD' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrency('USD')}
+                  className="min-w-[60px]"
+                >
+                  USD
+                </Button>
+                <Button
+                  variant={currency === 'LKR' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrency('LKR')}
+                  className="min-w-[60px]"
+                >
+                  LKR
                 </Button>
               </div>
             </div>

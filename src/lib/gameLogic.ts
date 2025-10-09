@@ -315,12 +315,12 @@ export function calculateGameResults(choices: GameChoice[]): GameResult {
     outcomeSummaryTa = 'நீங்கள் நிர்வகிக்கிறீர்கள் ஆனால் கடன் மற்றும் சேமிப்பு பற்றி மேலும் மூலோபாயமாக இருக்க வேண்டும்.';
     recommendations = [
       'Create a strict monthly budget',
-      'Build emergency fund of at least ₹50,000',
+      'Build emergency fund of at least Rs 50,000',
       'Avoid lifestyle inflation',
     ];
     recommendationsTa = [
       'கடுமையான மாதாந்திர பட்ஜெட்டை உருவாக்கவும்',
-      'குறைந்தது ₹50,000 அவசரகால நிதியை உருவாக்கவும்',
+      'குறைந்தது Rs 50,000 அவசரகால நிதியை உருவாக்கவும்',
       'வாழ்க்கை முறை பணவீக்கத்தைத் தவிர்க்கவும்',
     ];
   }

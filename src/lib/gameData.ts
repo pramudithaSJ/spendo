@@ -7,10 +7,10 @@ export const GAME_PROFILE = {
   startingSalary: 70000,
   ageEn: 'Age: 24',
   ageTa: 'வயது: 24',
-  loanEn: 'Student Loan: ₹12,00,000',
-  loanTa: 'கல்விக் கடன்: ₹12,00,000',
-  salaryEn: 'Starting Salary: ₹70,000/month',
-  salaryTa: 'தொடக்க சம்பளம்: ₹70,000/மாதம்',
+  loanEn: 'Student Loan: Rs 12,00,000',
+  loanTa: 'கல்விக் கடன்: Rs 12,00,000',
+  salaryEn: 'Starting Salary: Rs 70,000/month',
+  salaryTa: 'தொடக்க சம்பளம்: Rs 70,000/மாதம்',
 };
 
 export const GAME_STEPS: GameStep[] = [
@@ -20,13 +20,13 @@ export const GAME_STEPS: GameStep[] = [
     titleTa: 'படி 1: திருப்பிச் செலுத்தும் திட்டத்தைத் தேர்ந்தெடுங்கள்',
     scenario: 'Grace period ending → must start repayment',
     scenarioTa: 'கருணைக் காலம் முடிவடைகிறது → திருப்பிச் செலுத்த வேண்டும்',
-    context: 'Current Salary: ₹70,000/month | Student Loan: ₹12,00,000',
-    contextTa: 'தற்போதைய சம்பளம்: ₹70,000/மாதம் | கல்விக் கடன்: ₹12,00,000',
+    context: 'Current Salary: Rs 70,000/month | Student Loan: Rs 12,00,000',
+    contextTa: 'தற்போதைய சம்பளம்: Rs 70,000/மாதம் | கல்விக் கடன்: Rs 12,00,000',
     options: [
       {
         id: 'A',
-        text: 'Standard Plan: ₹25,000/month (5 years), remaining balance spent on essentials',
-        textTa: 'நிலையான திட்டம்: ₹25,000/மாதம் (5 ஆண்டுகள்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
+        text: 'Standard Plan: Rs 25,000/month (5 years), remaining balance spent on essentials',
+        textTa: 'நிலையான திட்டம்: Rs 25,000/மாதம் (5 ஆண்டுகள்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
         financialImpact: {
           description: 'High monthly payment but loan-free in 5 years',
           descriptionTa: 'அதிக மாதாந்திர செலுத்துதல் ஆனால் 5 ஆண்டுகளில் கடன் இல்லாமல்',
@@ -36,8 +36,8 @@ export const GAME_STEPS: GameStep[] = [
       },
       {
         id: 'B',
-        text: 'Extended Plan: ₹12,000/month (10 years), remaining balance spent on essentials',
-        textTa: 'நீட்டிக்கப்பட்ட திட்டம்: ₹12,000/மாதம் (10 ஆண்டுகள்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
+        text: 'Extended Plan: Rs 12,000/month (10 years), remaining balance spent on essentials',
+        textTa: 'நீட்டிக்கப்பட்ட திட்டம்: Rs 12,000/மாதம் (10 ஆண்டுகள்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
         financialImpact: {
           description: 'Lower monthly burden, more time to repay',
           descriptionTa: 'குறைந்த மாதாந்திர சுமை, திருப்பிச் செலுத்த அதிக நேரம்',
@@ -47,8 +47,8 @@ export const GAME_STEPS: GameStep[] = [
       },
       {
         id: 'C',
-        text: 'Income-based Plan: 15% of salary (~₹10,500/month), remaining balance spent on essentials',
-        textTa: 'வருமான அடிப்படை திட்டம்: சம்பளத்தின் 15% (~₹10,500/மாதம்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
+        text: 'Income-based Plan: 15% of salary (~Rs 10,500/month), remaining balance spent on essentials',
+        textTa: 'வருமான அடிப்படை திட்டம்: சம்பளத்தின் 15% (~Rs 10,500/மாதம்), மீதமுள்ளது அத்தியாவசியங்களுக்கு',
         financialImpact: {
           description: 'Flexible payment based on income level',
           descriptionTa: 'வருமான நிலைக்கு ஏற்ற நெகிழ்வான செலுத்துதல்',
@@ -60,12 +60,12 @@ export const GAME_STEPS: GameStep[] = [
   },
   {
     step: 2,
-    title: 'Step 2: After 6 Months - Salary Hike to ₹1,00,000',
-    titleTa: 'படி 2: 6 மாதங்களுக்குப் பிறகு - சம்பளம் ₹1,00,000 ஆக உயர்வு',
-    scenario: 'Your salary has increased to ₹1,00,000 per month',
-    scenarioTa: 'உங்கள் சம்பளம் மாதம் ₹1,00,000 ஆக அதிகரித்துள்ளது',
-    context: 'New Salary: ₹1,00,000/month | Extra Income: ₹30,000/month',
-    contextTa: 'புதிய சம்பளம்: ₹1,00,000/மாதம் | கூடுதல் வருமானம்: ₹30,000/மாதம்',
+    title: 'Step 2: After 6 Months - Salary Hike to Rs 1,00,000',
+    titleTa: 'படி 2: 6 மாதங்களுக்குப் பிறகு - சம்பளம் Rs 1,00,000 ஆக உயர்வு',
+    scenario: 'Your salary has increased to Rs 1,00,000 per month',
+    scenarioTa: 'உங்கள் சம்பளம் மாதம் Rs 1,00,000 ஆக அதிகரித்துள்ளது',
+    context: 'New Salary: Rs 1,00,000/month | Extra Income: Rs 30,000/month',
+    contextTa: 'புதிய சம்பளம்: Rs 1,00,000/மாதம் | கூடுதல் வருமானம்: Rs 30,000/மாதம்',
     options: [
       {
         id: 'A',
@@ -79,8 +79,8 @@ export const GAME_STEPS: GameStep[] = [
       },
       {
         id: 'B',
-        text: 'Increase repayment to finish early (~₹40,000) & Save the remaining amount',
-        textTa: 'முன்கூட்டியே முடிக்க திருப்பிச் செலுத்துதலை அதிகரிக்கவும் (~₹40,000) & மீதமுள்ளதைச் சேமிக்கவும்',
+        text: 'Increase repayment to finish early (~Rs 40,000) & Save the remaining amount',
+        textTa: 'முன்கூட்டியே முடிக்க திருப்பிச் செலுத்துதலை அதிகரிக்கவும் (~Rs 40,000) & மீதமுள்ளதைச் சேமிக்கவும்',
         financialImpact: {
           description: 'Become debt-free faster, reduce interest',
           descriptionTa: 'வேகமாக கடன் இல்லாமல் ஆகவும், வட்டியைக் குறைக்கவும்',
@@ -115,8 +115,8 @@ export const GAME_STEPS: GameStep[] = [
     titleTa: 'படி 3: 1 ஆண்டுக்குப் பிறகு - பணவீக்க தாக்கம்',
     scenario: 'Due to inflation, living expenses increased by 7-10%',
     scenarioTa: 'பணவீக்கம் காரணமாக, வாழ்க்கைச் செலவுகள் 7-10% அதிகரித்துள்ளன',
-    context: 'Monthly Expenses Increased: ~₹5,000-7,000 more',
-    contextTa: 'மாதாந்திர செலவுகள் அதிகரிப்பு: ~₹5,000-7,000 அதிகம்',
+    context: 'Monthly Expenses Increased: ~Rs 5,000-7,000 more',
+    contextTa: 'மாதாந்திர செலவுகள் அதிகரிப்பு: ~Rs 5,000-7,000 அதிகம்',
     options: [
       {
         id: 'A',
@@ -168,13 +168,13 @@ export const GAME_STEPS: GameStep[] = [
     titleTa: 'படி 4: 12 மாதங்களுக்குப் பிறகு - வெளிநாட்டில் முதுகலை வாய்ப்பு',
     scenario: 'Opportunity for Masters abroad - needs additional funding',
     scenarioTa: 'வெளிநாட்டில் முதுகலை வாய்ப்பு - கூடுதல் நிதி தேவை',
-    context: 'Masters Program Cost: ₹20,00,000',
-    contextTa: 'முதுகலை திட்ட செலவு: ₹20,00,000',
+    context: 'Masters Program Cost: Rs 20,00,000',
+    contextTa: 'முதுகலை திட்ட செலவு: Rs 20,00,000',
     options: [
       {
         id: 'A',
-        text: 'Take new loan ₹20,00,000 with new installments',
-        textTa: 'புதிய தவணைகளுடன் ₹20,00,000 புதிய கடன் எடுக்கவும்',
+        text: 'Take new loan Rs 20,00,000 with new installments',
+        textTa: 'புதிய தவணைகளுடன் Rs 20,00,000 புதிய கடன் எடுக்கவும்',
         financialImpact: {
           description: 'Invest in education, manage dual loans',
           descriptionTa: 'கல்வியில் முதலீடு செய்யவும், இரட்டை கடன்களை நிர்வகிக்கவும்',
@@ -216,10 +216,10 @@ export const GAME_STEPS: GameStep[] = [
     step: 5,
     title: 'Step 5: After 18 Months - Family Emergency',
     titleTa: 'படி 5: 18 மாதங்களுக்குப் பிறகு - குடும்ப அவசரநிலை',
-    scenario: 'Family emergency requires ₹3,00,000 immediately',
-    scenarioTa: 'குடும்ப அவசரநிலைக்கு உடனடியாக ₹3,00,000 தேவை',
-    context: 'Emergency Fund Needed: ₹3,00,000',
-    contextTa: 'அவசரகால நிதி தேவை: ₹3,00,000',
+    scenario: 'Family emergency requires Rs 3,00,000 immediately',
+    scenarioTa: 'குடும்ப அவசரநிலைக்கு உடனடியாக Rs 3,00,000 தேவை',
+    context: 'Emergency Fund Needed: Rs 3,00,000',
+    contextTa: 'அவசரகால நிதி தேவை: Rs 3,00,000',
     options: [
       {
         id: 'A',
