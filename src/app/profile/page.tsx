@@ -14,7 +14,8 @@ import {
   HelpCircle,
   Mail,
   Languages,
-  DollarSign
+  DollarSign,
+  Calculator
 } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -56,6 +57,13 @@ export default function ProfilePage() {
       description: t.profile.reportsAnalyticsDesc,
       href: '/reports',
       color: 'text-green-600 bg-green-50'
+    },
+    {
+      icon: Calculator,
+      label: t.loanCalculator.title,
+      description: t.loanCalculator.loanCalculatorDesc,
+      href: '/loan-calculator',
+      color: 'text-indigo-600 bg-indigo-50'
     },
     {
       icon: Settings,
