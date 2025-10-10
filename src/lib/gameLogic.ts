@@ -34,13 +34,22 @@ export function saveGameState(state: GameState): void {
 /**
  * Initialize a new game state
  */
-export function initializeGameState(groupNumber: number, groupName?: string): GameState {
+export function initializeGameState(
+  groupNumber: number,
+  scenarioId: string = 'scenario-1',
+  groupName?: string
+): GameState {
   return {
     groupNumber,
     groupName,
+    scenarioId,
     choices: [],
     currentStep: 1,
     isDeadEnd: false,
+    startTime: new Date().toISOString(),
+    pageLoadCount: 1,
+    wasRefreshed: false,
+    refreshTimestamps: [],
   };
 }
 
@@ -86,7 +95,7 @@ export function makeChoice(
     currentStep: isDeadEnd ? step : step + 1,
     isDeadEnd,
     deadEndReason,
-    completedAt: (isDeadEnd || step >= 5) ? new Date().toISOString() : undefined,
+    completedAt: (isDeadEnd || step >= 4) ? new Date().toISOString() : undefined,
   };
 
   saveGameState(newState);
@@ -205,9 +214,41 @@ export function isOptionDisabled(
 }
 
 /**
+ * Calculate emergency fund based on choices
+ * Emergency happens at 18 months - need Rs 300,000
+ */
+function calculateEmergencyFund(choices: GameChoice[]): number {
+  let totalSavings = 0;
+  const step1 = choices.find(c => c.step === 1);
+  const step2 = choices.find(c => c.step === 2);
+
+  // Base calculation: 12 months of savings from month 6 to month 18
+  // After Step 2, salary is Rs 100,000/month
+
+  if (step2?.option === 'A') {
+    // Keep repayment same, save extra Rs 30,000/month
+    // 12 months × Rs 30,000 = Rs 360,000 ✓ WIN
+    totalSavings = 30000 * 12;
+  } else if (step2?.option === 'B') {
+    // Increase payment to Rs 40,000, save remaining after expenses
+    // Assume Rs 35,000 expenses: (100,000 - 40,000 - 35,000) × 12 = Rs 300,000 ✓ WIN
+    totalSavings = 25000 * 12;
+  } else if (step2?.option === 'C') {
+    // Invest extra Rs 30,000/month at 12% for 12 months
+    // Simple: Rs 30,000 × 12 = Rs 360,000 ✓ WIN (ignoring 12% for simplicity)
+    totalSavings = 30000 * 12;
+  } else if (step2?.option === 'D') {
+    // Lifestyle spending, no savings = Rs 0 ✗ LOSE
+    totalSavings = 0;
+  }
+
+  return totalSavings;
+}
+
+/**
  * Calculate final game results based on all choices
  */
-export function calculateGameResults(choices: GameChoice[]): GameResult {
+export function calculateGameResults(choices: GameChoice[], startTime?: string): GameResult {
   let totalLoanAmount = GAME_PROFILE.studentLoan;
   let monthlyPayment = 0;
   let savings = 0;
@@ -217,112 +258,34 @@ export function calculateGameResults(choices: GameChoice[]): GameResult {
   const step2 = choices.find(c => c.step === 2);
   const step3 = choices.find(c => c.step === 3);
   const step4 = choices.find(c => c.step === 4);
-  const step5 = choices.find(c => c.step === 5);
 
-  // Calculate based on Step 1 choice
-  if (step1?.option === 'A') {
-    monthlyPayment = 25000;
-  } else if (step1?.option === 'B') {
-    monthlyPayment = 12000;
-  } else if (step1?.option === 'C') {
-    monthlyPayment = 10500;
-  }
+  // Calculate emergency fund (Step 5 auto-check)
+  const emergencyFund = calculateEmergencyFund(choices);
+  const hasEnoughBalance = emergencyFund >= 300000;
 
-  // Adjust based on Step 2
-  if (step2?.option === 'A') {
-    savings += 30000; // Saved extra income
-  } else if (step2?.option === 'B') {
-    monthlyPayment = 40000; // Increased payment
-  } else if (step2?.option === 'C') {
-    savings += 25000; // Invested (some saved)
-  }
+  // Simple Win/Lose logic based on emergency fund
+  const outcome: GameResult['outcome'] = hasEnoughBalance ? 'excellent' : 'failed';
+  const outcomeSummary = hasEnoughBalance
+    ? 'Congratulations! You won!'
+    : 'Not good, better next time';
+  const outcomeSummaryTa = hasEnoughBalance
+    ? 'வாழ்த்துக்கள்! நீங்கள் வென்றீர்கள்!'
+    : 'நல்லதல்ல, அடுத்த முறை சிறப்பாக';
 
-  // Step 4: Additional education loan
-  if (step4?.option === 'A') {
-    additionalDebt += 2000000;
-    totalLoanAmount += 2000000;
-  } else if (step4?.option === 'C') {
-    additionalDebt += 500000; // Partial scholarship
-    totalLoanAmount += 500000;
-  }
+  // Minimal data for display (kept for compatibility)
+  const yearsToComplete = 5;
+  const totalInterestPaid = 0;
+  const totalPaid = totalLoanAmount;
+  const remainingDebt = totalLoanAmount;
+  const recommendations: string[] = [];
+  const recommendationsTa: string[] = [];
 
-  // Step 5: Emergency handling
-  if (step5?.option === 'B') {
-    additionalDebt += 300000; // High interest loan
-    totalLoanAmount += 300000;
-  } else if (step5?.option === 'C') {
-    savings -= 300000; // Used savings
-  }
-
-  // Calculate years to complete
-  const yearsToComplete = totalLoanAmount / (monthlyPayment * 12);
-  const totalInterestPaid = totalLoanAmount * 0.08 * yearsToComplete; // Assuming 8% interest
-  const totalPaid = totalLoanAmount + totalInterestPaid;
-  const remainingDebt = Math.max(0, totalLoanAmount - (18 * monthlyPayment)); // After 18 months
-
-  // Determine outcome
-  let outcome: GameResult['outcome'] = 'good';
-  let outcomeSummary = '';
-  let outcomeSummaryTa = '';
-  let recommendations: string[] = [];
-  let recommendationsTa: string[] = [];
-
-  if (additionalDebt > 1500000 || savings < 0) {
-    outcome = 'poor';
-    outcomeSummary = 'Your debt burden is very high. You need to restructure your finances.';
-    outcomeSummaryTa = 'உங்கள் கடன் சுமை மிக அதிகம். உங்கள் நிதியை மறுசீரமைக்க வேண்டும்.';
-    recommendations = [
-      'Seek financial counseling immediately',
-      'Consider debt consolidation',
-      'Avoid taking new loans',
-    ];
-    recommendationsTa = [
-      'உடனடியாக நிதி ஆலோசனை பெறவும்',
-      'கடன் ஒருங்கிணைப்பைக் கருத்தில் கொள்ளவும்',
-      'புதிய கடன்களை எடுப்பதைத் தவிர்க்கவும்',
-    ];
-  } else if (monthlyPayment >= 30000 && savings >= 100000) {
-    outcome = 'excellent';
-    outcomeSummary = 'Excellent financial management! You are on track to be debt-free soon.';
-    outcomeSummaryTa = 'சிறந்த நிதி நிர்வாகம்! நீங்கள் விரைவில் கடன் இல்லாமல் இருக்கும் பாதையில் உள்ளீர்கள்.';
-    recommendations = [
-      'Continue aggressive repayment',
-      'Build 6-month emergency fund',
-      'Start retirement planning',
-    ];
-    recommendationsTa = [
-      'ஆக்கிரமிப்பு திருப்பிச் செலுத்துதலைத் தொடரவும்',
-      '6 மாத அவசரகால நிதியை உருவாக்கவும்',
-      'ஓய்வூதிய திட்டமிடலைத் தொடங்கவும்',
-    ];
-  } else if (savings >= 50000) {
-    outcome = 'good';
-    outcomeSummary = 'Good progress! You have maintained a balance between repayment and savings.';
-    outcomeSummaryTa = 'நல்ல முன்னேற்றம்! திருப்பிச் செலுத்துதல் மற்றும் சேமிப்புக்கு இடையே சமநிலையை பராமரித்துள்ளீர்கள்.';
-    recommendations = [
-      'Increase savings gradually',
-      'Review and optimize expenses monthly',
-      'Consider increasing EMI if income grows',
-    ];
-    recommendationsTa = [
-      'சேமிப்பை படிப்படியாக அதிகரிக்கவும்',
-      'மாதாந்திர செலவுகளை மதிப்பாய்வு செய்து உகந்ததாக்கவும்',
-      'வருமானம் வளர்ந்தால் EMI அதிகரிப்பதைக் கருத்தில் கொள்ளவும்',
-    ];
-  } else {
-    outcome = 'fair';
-    outcomeSummary = 'You are managing but need to be more strategic about debt and savings.';
-    outcomeSummaryTa = 'நீங்கள் நிர்வகிக்கிறீர்கள் ஆனால் கடன் மற்றும் சேமிப்பு பற்றி மேலும் மூலோபாயமாக இருக்க வேண்டும்.';
-    recommendations = [
-      'Create a strict monthly budget',
-      'Build emergency fund of at least Rs 50,000',
-      'Avoid lifestyle inflation',
-    ];
-    recommendationsTa = [
-      'கடுமையான மாதாந்திர பட்ஜெட்டை உருவாக்கவும்',
-      'குறைந்தது Rs 50,000 அவசரகால நிதியை உருவாக்கவும்',
-      'வாழ்க்கை முறை பணவீக்கத்தைத் தவிர்க்கவும்',
-    ];
+  // Calculate time spent if startTime is provided
+  let timeSpent: number | undefined;
+  if (startTime) {
+    const start = new Date(startTime).getTime();
+    const end = Date.now();
+    timeSpent = Math.floor((end - start) / 1000); // in seconds
   }
 
   return {
@@ -338,6 +301,9 @@ export function calculateGameResults(choices: GameChoice[]): GameResult {
     outcomeSummaryTa,
     recommendations,
     recommendationsTa,
+    timeSpent,
+    hasEnoughBalance,
+    emergencyFund,
   };
 }
 
@@ -357,7 +323,7 @@ export function getAllSavedGroups(): number[] {
   if (typeof window === 'undefined') return [];
 
   const groups: number[] = [];
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 12; i++) {
     const key = `${STORAGE_KEY_PREFIX}${i}`;
     if (localStorage.getItem(key)) {
       groups.push(i);

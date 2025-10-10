@@ -39,11 +39,16 @@ export interface GameChoice {
 export interface GameState {
   groupNumber: number;
   groupName?: string;
+  scenarioId: string;
   choices: GameChoice[];
   currentStep: number;
   isDeadEnd: boolean;
   deadEndReason?: string;
+  startTime: string;
   completedAt?: string;
+  pageLoadCount: number;
+  wasRefreshed: boolean;
+  refreshTimestamps: string[];
 }
 
 export interface DisabledOption {
@@ -66,4 +71,24 @@ export interface GameResult {
   outcomeSummaryTa: string;
   recommendations: string[];
   recommendationsTa: string[];
+  timeSpent?: number; // Time spent in seconds
+  hasEnoughBalance: boolean; // For Step 5 emergency check (Rs 300,000)
+  emergencyFund: number; // Calculated savings for emergency
+}
+
+export interface FirebaseGameResult {
+  id?: string;
+  groupNumber: number;
+  scenarioId: string;
+  timeSpent: string; // formatted time (e.g., "2m 30s")
+  timeSpentSeconds: number; // raw seconds for sorting
+  outcome: 'excellent' | 'good' | 'fair' | 'poor' | 'failed';
+  completedAt: string;
+  userId: string;
+  totalLoanAmount: number;
+  savings: number;
+  remainingDebt: number;
+  pageLoadCount: number;
+  wasRefreshed: boolean;
+  refreshTimestamps: string[];
 }

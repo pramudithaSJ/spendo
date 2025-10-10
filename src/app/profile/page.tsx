@@ -14,7 +14,9 @@ import {
   HelpCircle,
   Mail,
   Languages,
-  DollarSign
+  DollarSign,
+  Calculator,
+  Gamepad2
 } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -44,6 +46,13 @@ export default function ProfilePage() {
 
   const menuItems = [
     {
+      icon: Gamepad2,
+      label: language === 'en' ? 'Game Scenarios' : 'விளையாட்டு சூழ்நிலைகள்',
+      description: language === 'en' ? 'Play financial management scenarios' : 'நிதி மேலாண்மை சூழ்நிலைகளை விளையாடுங்கள்',
+      href: '/game-scenarios',
+      color: 'text-pink-600 bg-pink-50'
+    },
+    {
       icon: Tag,
       label: t.profile.manageCategories,
       description: t.profile.manageCategoriesDesc,
@@ -56,6 +65,13 @@ export default function ProfilePage() {
       description: t.profile.reportsAnalyticsDesc,
       href: '/reports',
       color: 'text-green-600 bg-green-50'
+    },
+    {
+      icon: Calculator,
+      label: t.loanCalculator.title,
+      description: t.loanCalculator.loanCalculatorDesc,
+      href: '/loan-calculator',
+      color: 'text-indigo-600 bg-indigo-50'
     },
     {
       icon: Settings,

@@ -1,24 +1,39 @@
 'use client';
 
+import { useState } from 'react';
 import { GameResult } from '@/lib/gameTypes';
-import { TrendingUp, TrendingDown, DollarSign, Calendar, Lightbulb, Award } from 'lucide-react';
+import { Award, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { submitGameResult, hasExistingSubmission } from '@/lib/gameResultsService';
+import { formatTimeWithUnits } from '@/lib/gameTimer';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface GameResultsProps {
   result: GameResult;
   language: 'en' | 'ta';
   groupNumber: number;
+  scenarioId: string;
+  startTime: string;
+  wasRefreshed?: boolean;
+  refreshCount?: number;
+  refreshTimestamps?: string[];
 }
 
-export default function GameResults({ result, language, groupNumber }: GameResultsProps) {
-  // Game always uses LKR with Rs format
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-LK', {
-      style: 'currency',
-      currency: 'LKR',
-      maximumFractionDigits: 0,
-    }).format(amount).replace('LKR', 'Rs');
-  };
+export default function GameResults({
+  result,
+  language,
+  groupNumber,
+  scenarioId,
+  startTime,
+  wasRefreshed = false,
+  refreshCount = 0,
+  refreshTimestamps = [],
+}: GameResultsProps) {
+  const { user } = useAuth();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const getOutcomeColor = (outcome: GameResult['outcome']) => {
     switch (outcome) {
@@ -48,8 +63,75 @@ export default function GameResults({ result, language, groupNumber }: GameResul
     return outcome.toUpperCase();
   };
 
+  const handleSubmit = async () => {
+    if (!user || !result.timeSpent || submitted) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Check for existing submission
+      const exists = await hasExistingSubmission(groupNumber, scenarioId);
+
+      if (exists) {
+        setSubmitError(
+          language === 'ta'
+            ? `குழு ${groupNumber} ஏற்கனவே இந்த சூழ்நிலைக்கு சமர்ப்பித்துள்ளது`
+            : `Group ${groupNumber} has already submitted for this scenario`
+        );
+        setSubmitting(false);
+        return;
+      }
+
+      // Submit with refresh data
+      await submitGameResult({
+        groupNumber,
+        scenarioId,
+        timeSpent: formatTimeWithUnits(result.timeSpent, 'en'), // Format time for Firebase (e.g., "2m 30s")
+        timeSpentSeconds: result.timeSpent, // Raw seconds for sorting
+        outcome: result.outcome,
+        completedAt: new Date().toISOString(),
+        userId: user.uid,
+        totalLoanAmount: result.totalLoanAmount,
+        savings: result.savings,
+        remainingDebt: result.remainingDebt,
+        pageLoadCount: refreshCount + 1,
+        wasRefreshed,
+        refreshTimestamps,
+      });
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting result:', error);
+      setSubmitError(
+        language === 'ta'
+          ? 'சமர்ப்பிப்பதில் பிழை. மீண்டும் முயற்சிக்கவும்.'
+          : 'Error submitting. Please try again.'
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const isWinner = result.outcome === 'excellent' || result.outcome === 'good';
+
   return (
-    <div className="space-y-6">
+    <div id="game-results" className="space-y-6">
+      {/* Winner Banner */}
+      {isWinner && (
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg p-6 text-center shadow-lg">
+          <Award size={64} className="mx-auto mb-3" />
+          <h2 className="text-3xl font-bold mb-2">
+            {language === 'ta' ? '🎉 வாழ்த்துக்கள்! நீங்கள் வென்றீர்கள்!' : '🎉 Congratulations! You Won!'}
+          </h2>
+          <p className="text-green-100">
+            {language === 'ta'
+              ? 'சிறந்த நிதி மேலாண்மை முடிவுகள்!'
+              : 'Excellent financial management decisions!'}
+          </p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">
@@ -59,6 +141,69 @@ export default function GameResults({ result, language, groupNumber }: GameResul
           {language === 'ta' ? `குழு ${groupNumber} முடிவுகள்` : `Group ${groupNumber} Results`}
         </p>
       </div>
+
+      {/* Time Spent */}
+      {result.timeSpent && (
+        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Clock className="h-6 w-6 text-blue-600" />
+            <h3 className="text-lg font-bold text-blue-900">
+              {language === 'ta' ? 'செலவழித்த நேரம்' : 'Time Spent'}
+            </h3>
+          </div>
+          <p className="text-3xl font-bold text-blue-600">
+            {formatTimeWithUnits(result.timeSpent, language)}
+          </p>
+        </div>
+      )}
+
+      {/* Emergency Fund Balance - Step 5 Auto-Check */}
+      <div className={cn(
+        'border-2 rounded-lg p-4 text-center',
+        result.hasEnoughBalance
+          ? 'bg-green-50 border-green-500'
+          : 'bg-red-50 border-red-500'
+      )}>
+        <h3 className={cn(
+          'text-lg font-bold mb-2',
+          result.hasEnoughBalance ? 'text-green-900' : 'text-red-900'
+        )}>
+          {language === 'ta'
+            ? 'படி 5: குடும்ப அவசரநிலை Rs. 300,000'
+            : 'Step 5: Family Emergency Rs. 300,000'}
+        </h3>
+        <p className={cn(
+          'text-sm font-medium',
+          result.hasEnoughBalance ? 'text-green-800' : 'text-red-800'
+        )}>
+          {language === 'ta'
+            ? result.hasEnoughBalance
+              ? 'அவசரநிலைக்கு போதுமான இருப்பு உள்ளது'
+              : 'அவசரநிலைக்கு போதுமான இருப்பு இல்லை'
+            : result.hasEnoughBalance
+              ? 'You have enough balance to attend emergency'
+              : 'You don\'t have enough balance to attend emergency'}
+        </p>
+      </div>
+
+      {/* Refresh Warning (if page was refreshed) */}
+      {wasRefreshed && refreshCount > 0 && (
+        <div className="bg-orange-50 border-2 border-orange-400 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-bold text-orange-900 mb-1">
+                {language === 'ta' ? 'பக்கம் புதுப்பிப்பு கண்டறியப்பட்டது' : 'Page Refresh Detected'}
+              </h3>
+              <p className="text-sm text-orange-800">
+                {language === 'ta'
+                  ? `பக்கம் ${refreshCount} முறை புதுப்பிக்கப்பட்டது. இந்த தகவல் சமர்ப்பிப்பில் சேர்க்கப்படும்.`
+                  : `Page was refreshed ${refreshCount} time${refreshCount > 1 ? 's' : ''}. This will be included in your submission.`}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Outcome Badge */}
       <div className={cn(
@@ -72,92 +217,42 @@ export default function GameResults({ result, language, groupNumber }: GameResul
         </p>
       </div>
 
-      {/* Financial Summary */}
-      <div className="bg-gray-50 rounded-lg p-4">
-        <h3 className="font-semibold mb-4 flex items-center gap-2">
-          <DollarSign size={18} />
-          {language === 'ta' ? 'நிதி சுருக்கம்' : 'Financial Summary'}
-        </h3>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">
-              {language === 'ta' ? 'மொத்த கடன்' : 'Total Loan'}
-            </p>
-            <p className="text-lg font-bold">{formatCurrency(result.totalLoanAmount)}</p>
-          </div>
-
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">
-              {language === 'ta' ? 'மாதாந்திர EMI' : 'Monthly EMI'}
-            </p>
-            <p className="text-lg font-bold">{formatCurrency(result.monthlyPayment)}</p>
-          </div>
-
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">
-              {language === 'ta' ? 'மீதமுள்ள கடன்' : 'Remaining Debt'}
-            </p>
-            <p className="text-lg font-bold text-orange-600">
-              {formatCurrency(result.remainingDebt)}
-            </p>
-          </div>
-
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">
-              {language === 'ta' ? 'சேமிப்பு' : 'Savings'}
-            </p>
-            <p className="text-lg font-bold text-green-600">
-              {formatCurrency(result.savings)}
+      {/* Action Buttons */}
+      <div className="space-y-3">
+        {!submitted ? (
+          <Button
+            onClick={handleSubmit}
+            disabled={submitting || !result.timeSpent || !user}
+            className="w-full bg-black hover:bg-gray-800 text-white py-6 text-lg"
+          >
+            {submitting ? (
+              <>
+                <Send size={20} className="mr-2 animate-pulse" />
+                {language === 'ta' ? 'சமர்ப்பிக்கிறது...' : 'Submitting...'}
+              </>
+            ) : (
+              <>
+                <Send size={20} className="mr-2" />
+                {language === 'ta' ? 'முடிவுகளைச் சமர்ப்பிக்கவும்' : 'Submit Results'}
+              </>
+            )}
+          </Button>
+        ) : (
+          <div className="bg-green-50 border-2 border-green-500 rounded-lg p-4 text-center">
+            <CheckCircle size={48} className="mx-auto mb-2 text-green-600" />
+            <p className="text-green-900 font-semibold">
+              {language === 'ta'
+                ? '✓ முடிவுகள் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டன!'
+                : '✓ Results submitted successfully!'}
             </p>
           </div>
+        )}
 
-          <div className="bg-white p-3 rounded-lg col-span-2">
-            <p className="text-xs text-gray-500 mb-1">
-              {language === 'ta' ? 'முடிக்க ஆண்டுகள்' : 'Years to Complete'}
-            </p>
-            <div className="flex items-center gap-2">
-              <Calendar size={18} className="text-gray-400" />
-              <p className="text-lg font-bold">
-                {result.yearsToComplete} {language === 'ta' ? 'ஆண்டுகள்' : 'years'}
-              </p>
-            </div>
+        {submitError && (
+          <div className="bg-red-50 border-2 border-red-500 rounded-lg p-3 text-center text-red-900">
+            {submitError}
           </div>
-        </div>
-      </div>
-
-      {/* Recommendations */}
-      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-        <h3 className="font-semibold mb-3 flex items-center gap-2 text-blue-900">
-          <Lightbulb size={18} />
-          {language === 'ta' ? 'பரிந்துரைகள்' : 'Recommendations'}
-        </h3>
-
-        <ul className="space-y-2">
-          {(language === 'ta' ? result.recommendationsTa : result.recommendations).map(
-            (rec, index) => (
-              <li key={index} className="flex items-start gap-2 text-sm text-blue-900">
-                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-200 text-blue-900 flex items-center justify-center text-xs font-bold mt-0.5">
-                  {index + 1}
-                </span>
-                <span>{rec}</span>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-
-      {/* Key Learnings */}
-      <div className="bg-gray-900 text-white rounded-lg p-4">
-        <h3 className="font-semibold mb-2">
-          {language === 'ta' ? 'முக்கிய கற்றல்கள்' : 'Key Learnings'}
-        </h3>
-        <ul className="text-sm space-y-1 text-gray-300">
-          <li>• {language === 'ta' ? 'திட்டமிடல் மிக முக்கியம்' : 'Planning is crucial'}</li>
-          <li>• {language === 'ta' ? 'அவசரகால நிதி அவசியம்' : 'Emergency fund is essential'}</li>
-          <li>• {language === 'ta' ? 'நல்ல கடன் vs மோசமான கடன்' : 'Good debt vs bad debt'}</li>
-          <li>• {language === 'ta' ? 'சேமிப்பு மற்றும் திருப்பிச் செலுத்துதல் சமநிலை' : 'Balance savings and repayment'}</li>
-        </ul>
+        )}
       </div>
     </div>
   );

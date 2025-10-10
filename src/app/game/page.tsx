@@ -10,15 +10,17 @@ import {
   makeChoice,
   isOptionDisabled,
   calculateGameResults,
-  resetGameState,
+  saveGameState,
 } from '@/lib/gameLogic';
+import { detectRefresh, recordRefresh, initializeSession, getRefreshWarning } from '@/lib/refreshDetection';
 import OptionCard from '@/components/game/OptionCard';
 import ChoiceHistory from '@/components/game/ChoiceHistory';
 import ConfirmationDialog from '@/components/game/ConfirmationDialog';
 import GameResults from '@/components/game/GameResults';
+import LiveTimer from '@/components/game/LiveTimer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, RefreshCw, Gamepad2 } from 'lucide-react';
+import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function GamePage() {
@@ -32,17 +34,48 @@ export default function GamePage() {
 
   useEffect(() => {
     setMounted(true);
+
+    // Check for page refresh
+    if (gameState && !gameState.completedAt) {
+      const isRefresh = detectRefresh(gameState);
+      if (isRefresh) {
+        const updatedState = recordRefresh(gameState);
+        setGameState(updatedState);
+        saveGameState(updatedState);
+      }
+    }
   }, []);
+
+  // Separate effect to handle refresh detection after gameState loads
+  useEffect(() => {
+    if (mounted && gameState && !gameState.completedAt) {
+      const isRefresh = detectRefresh(gameState);
+      if (isRefresh && gameState.pageLoadCount === 1) {
+        // This is the first refresh detection
+        const updatedState = recordRefresh(gameState);
+        setGameState(updatedState);
+        saveGameState(updatedState);
+      }
+    }
+  }, [mounted, gameState?.groupNumber]);
 
   const handleGroupSelect = () => {
     const num = parseInt(groupNumber);
-    if (num >= 1 && num <= 10) {
+    if (num >= 1 && num <= 12) {
       const existing = loadGameState(num);
       if (existing) {
         setGameState(existing);
+        // Check for refresh on existing game
+        const isRefresh = detectRefresh(existing);
+        if (isRefresh) {
+          const updatedState = recordRefresh(existing);
+          setGameState(updatedState);
+          saveGameState(updatedState);
+        }
       } else {
-        const newState = initializeGameState(num);
+        const newState = initializeGameState(num, 'scenario-1');
         setGameState(newState);
+        initializeSession(num);
       }
       setShowGroupSelect(false);
     }
@@ -70,16 +103,6 @@ export default function GamePage() {
   const handleCancelChoice = () => {
     setSelectedOption(null);
     setShowConfirmation(false);
-  };
-
-  const handleReset = () => {
-    if (gameState) {
-      if (confirm(language === 'ta' ? 'விளையாட்டை மீட்டமைக்க விரும்புகிறீர்களா?' : 'Reset game?')) {
-        resetGameState(gameState.groupNumber);
-        const newState = initializeGameState(gameState.groupNumber);
-        setGameState(newState);
-      }
-    }
   };
 
   const handleChangeGroup = () => {
@@ -112,8 +135,8 @@ export default function GamePage() {
             </h1>
             <p className="text-gray-600 text-sm">
               {language === 'ta'
-                ? 'உங்கள் குழு எண்ணை உள்ளிடவும் (1-10)'
-                : 'Enter your group number (1-10)'}
+                ? 'உங்கள் குழு எண்ணை உள்ளிடவும் (1-12)'
+                : 'Enter your group number (1-12)'}
             </p>
           </div>
 
@@ -125,17 +148,17 @@ export default function GamePage() {
               <Input
                 type="number"
                 min="1"
-                max="10"
+                max="12"
                 value={groupNumber}
                 onChange={(e) => setGroupNumber(e.target.value)}
-                placeholder={language === 'ta' ? '1-10' : '1-10'}
+                placeholder={language === 'ta' ? '1-12' : '1-12'}
                 className="text-center text-2xl font-bold"
               />
             </div>
 
             <Button
               onClick={handleGroupSelect}
-              disabled={!groupNumber || parseInt(groupNumber) < 1 || parseInt(groupNumber) > 10}
+              disabled={!groupNumber || parseInt(groupNumber) < 1 || parseInt(groupNumber) > 12}
               className="w-full bg-black hover:bg-gray-800"
             >
               {language === 'ta' ? 'விளையாட்டைத் தொடங்கு' : 'Start Game'}
@@ -169,12 +192,12 @@ export default function GamePage() {
 
   // Game Complete - Show Results
   if (gameState.completedAt) {
-    const results = calculateGameResults(gameState.choices);
+    const results = calculateGameResults(gameState.choices, gameState.startTime);
 
     return (
       <div className="min-h-screen bg-gray-50 p-4 pb-24">
         <div className="max-w-2xl mx-auto">
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4">
             <Button
               onClick={handleChangeGroup}
               variant="outline"
@@ -182,15 +205,6 @@ export default function GamePage() {
             >
               <ArrowLeft size={16} className="mr-2" />
               {language === 'ta' ? 'குழுவை மாற்று' : 'Change Group'}
-            </Button>
-
-            <Button
-              onClick={handleReset}
-              variant="outline"
-              size="sm"
-            >
-              <RefreshCw size={16} className="mr-2" />
-              {language === 'ta' ? 'மீட்டமை' : 'Reset'}
             </Button>
           </div>
 
@@ -209,7 +223,16 @@ export default function GamePage() {
             </div>
           )}
 
-          <GameResults result={results} language={language} groupNumber={gameState.groupNumber} />
+          <GameResults
+            result={results}
+            language={language}
+            groupNumber={gameState.groupNumber}
+            scenarioId={gameState.scenarioId}
+            startTime={gameState.startTime}
+            wasRefreshed={gameState.wasRefreshed}
+            refreshCount={gameState.pageLoadCount - 1}
+            refreshTimestamps={gameState.refreshTimestamps}
+          />
 
           <div className="mt-6">
             <Link href="/dashboard">
@@ -232,6 +255,16 @@ export default function GamePage() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 pb-24">
       <div className="max-w-2xl mx-auto">
+        {/* Live Timer */}
+        <div className="mb-4">
+          <LiveTimer
+            startTime={gameState.startTime}
+            wasRefreshed={gameState.wasRefreshed}
+            refreshCount={gameState.pageLoadCount - 1}
+            language={language}
+          />
+        </div>
+
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -248,14 +281,7 @@ export default function GamePage() {
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <Button
-              onClick={handleReset}
-              variant="outline"
-              size="sm"
-            >
-              <RefreshCw size={16} />
-            </Button>
+          <div>
             <Button
               onClick={handleChangeGroup}
               variant="outline"
