@@ -15,7 +15,8 @@ import {
   Mail,
   Languages,
   DollarSign,
-  Calculator
+  Calculator,
+  Gamepad2
 } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -44,6 +45,13 @@ export default function ProfilePage() {
   };
 
   const menuItems = [
+    {
+      icon: Gamepad2,
+      label: language === 'en' ? 'Game Scenarios' : 'விளையாட்டு சூழ்நிலைகள்',
+      description: language === 'en' ? 'Play financial management scenarios' : 'நிதி மேலாண்மை சூழ்நிலைகளை விளையாடுங்கள்',
+      href: '/game-scenarios',
+      color: 'text-pink-600 bg-pink-50'
+    },
     {
       icon: Tag,
       label: t.profile.manageCategories,

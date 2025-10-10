@@ -1,0 +1,10 @@
+  ,Step 1 Option,Step 2 Option,Step 3 Option,Step 4 Option,Step 1 Description,Step 2 Description,Step 3 Description,Step 4 Description
+1,1A,2A,3A,4B,"Standard Plan – Rs.25,000/month (5 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Delay Master’s until current loan finished
+2,1A,2A,3A,4C,"Standard Plan – Rs.25,000/month (5 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Seek scholarship (minimize loan)
+3,1A,2A,3A,4D,"Standard Plan – Rs.25,000/month (5 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Drop plan to avoid over-debt
+4,1B,2A,3A,4B,"Extended Plan – Rs.15,000/month (10 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Delay Master’s until current loan finished
+5,1B,2A,3A,4C,"Extended Plan – Rs.15,000/month (10 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Seek scholarship (minimize loan)
+6,1B,2A,3A,4D,"Extended Plan – Rs.15,000/month (10 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Drop plan to avoid over-debt
+7,1C,2A,3A,4B,"Extended Plan – Rs.11,000/month (20 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Delay Master’s until current loan finished
+8,1C,2A,3A,4C,"Extended Plan – Rs.11,000/month (20 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Seek scholarship (minimize loan)
+9,1C,2A,3A,4D,"Extended Plan – Rs.11,000/month (20 years)","Keep repayment same, save extra","Stick to plan, cut non-essentials",Drop plan to avoid over-debt
