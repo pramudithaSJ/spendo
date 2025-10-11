@@ -250,6 +250,8 @@ export const en = {
     homeRate: 'Home: 8-12% p.a.',
     vehicleRate: 'Vehicle: 10-15% p.a.',
     educationRate: 'Education: 6-10% p.a.',
+    businessRate: 'Business: 14-20% p.a.',
+    ratesDisclaimer: 'Interest rates may vary based on your credit score, income level, employment status, and overall risk profile. The rates shown are indicative market averages. Please consult with your financial institution for personalized rates.',
     invalidAmount: 'Please enter a valid loan amount',
     invalidRate: 'Please enter a valid interest rate',
     invalidTenure: 'Please enter a valid tenure',
