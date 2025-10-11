@@ -8,7 +8,8 @@ import BottomNavigation from '@/components/layout/BottomNavigation';
 import CategoryForm from '@/components/forms/CategoryForm';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { categoryService, defaultCategories } from '@/lib/categoryService';
+import { categoryService } from '@/lib/categoryService';
+import { ensureCategoriesInitialized } from '@/lib/initializeCategoriesService';
 import { Category } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -31,36 +32,19 @@ export default function CategoriesPage() {
 
   const loadCategories = async () => {
     if (!user) return;
-    
+
     try {
+      // Ensure categories are initialized (safe to call multiple times)
+      await ensureCategoriesInitialized(user.uid);
+
+      // Load categories
       const userCategories = await categoryService.getCategories(user.uid);
-      
-      // If user has no categories, create default ones
-      if (userCategories.length === 0) {
-        await createDefaultCategories();
-        const newCategories = await categoryService.getCategories(user.uid);
-        setCategories(newCategories);
-      } else {
-        setCategories(userCategories);
-      }
+      setCategories(userCategories);
     } catch (error) {
       console.error('Error loading categories:', error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const createDefaultCategories = async () => {
-    if (!user) return;
-    
-    const promises = defaultCategories.map(cat => 
-      categoryService.addCategory({
-        ...cat,
-        userId: user.uid,
-      })
-    );
-    
-    await Promise.all(promises);
   };
 
   const handleAddCategory = async (data: { name: string; type: 'income' | 'expense'; icon: string }) => {
