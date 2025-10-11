@@ -55,16 +55,7 @@ export default function ConfirmationDialog({
             </div>
           </div>
 
-          {option.isDeadEnd && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-700 font-medium">
-                ⚠️{' '}
-                {language === 'ta'
-                  ? 'இந்த தேர்வு சிக்கல்களுக்கு வழிவகுக்கலாம்!'
-                  : 'This choice may lead to a dead end!'}
-              </p>
-            </div>
-          )}
+          {/* Dead-end warning removed - players discover consequences at the end */}
         </div>
 
         <div className="flex gap-3">

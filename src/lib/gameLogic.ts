@@ -92,10 +92,10 @@ export function makeChoice(
   const newState: GameState = {
     ...state,
     choices: newChoices,
-    currentStep: isDeadEnd ? step : step + 1,
+    currentStep: step + 1, // Always progress to next step, even on dead-end
     isDeadEnd,
     deadEndReason,
-    completedAt: (isDeadEnd || step >= 4) ? new Date().toISOString() : undefined,
+    completedAt: step >= 4 ? new Date().toISOString() : undefined, // Only complete after step 4
   };
 
   saveGameState(newState);
@@ -143,25 +143,9 @@ export function getDisabledOptions(choices: GameChoice[], currentStep: number): 
   const step2Choice = choices.find(c => c.step === 2);
   const step3Choice = choices.find(c => c.step === 3);
 
-  // Step 3 logic: If chose Standard Plan (A) with high payments, can't afford to skip
-  if (currentStep === 3 && step1Choice?.option === 'A') {
-    disabled.push({
-      step: 3,
-      option: 'C',
-      reason: 'Cannot skip payment on Standard Plan - will damage credit and add penalties',
-      reasonTa: 'நிலையான திட்டத்தில் கட்டணத்தைத் தவிர்க்க முடியாது - கடன் மதிப்பெண்ணை சேதப்படுத்தும்',
-    });
-  }
-
-  // Step 3 logic: If chose to increase lifestyle spending, more vulnerable to inflation
-  if (currentStep === 3 && step2Choice?.option === 'D') {
-    disabled.push({
-      step: 3,
-      option: 'A',
-      reason: 'Already increased spending - cannot easily cut non-essential expenses',
-      reasonTa: 'ஏற்கனவே செலவு அதிகரித்துவிட்டது - தேவையற்ற செலவுகளை எளிதில் குறைக்க முடியாது',
-    });
-  }
+  // Step 3 logic: Allow all options without pre-warnings
+  // Players will discover consequences at the end
+  // Removed disabled option warnings to let players make choices freely
 
   // Step 4 logic: If haven't built savings and still have high debt, can't take another loan
   if (currentStep === 4) {
@@ -266,11 +250,11 @@ export function calculateGameResults(choices: GameChoice[], startTime?: string):
   // Simple Win/Lose logic based on emergency fund
   const outcome: GameResult['outcome'] = hasEnoughBalance ? 'excellent' : 'failed';
   const outcomeSummary = hasEnoughBalance
-    ? 'Congratulations! You won!'
-    : 'Not good, better next time';
+    ? 'Successful!'
+    : 'Not successful, better next time';
   const outcomeSummaryTa = hasEnoughBalance
-    ? 'வாழ்த்துக்கள்! நீங்கள் வென்றீர்கள்!'
-    : 'நல்லதல்ல, அடுத்த முறை சிறப்பாக';
+    ? 'வெற்றிகரமானது!'
+    : 'வெற்றிபெறவில்லை, அடுத்த முறை சிறப்பாக';
 
   // Minimal data for display (kept for compatibility)
   const yearsToComplete = 5;

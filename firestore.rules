@@ -35,5 +35,15 @@ service cloud.firestore {
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
       allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
+
+    // Game Results collection - users can submit and read game results
+    match /gameResults/{resultId} {
+      // Allow authenticated users to create game results
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      // Allow reading all game results (for leaderboards and rankings)
+      allow read: if isAuthenticated();
+      // Only allow users to update/delete their own results
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
   }
 }

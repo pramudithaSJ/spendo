@@ -208,20 +208,7 @@ export default function GamePage() {
             </Button>
           </div>
 
-          {gameState.isDeadEnd && (
-            <div className="bg-red-100 border-2 border-red-500 rounded-lg p-6 mb-6 text-center">
-              <h2 className="text-2xl font-bold text-red-900 mb-2">
-                {language === 'ta' ? '❌ முட்டுக்கட்டை!' : '❌ Dead End!'}
-              </h2>
-              <p className="text-red-800">
-                {language === 'ta'
-                  ? gameState.deadEndReason
-                    ? GAME_STEPS.flatMap(s => s.options).find(o => o.deadEndReason === gameState.deadEndReason)?.deadEndReasonTa || gameState.deadEndReason
-                    : 'இந்த தேர்வு சிக்கல்களுக்கு வழிவகுத்தது'
-                  : gameState.deadEndReason || 'This choice led to financial problems'}
-              </p>
-            </div>
-          )}
+          {/* Dead-end message removed - players discover outcomes through final results only */}
 
           <GameResults
             result={results}

@@ -50,12 +50,7 @@ export default function OptionCard({
             {text}
           </p>
 
-          {disabled && disabledReason && (
-            <div className="flex items-start gap-2 mt-2 p-2 bg-gray-200 rounded text-xs text-gray-700">
-              <Lock size={14} className="flex-shrink-0 mt-0.5" />
-              <span>{disabledReason}</span>
-            </div>
-          )}
+          {/* All hints/suggestions removed - players make choices without pre-warnings */}
         </div>
       </div>
     </button>

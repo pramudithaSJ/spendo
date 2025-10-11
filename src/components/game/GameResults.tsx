@@ -122,7 +122,7 @@ export default function GameResults({
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg p-6 text-center shadow-lg">
           <Award size={64} className="mx-auto mb-3" />
           <h2 className="text-3xl font-bold mb-2">
-            {language === 'ta' ? '🎉 வாழ்த்துக்கள்! நீங்கள் வென்றீர்கள்!' : '🎉 Congratulations! You Won!'}
+            {language === 'ta' ? '🎉 வாழ்த்துக்கள்! வெற்றிகரமானது!' : '🎉 Congratulations! Successful!'}
           </h2>
           <p className="text-green-100">
             {language === 'ta'
