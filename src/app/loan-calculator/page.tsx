@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FormattedNumberInput } from '@/components/ui/FormattedNumberInput';
-import { Calculator, TrendingUp, PieChart, ArrowLeft, Info, X } from 'lucide-react';
+import { Calculator, TrendingUp, PieChart, ArrowLeft, Info, X, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatCurrency } from '@/lib/utils';
@@ -40,6 +40,7 @@ export default function LoanCalculatorPage() {
     { id: 'home', label: t.loanCalculator.homeLoan, rate: '8-12' },
     { id: 'vehicle', label: t.loanCalculator.vehicleLoan, rate: '10-15' },
     { id: 'education', label: t.loanCalculator.educationLoan, rate: '6-10' },
+    { id: 'business', label: t.loanCalculator.businessLoan, rate: '14-20' },
   ];
 
   const validateInputs = (): boolean => {
@@ -156,6 +157,20 @@ export default function LoanCalculatorPage() {
           </CardContent>
         </Card>
 
+        {/* Disclaimer */}
+        <Card className="bg-amber-50 border-amber-200">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  {t.loanCalculator.ratesDisclaimer}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Typical Rates Info */}
         <Card className="bg-blue-50 border-blue-200">
           <CardContent className="p-4">
@@ -170,6 +185,7 @@ export default function LoanCalculatorPage() {
                   <p>{t.loanCalculator.homeRate}</p>
                   <p>{t.loanCalculator.vehicleRate}</p>
                   <p>{t.loanCalculator.educationRate}</p>
+                  <p>{t.loanCalculator.businessRate}</p>
                 </div>
               </div>
             </div>
