@@ -1,5 +1,6 @@
 import { GameState, GameChoice, OptionId, DisabledOption, GameResult } from './gameTypes';
 import { GAME_STEPS, GAME_PROFILE } from './gameData';
+import { getGame1DisabledOptions } from './game1DisabledOptions';
 
 const STORAGE_KEY_PREFIX = 'spendo-game-group-';
 
@@ -156,12 +157,11 @@ function checkCombinationDeadEnd(choices: GameChoice[]): { isDeadEnd: boolean; r
 
 /**
  * Get disabled options based on previous choices
- * NO HINTS - All students can pick any option regardless of previous choices
+ * Uses Game 1 disabled options mapping from game1DisabledOptions.ts
  */
 export function getDisabledOptions(choices: GameChoice[], currentStep: number): DisabledOption[] {
-  // Return empty array - no disabled options, no hints
-  // Students can pick any option and discover results at the end
-  return [];
+  // Use Game 1 disabled options mapping based on path combinations
+  return getGame1DisabledOptions(choices, currentStep);
 }
 
 /**
@@ -218,10 +218,10 @@ function calculateEmergencyFund(choices: GameChoice[]): number {
  * Calculate final game results based on all choices
  */
 export function calculateGameResults(choices: GameChoice[], startTime?: string): GameResult {
-  let totalLoanAmount = GAME_PROFILE.studentLoan;
-  let monthlyPayment = 0;
-  let savings = 0;
-  let additionalDebt = 0;
+  const totalLoanAmount = GAME_PROFILE.studentLoan;
+  const monthlyPayment = 0;
+  const savings = 0;
+  const additionalDebt = 0;
 
   const step1 = choices.find(c => c.step === 1);
   const step2 = choices.find(c => c.step === 2);

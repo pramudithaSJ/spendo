@@ -1,5 +1,6 @@
 import { GameState, GameChoice, OptionId, DisabledOption, GameResult } from './gameTypes';
 import { GAME2_STEPS, GAME2_PROFILE } from './game2Data';
+import { getGame2DisabledOptions as getGame2DisabledOptionsFromFile } from './game2DisabledOptions';
 
 const STORAGE_KEY_PREFIX = 'spendo-game2-group-';
 const EMERGENCY_AMOUNT = 500000; // Rs 500,000 emergency after 2 years
@@ -241,9 +242,8 @@ function calculatePortfolioValue(choices: GameChoice[]): {
  * NO hints - all players see all options regardless of previous choices
  */
 export function getGame2DisabledOptions(choices: GameChoice[], currentStep: number): DisabledOption[] {
-  // Return empty array - no hints, no disabled options
-  // Players can make choices even if they don't apply to their portfolio
-  return [];
+  // Use Game 2 disabled options logic from game2DisabledOptions.ts
+  return getGame2DisabledOptionsFromFile(choices, currentStep);
 }
 
 /**

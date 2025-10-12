@@ -1,5 +1,6 @@
 import { GameState, GameChoice, OptionId, DisabledOption, GameResult } from './gameTypes';
 import { GAME3_STEPS, GAME3_PROFILE } from './game3Data';
+import { getGame3DisabledOptions as getGame3DisabledOptionsFromFile } from './game3DisabledOptions';
 
 const STORAGE_KEY_PREFIX = 'spendo-game3-group-';
 const EMERGENCY_AMOUNT = 500000; // Rs 500,000 emergency after 36 months
@@ -189,8 +190,8 @@ function calculateSavingsBalance(choices: GameChoice[]): number {
  * NO hints - all players see all options regardless of previous choices
  */
 export function getGame3DisabledOptions(choices: GameChoice[], currentStep: number): DisabledOption[] {
-  // Return empty array - no hints, no disabled options
-  return [];
+  // Use Game 3 disabled options logic from game3DisabledOptions.ts
+  return getGame3DisabledOptionsFromFile(choices, currentStep);
 }
 
 /**
