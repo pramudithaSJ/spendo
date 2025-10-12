@@ -116,7 +116,7 @@ function calculateSavingsBalance(choices: GameChoice[]): number {
   const step3 = choices.find(c => c.step === 3);
 
   let totalSavings = GAME3_PROFILE.savings; // Starting Rs. 20,000
-  let monthlyDebt = 0;
+  const monthlyDebt = 0;
 
   // Step 1: Monthly budgeting for 36 months
   if (step1) {

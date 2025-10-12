@@ -156,48 +156,12 @@ function checkCombinationDeadEnd(choices: GameChoice[]): { isDeadEnd: boolean; r
 
 /**
  * Get disabled options based on previous choices
+ * NO HINTS - All students can pick any option regardless of previous choices
  */
 export function getDisabledOptions(choices: GameChoice[], currentStep: number): DisabledOption[] {
-  const disabled: DisabledOption[] = [];
-
-  const step1Choice = choices.find(c => c.step === 1);
-  const step2Choice = choices.find(c => c.step === 2);
-  const step3Choice = choices.find(c => c.step === 3);
-
-  // Step 3 logic: Allow all options without pre-warnings
-  // Players will discover consequences at the end
-  // Removed disabled option warnings to let players make choices freely
-
-  // Step 4 logic: If haven't built savings and still have high debt, can't take another loan
-  if (currentStep === 4) {
-    const hasGoodSavings = step2Choice?.option === 'A' || step2Choice?.option === 'C';
-    const hasHighPayment = step1Choice?.option === 'A';
-
-    if (!hasGoodSavings && !hasHighPayment) {
-      disabled.push({
-        step: 4,
-        option: 'A',
-        reason: 'Taking another large loan without savings or aggressive repayment is too risky',
-        reasonTa: 'சேமிப்பு அல்லது ஆக்கிரமிப்பு திருப்பிச் செலுத்துதல் இல்லாமல் மற்றொரு பெரிய கடன் எடுப்பது மிகவும் ஆபத்தானது',
-      });
-    }
-  }
-
-  // Step 5 logic: Can only use savings if you actually saved
-  if (currentStep === 5) {
-    const hasSavings = step2Choice?.option === 'A' || step2Choice?.option === 'C';
-
-    if (!hasSavings) {
-      disabled.push({
-        step: 5,
-        option: 'C',
-        reason: 'No savings available - you did not build an emergency fund',
-        reasonTa: 'சேமிப்பு கிடைக்கவில்லை - நீங்கள் அவசரகால நிதியை உருவாக்கவில்லை',
-      });
-    }
-  }
-
-  return disabled;
+  // Return empty array - no disabled options, no hints
+  // Students can pick any option and discover results at the end
+  return [];
 }
 
 /**
