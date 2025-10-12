@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { GameState, GameOption, OptionId } from '@/lib/gameTypes';
 import { GAME_STEPS, TOTAL_STEPS, GAME_PROFILE } from '@/lib/gameData';
+import { GAME2_STEPS, GAME2_TOTAL_STEPS, GAME2_PROFILE } from '@/lib/game2Data';
+import { GAME3_STEPS, GAME3_TOTAL_STEPS, GAME3_PROFILE } from '@/lib/game3Data';
 import {
   loadGameState,
   initializeGameState,
@@ -12,6 +15,22 @@ import {
   calculateGameResults,
   saveGameState,
 } from '@/lib/gameLogic';
+import {
+  loadGame2State,
+  initializeGame2State,
+  makeGame2Choice,
+  isGame2OptionDisabled,
+  calculateGame2Results,
+  saveGame2State,
+} from '@/lib/game2Logic';
+import {
+  loadGame3State,
+  initializeGame3State,
+  makeGame3Choice,
+  isGame3OptionDisabled,
+  calculateGame3Results,
+  saveGame3State,
+} from '@/lib/game3Logic';
 import { detectRefresh, recordRefresh, initializeSession, getRefreshWarning } from '@/lib/refreshDetection';
 import OptionCard from '@/components/game/OptionCard';
 import ChoiceHistory from '@/components/game/ChoiceHistory';
@@ -25,12 +44,29 @@ import Link from 'next/link';
 
 export default function GamePage() {
   const { language, t } = useLanguage();
+  const searchParams = useSearchParams();
+  const scenarioId = searchParams.get('scenario') || 'scenario-1';
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [groupNumber, setGroupNumber] = useState<string>('');
   const [showGroupSelect, setShowGroupSelect] = useState(true);
   const [selectedOption, setSelectedOption] = useState<GameOption | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Get scenario-specific data and functions
+  const isGame2 = scenarioId === 'scenario-2';
+  const isGame3 = scenarioId === 'scenario-3';
+
+  const gameSteps = isGame3 ? GAME3_STEPS : (isGame2 ? GAME2_STEPS : GAME_STEPS);
+  const totalSteps = isGame3 ? GAME3_TOTAL_STEPS : (isGame2 ? GAME2_TOTAL_STEPS : TOTAL_STEPS);
+  const gameProfile = isGame3 ? GAME3_PROFILE : (isGame2 ? GAME2_PROFILE : GAME_PROFILE);
+
+  const loadState = isGame3 ? loadGame3State : (isGame2 ? loadGame2State : loadGameState);
+  const initState = isGame3 ? initializeGame3State : (isGame2 ? initializeGame2State : initializeGameState);
+  const makeChoiceFn = isGame3 ? makeGame3Choice : (isGame2 ? makeGame2Choice : makeChoice);
+  const checkOptionDisabled = isGame3 ? isGame3OptionDisabled : (isGame2 ? isGame2OptionDisabled : isOptionDisabled);
+  const calculateResults = isGame3 ? calculateGame3Results : (isGame2 ? calculateGame2Results : calculateGameResults);
+  const saveState = isGame3 ? saveGame3State : (isGame2 ? saveGame2State : saveGameState);
 
   useEffect(() => {
     setMounted(true);
@@ -41,7 +77,7 @@ export default function GamePage() {
       if (isRefresh) {
         const updatedState = recordRefresh(gameState);
         setGameState(updatedState);
-        saveGameState(updatedState);
+        saveState(updatedState);
       }
     }
   }, []);
@@ -54,7 +90,7 @@ export default function GamePage() {
         // This is the first refresh detection
         const updatedState = recordRefresh(gameState);
         setGameState(updatedState);
-        saveGameState(updatedState);
+        saveState(updatedState);
       }
     }
   }, [mounted, gameState?.groupNumber]);
@@ -62,7 +98,7 @@ export default function GamePage() {
   const handleGroupSelect = () => {
     const num = parseInt(groupNumber);
     if (num >= 1 && num <= 12) {
-      const existing = loadGameState(num);
+      const existing = loadState(num);
       if (existing) {
         setGameState(existing);
         // Check for refresh on existing game
@@ -70,10 +106,10 @@ export default function GamePage() {
         if (isRefresh) {
           const updatedState = recordRefresh(existing);
           setGameState(updatedState);
-          saveGameState(updatedState);
+          saveState(updatedState);
         }
       } else {
-        const newState = initializeGameState(num, 'scenario-1');
+        const newState = initState(num, scenarioId);
         setGameState(newState);
         initializeSession(num);
       }
@@ -89,7 +125,7 @@ export default function GamePage() {
   const handleConfirmChoice = () => {
     if (!gameState || !selectedOption) return;
 
-    const newState = makeChoice(
+    const newState = makeChoiceFn(
       gameState,
       gameState.currentStep,
       selectedOption.id
@@ -129,9 +165,12 @@ export default function GamePage() {
               <Gamepad2 size={32} className="text-white" />
             </div>
             <h1 className="text-2xl font-bold mb-2">
-              {language === 'ta'
-                ? 'மாணவர் கடன் மேலாண்மை விளையாட்டு'
-                : 'Student Loan Management Game'}
+              {isGame3
+                ? (language === 'ta' ? 'செலவு மேலாண்மை விளையாட்டு' : 'Expense Management Game')
+                : (isGame2
+                  ? (language === 'ta' ? 'முதலீட்டு மேலாண்மை விளையாட்டு' : 'Investment Management Game')
+                  : (language === 'ta' ? 'மாணவர் கடன் மேலாண்மை விளையாட்டு' : 'Student Loan Management Game'))
+              }
             </h1>
             <p className="text-gray-600 text-sm">
               {language === 'ta'
@@ -178,9 +217,24 @@ export default function GamePage() {
               {language === 'ta' ? 'சூழ்நிலை விவரங்கள்' : 'Scenario Profile'}
             </h3>
             <ul className="space-y-1 text-gray-700">
-              <li>• {language === 'ta' ? GAME_PROFILE.ageTa : GAME_PROFILE.ageEn}</li>
-              <li>• {language === 'ta' ? GAME_PROFILE.loanTa : GAME_PROFILE.loanEn}</li>
-              <li>• {language === 'ta' ? GAME_PROFILE.salaryTa : GAME_PROFILE.salaryEn}</li>
+              <li>• {language === 'ta' ? gameProfile.ageTa : gameProfile.ageEn}</li>
+              {isGame3 ? (
+                <>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME3_PROFILE).salaryTa : (gameProfile as typeof GAME3_PROFILE).salaryEn}</li>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME3_PROFILE).savingsTa : (gameProfile as typeof GAME3_PROFILE).savingsEn}</li>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME3_PROFILE).expensesTa : (gameProfile as typeof GAME3_PROFILE).expensesEn}</li>
+                </>
+              ) : (isGame2 ? (
+                <>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME2_PROFILE).salaryTa : (gameProfile as typeof GAME2_PROFILE).salaryEn}</li>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME2_PROFILE).savingsTa : (gameProfile as typeof GAME2_PROFILE).savingsEn}</li>
+                </>
+              ) : (
+                <>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME_PROFILE).loanTa : (gameProfile as typeof GAME_PROFILE).loanEn}</li>
+                  <li>• {language === 'ta' ? (gameProfile as typeof GAME_PROFILE).salaryTa : (gameProfile as typeof GAME_PROFILE).salaryEn}</li>
+                </>
+              ))}
             </ul>
           </div>
         </div>
@@ -192,7 +246,7 @@ export default function GamePage() {
 
   // Game Complete - Show Results
   if (gameState.completedAt) {
-    const results = calculateGameResults(gameState.choices, gameState.startTime);
+    const results = calculateResults(gameState.choices, gameState.startTime);
 
     return (
       <div className="min-h-screen bg-gray-50 p-4 pb-24">
@@ -219,6 +273,9 @@ export default function GamePage() {
             wasRefreshed={gameState.wasRefreshed}
             refreshCount={gameState.pageLoadCount - 1}
             refreshTimestamps={gameState.refreshTimestamps}
+            studentAnswer={gameState.studentAnswer}
+            isCorrect={gameState.isCorrect}
+            actualBalance={gameState.actualBalance}
           />
 
           <div className="mt-6">
@@ -235,7 +292,7 @@ export default function GamePage() {
   }
 
   // Active Game - Show Current Step
-  const currentStepData = GAME_STEPS.find(s => s.step === gameState.currentStep);
+  const currentStepData = gameSteps.find(s => s.step === gameState.currentStep);
 
   if (!currentStepData) return null;
 
@@ -264,7 +321,7 @@ export default function GamePage() {
               </span>
             </div>
             <div className="text-xs text-gray-500">
-              {language === 'ta' ? 'படி' : 'Step'} {gameState.currentStep}/{TOTAL_STEPS}
+              {language === 'ta' ? 'படி' : 'Step'} {gameState.currentStep}/{totalSteps}
             </div>
           </div>
 
@@ -284,7 +341,7 @@ export default function GamePage() {
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-black transition-all duration-500"
-              style={{ width: `${(gameState.currentStep / TOTAL_STEPS) * 100}%` }}
+              style={{ width: `${(gameState.currentStep / totalSteps) * 100}%` }}
             />
           </div>
         </div>
@@ -315,7 +372,7 @@ export default function GamePage() {
             {language === 'ta' ? 'உங்கள் தேர்வை தேர்ந்தெடுங்கள்:' : 'Select Your Choice:'}
           </h3>
           {currentStepData.options.map((option) => {
-            const disabledCheck = isOptionDisabled(
+            const disabledCheck = checkOptionDisabled(
               gameState.choices,
               gameState.currentStep,
               option.id

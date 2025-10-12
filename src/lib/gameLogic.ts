@@ -89,13 +89,34 @@ export function makeChoice(
     deadEndReason = deadEndCheck.reason;
   }
 
+  // Check if this is the final assessment step (Step 5)
+  let studentAnswer: 'yes' | 'no' | undefined;
+  let isCorrect: boolean | undefined;
+  let actualBalance: number | undefined;
+
+  if (step === 5) {
+    // Student selected their answer
+    studentAnswer = option === 'A' ? 'yes' : 'no';
+
+    // Calculate the CORRECT answer
+    const results = calculateGameResults(newChoices);
+    actualBalance = results.emergencyFund;
+    const correctAnswer = results.hasEnoughBalance ? 'yes' : 'no';
+
+    // Validate student's answer
+    isCorrect = studentAnswer === correctAnswer;
+  }
+
   const newState: GameState = {
     ...state,
     choices: newChoices,
     currentStep: step + 1, // Always progress to next step, even on dead-end
     isDeadEnd,
     deadEndReason,
-    completedAt: step >= 4 ? new Date().toISOString() : undefined, // Only complete after step 4
+    completedAt: step >= 5 ? new Date().toISOString() : undefined, // Only complete after step 5
+    studentAnswer,
+    isCorrect,
+    actualBalance,
   };
 
   saveGameState(newState);

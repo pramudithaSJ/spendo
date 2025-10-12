@@ -18,6 +18,9 @@ interface GameResultsProps {
   wasRefreshed?: boolean;
   refreshCount?: number;
   refreshTimestamps?: string[];
+  studentAnswer?: 'yes' | 'no';
+  isCorrect?: boolean;
+  actualBalance?: number;
 }
 
 export default function GameResults({
@@ -29,6 +32,9 @@ export default function GameResults({
   wasRefreshed = false,
   refreshCount = 0,
   refreshTimestamps = [],
+  studentAnswer,
+  isCorrect,
+  actualBalance,
 }: GameResultsProps) {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
@@ -83,7 +89,7 @@ export default function GameResults({
         return;
       }
 
-      // Submit with refresh data
+      // Submit with refresh data and validation results
       await submitGameResult({
         groupNumber,
         scenarioId,
@@ -98,6 +104,10 @@ export default function GameResults({
         pageLoadCount: refreshCount + 1,
         wasRefreshed,
         refreshTimestamps,
+        studentAnswer: studentAnswer || 'no', // Student's final answer
+        isCorrect: isCorrect || false, // Whether assessment was correct
+        actualBalance: actualBalance || 0, // Calculated balance
+        submittedAt: new Date().toISOString(), // Submission timestamp for ranking
       });
 
       setSubmitted(true);
@@ -157,34 +167,75 @@ export default function GameResults({
         </div>
       )}
 
-      {/* Emergency Fund Balance - Step 5 Auto-Check */}
-      <div className={cn(
-        'border-2 rounded-lg p-4 text-center',
-        result.hasEnoughBalance
-          ? 'bg-green-50 border-green-500'
-          : 'bg-red-50 border-red-500'
-      )}>
-        <h3 className={cn(
-          'text-lg font-bold mb-2',
-          result.hasEnoughBalance ? 'text-green-900' : 'text-red-900'
-        )}>
-          {language === 'ta'
-            ? 'படி 5: குடும்ப அவசரநிலை Rs. 300,000'
-            : 'Step 5: Family Emergency Rs. 300,000'}
-        </h3>
-        <p className={cn(
-          'text-sm font-medium',
-          result.hasEnoughBalance ? 'text-green-800' : 'text-red-800'
-        )}>
-          {language === 'ta'
-            ? result.hasEnoughBalance
-              ? 'அவசரநிலைக்கு போதுமான இருப்பு உள்ளது'
-              : 'அவசரநிலைக்கு போதுமான இருப்பு இல்லை'
-            : result.hasEnoughBalance
-              ? 'You have enough balance to attend emergency'
-              : 'You don\'t have enough balance to attend emergency'}
-        </p>
-      </div>
+      {/* Student Assessment Validation Result */}
+      {studentAnswer && isCorrect !== undefined && actualBalance !== undefined && (
+        <div className="space-y-4">
+          {/* Student's Answer */}
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+            <h3 className="text-lg font-bold text-blue-900 mb-2">
+              {language === 'ta' ? 'உங்கள் பதில்' : 'Your Answer'}
+            </h3>
+            <p className="text-blue-800 font-medium">
+              {studentAnswer === 'yes'
+                ? (language === 'ta' ? '✓ ஆம், எனக்கு போதுமான இருப்பு உள்ளது' : '✓ Yes, I have enough balance')
+                : (language === 'ta' ? '✗ இல்லை, எனக்கு போதுமான இருப்பு இல்லை' : '✗ No, I don\'t have enough balance')}
+            </p>
+          </div>
+
+          {/* Actual Balance & Required Amount */}
+          <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
+            <h3 className="text-lg font-bold text-gray-900 mb-3">
+              {language === 'ta' ? 'நிதி விவரங்கள்' : 'Financial Details'}
+            </h3>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-gray-700">{language === 'ta' ? 'உங்கள் உண்மையான இருப்பு:' : 'Your Actual Balance:'}</span>
+                <span className="font-bold text-gray-900">Rs. {actualBalance.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-700">{language === 'ta' ? 'தேவையான தொகை:' : 'Required Amount:'}</span>
+                <span className="font-bold text-gray-900">
+                  Rs. {scenarioId === 'scenario-1' ? '300,000' : '500,000'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Validation Result */}
+          <div className={cn(
+            'border-2 rounded-lg p-6 text-center',
+            isCorrect
+              ? 'bg-green-50 border-green-500'
+              : 'bg-red-50 border-red-500'
+          )}>
+            {isCorrect ? (
+              <>
+                <CheckCircle size={64} className="mx-auto mb-3 text-green-600" />
+                <h3 className="text-2xl font-bold text-green-900 mb-2">
+                  {language === 'ta' ? '✅ சரியான மதிப்பீடு!' : '✅ CORRECT Assessment!'}
+                </h3>
+                <p className="text-green-800">
+                  {language === 'ta'
+                    ? 'உங்கள் மதிப்பீடு உண்மையான இருப்புடன் பொருந்துகிறது'
+                    : 'Your assessment matches the actual balance'}
+                </p>
+              </>
+            ) : (
+              <>
+                <AlertCircle size={64} className="mx-auto mb-3 text-red-600" />
+                <h3 className="text-2xl font-bold text-red-900 mb-2">
+                  {language === 'ta' ? '❌ தவறான மதிப்பீடு' : '❌ INCORRECT Assessment'}
+                </h3>
+                <p className="text-red-800">
+                  {language === 'ta'
+                    ? 'உங்கள் மதிப்பீடு உண்மையான இருப்புடன் பொருந்தவில்லை'
+                    : 'Your assessment doesn\'t match the actual balance'}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Refresh Warning (if page was refreshed) */}
       {wasRefreshed && refreshCount > 0 && (

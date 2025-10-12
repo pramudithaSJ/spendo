@@ -49,6 +49,10 @@ export interface GameState {
   pageLoadCount: number;
   wasRefreshed: boolean;
   refreshTimestamps: string[];
+  // Final assessment validation
+  studentAnswer?: 'yes' | 'no';  // Student's answer to "Do you have enough balance?"
+  isCorrect?: boolean;            // Whether student's assessment was correct
+  actualBalance?: number;         // Calculated emergency fund amount
 }
 
 export interface DisabledOption {
@@ -91,4 +95,9 @@ export interface FirebaseGameResult {
   pageLoadCount: number;
   wasRefreshed: boolean;
   refreshTimestamps: string[];
+  // Final assessment validation
+  studentAnswer: 'yes' | 'no';  // Student's final answer
+  isCorrect: boolean;            // Whether assessment was correct
+  actualBalance: number;         // Calculated balance
+  submittedAt: string;           // Submission timestamp for ranking
 }

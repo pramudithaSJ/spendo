@@ -139,8 +139,27 @@ export const GAME_STEPS: GameStep[] = [
       },
     ],
   },
-  // Step 5 is auto-calculated based on emergency fund balance
-  // No options needed - game auto-completes after Step 4
+  {
+    step: 5,
+    title: 'Step 5: Family Emergency After 18 Months',
+    titleTa: 'படி 5: 18 மாதங்களுக்குப் பிறகு குடும்ப அவசரநிலை',
+    scenario: 'A family emergency requiring Rs. 300,000 arises after 18 months. Based on your financial decisions, do you have enough balance?',
+    scenarioTa: '18 மாதங்களுக்குப் பிறகு Rs. 300,000 தேவைப்படும் குடும்ப அவசரநிலை ஏற்படுகிறது. உங்கள் நிதி முடிவுகளின் அடிப்படையில், உங்களிடம் போதுமான இருப்பு உள்ளதா?',
+    context: 'Required: Rs. 300,000 | Calculate your savings based on Steps 1-4',
+    contextTa: 'தேவை: Rs. 300,000 | படி 1-4 இன் அடிப்படையில் உங்கள் சேமிப்பைக் கணக்கிடுங்கள்',
+    options: [
+      {
+        id: 'A',
+        text: 'A) Yes, I have enough balance to attend the emergency',
+        textTa: 'A) ஆம், அவசரநிலையை சந்திக்க எனக்கு போதுமான இருப்பு உள்ளது',
+      },
+      {
+        id: 'B',
+        text: 'B) No, I don\'t have enough balance to attend the emergency',
+        textTa: 'B) இல்லை, அவசரநிலையை சந்திக்க எனக்கு போதுமான இருப்பு இல்லை',
+      },
+    ],
+  },
 ];
 
-export const TOTAL_STEPS = 4; // Only 4 steps with options, Step 5 auto-calculated
+export const TOTAL_STEPS = 5; // 5 steps total (4 decision + 1 final assessment)
