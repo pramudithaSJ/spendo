@@ -219,6 +219,31 @@ export const en = {
     failed: 'FAILED',
   },
 
+  // Ask AI
+  askAI: {
+    title: 'AI Financial Advisor',
+    subtitle: 'Get personalized advice based on your spending',
+    inputPlaceholder: 'Ask about your spending...',
+    sendMessage: 'Send',
+    thinking: 'Thinking...',
+    suggestedQuestions: 'Suggested Questions',
+    quickInsights: 'Quick Financial Snapshot',
+    noTransactionsYet: 'Add some transactions first to get personalized financial advice',
+    addTransactionsButton: 'Add Transactions',
+    errorLoadingData: 'Failed to load your financial data',
+    errorSendingMessage: 'Failed to send message. Please try again.',
+    errorNoApiKey: 'AI feature is not configured. Please add your OpenAI API key.',
+    setupInstructions: 'Add NEXT_PUBLIC_OPENAI_API_KEY to your .env.local file',
+    rateLimitError: 'Too many requests. Please wait a moment.',
+    thisMonth: 'This Month',
+    topSpending: 'Top Spending',
+    analyzeMore: 'Analyze your spending patterns',
+    chatHistory: 'Chat History',
+    newChat: 'New Chat',
+    clearChat: 'Clear Chat',
+    emptyState: 'Start by asking a question about your finances or tap a suggested question above',
+  },
+
   // Loan Calculator
   loanCalculator: {
     title: 'Loan Calculator',

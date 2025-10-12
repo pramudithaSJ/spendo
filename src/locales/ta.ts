@@ -221,6 +221,31 @@ export const ta: TranslationKeys = {
     failed: 'தோல்வி',
   },
 
+  // Ask AI
+  askAI: {
+    title: 'AI நிதி ஆலோசகர்',
+    subtitle: 'உங்கள் செலவின் அடிப்படையில் தனிப்பயனாக்கப்பட்ட ஆலோசனை பெறுங்கள்',
+    inputPlaceholder: 'உங்கள் செலவைப் பற்றி கேளுங்கள்...',
+    sendMessage: 'அனுப்பு',
+    thinking: 'சிந்திக்கிறது...',
+    suggestedQuestions: 'பரிந்துரைக்கப்பட்ட கேள்விகள்',
+    quickInsights: 'விரைவு நிதி ஸ்னாப்ஷாட்',
+    noTransactionsYet: 'தனிப்பயனாக்கப்பட்ட நிதி ஆலோசனை பெற முதலில் சில பரிவர்த்தனைகளைச் சேர்க்கவும்',
+    addTransactionsButton: 'பரிவர்த்தனைகளைச் சேர்க்கவும்',
+    errorLoadingData: 'உங்கள் நிதித் தகவலை ஏற்ற முடியவில்லை',
+    errorSendingMessage: 'செய்தியை அனுப்ப முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
+    errorNoApiKey: 'AI அம்சம் கட்டமைக்கப்படவில்லை. உங்கள் OpenAI API விசையைச் சேர்க்கவும்.',
+    setupInstructions: 'உங்கள் .env.local கோப்பில் NEXT_PUBLIC_OPENAI_API_KEY சேர்க்கவும்',
+    rateLimitError: 'பல கோரிக்கைகள். சிறிது காத்திருக்கவும்.',
+    thisMonth: 'இந்த மாதம்',
+    topSpending: 'அதிக செலவு',
+    analyzeMore: 'உங்கள் செலவு முறைகளை பகுப்பாய்வு செய்யுங்கள்',
+    chatHistory: 'அரட்டை வரலாறு',
+    newChat: 'புதிய அரட்டை',
+    clearChat: 'அரட்டையை அழிக்கவும்',
+    emptyState: 'உங்கள் நிதி பற்றிய கேள்வியைக் கேட்பதன் மூலம் தொடங்குங்கள் அல்லது மேலே பரிந்துரைக்கப்பட்ட கேள்வியைத் தட்டவும்',
+  },
+
   // Loan Calculator
   loanCalculator: {
     title: 'கடன் கால்குலேட்டர்',
