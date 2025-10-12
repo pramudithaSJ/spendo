@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,6 +15,7 @@ import { formatCurrency, formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as LucideIcons from 'lucide-react';
+import Logo from '@/components/branding/Logo';
 
 export default function DashboardPage() {
   const [monthlyStats, setMonthlyStats] = useState({
@@ -93,15 +95,18 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen hexagon-bg pb-20">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white/95 dark:bg-[var(--card)]/95 backdrop-blur-sm border-b border-[var(--surface-border)] sticky top-0 z-40 shadow-sm">
         <div className="flex items-center justify-between p-4">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">{t.dashboard.spendo}</h1>
-            <p className="text-sm text-gray-500">
-              {t.dashboard.welcomeBack}, {user?.displayName || user?.email}
-            </p>
+          <div className="flex items-center gap-3">
+            <Logo size="sm" variant="icon" className="flex-shrink-0" />
+            <div>
+              <h1 className="text-lg font-bold text-[var(--text-primary)]">BeeWise</h1>
+              <p className="text-xs text-[var(--text-secondary)] truncate max-w-[200px]">
+                {t.dashboard.welcomeBack}, {user?.displayName || user?.email?.split('@')[0]}
+              </p>
+            </div>
           </div>
         </div>
       </header>
@@ -116,7 +121,7 @@ export default function DashboardPage() {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-bee-secondary' : 'text-bee-primary'}`}>
                 {formatCurrency(monthlyStats.balance, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
@@ -131,7 +136,7 @@ export default function DashboardPage() {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-2xl font-bold text-bee-secondary">
                 {formatCurrency(monthlyStats.totalIncome, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
@@ -146,7 +151,7 @@ export default function DashboardPage() {
               <TrendingDown className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">
+              <div className="text-2xl font-bold text-bee-primary">
                 {formatCurrency(monthlyStats.totalExpenses, currency)}
               </div>
               <p className="text-xs text-muted-foreground">
@@ -197,7 +202,7 @@ export default function DashboardPage() {
                         </div>
                       </div>
                       <span className={`font-medium ${
-                        transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+                        transaction.type === 'income' ? 'text-bee-secondary' : 'text-bee-primary'
                       }`}>
                         {transaction.type === 'income' ? '+' : '-'}
                         {formatCurrency(transaction.amount, currency)}
@@ -214,7 +219,7 @@ export default function DashboardPage() {
       {/* Floating Action Button */}
       <Button
         size="lg"
-        className="fixed bottom-20 right-4 rounded-full w-14 h-14 shadow-lg"
+        className="fixed bottom-20 right-4 rounded-full w-14 h-14 bee-shadow hover:scale-110 transition-transform btn-bee-primary"
         asChild
       >
         <Link href="/add">

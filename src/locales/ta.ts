@@ -22,13 +22,14 @@ export const ta: TranslationKeys = {
     home: 'முகப்பு',
     history: 'வரலாறு',
     add: 'சேர்',
+    askAI: 'AI கேள்வி',
     profile: 'சுயவிவரம்',
   },
 
   // Auth
   auth: {
-    welcomeToSpendo: 'Spendo க்கு வரவேற்கிறோம்',
-    signInDescription: 'உங்கள் செலவுகளை கண்காணிக்க உள்நுழையவும்',
+    welcomeToSpendo: 'BeeWise க்கு வரவேற்கிறோம்',
+    signInDescription: 'உங்கள் நிதியை புத்திசாலித்தனமாக நிர்வகிக்க உள்நுழையவும்',
     email: 'மின்னஞ்சல்',
     emailPlaceholder: 'மின்னஞ்சலை உள்ளிடவும்',
     password: 'கடவுச்சொல்',
@@ -41,7 +42,7 @@ export const ta: TranslationKeys = {
     dontHaveAccount: 'கணக்கு இல்லையா?',
     alreadyHaveAccount: 'ஏற்கனவே கணக்கு உள்ளதா?',
     createAccount: 'கணக்கை உருவாக்கு',
-    createAccountDescription: 'உங்கள் செலவுகளை கண்காணிக்க Spendo இல் பதிவு செய்யவும்',
+    createAccountDescription: 'உங்கள் நிதி கல்வி பயணத்தை தொடங்க BeeWise இல் பதிவு செய்யவும்',
     creatingAccount: 'கணக்கை உருவாக்குகிறது...',
     invalidCredentials: 'தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்',
     emailInUse: 'மின்னஞ்சல் ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது',
@@ -58,7 +59,7 @@ export const ta: TranslationKeys = {
 
   // Dashboard
   dashboard: {
-    spendo: 'Spendo',
+    spendo: 'BeeWise',
     welcomeBack: 'மீண்டும் வரவேற்கிறோம்',
     balance: 'இருப்பு',
     income: 'வருமானம்',
@@ -138,8 +139,8 @@ export const ta: TranslationKeys = {
     privacySecurityDesc: 'கணக்கு பாதுகாப்பு அமைப்புகள்',
     helpSupport: 'உதவி & ஆதரவு',
     helpSupportDesc: 'உதவி மற்றும் தொடர்பு ஆதரவு',
-    appVersion: 'Spendo v1.0.0',
-    builtWith: 'சிறந்த செலவு கண்காணிப்புக்காக ❤️ உடன் உருவாக்கப்பட்டது',
+    appVersion: 'BeeWise v1.0.0',
+    builtWith: 'SLIIT Kandy Campus மூலம் இயக்கப்படுகிறது',
     language: 'மொழி',
     languageDesc: 'உங்களுக்கு விருப்பமான மொழியை தேர்வு செய்யவும்',
     currency: 'நாணயம்',

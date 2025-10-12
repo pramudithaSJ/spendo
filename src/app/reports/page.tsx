@@ -142,7 +142,7 @@ export default function ReportsPage() {
               <CardTitle className="text-sm font-medium">{t.reports.totalIncome}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-2xl font-bold text-bee-secondary">
                 {formatCurrency(monthlyStats.totalIncome, currency)}
               </div>
             </CardContent>
@@ -153,7 +153,7 @@ export default function ReportsPage() {
               <CardTitle className="text-sm font-medium">{t.reports.totalExpenses}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">
+              <div className="text-2xl font-bold text-bee-primary">
                 {formatCurrency(monthlyStats.totalExpenses, currency)}
               </div>
             </CardContent>
@@ -164,7 +164,7 @@ export default function ReportsPage() {
               <CardTitle className="text-sm font-medium">{t.reports.netBalance}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className={`text-2xl font-bold ${monthlyStats.balance >= 0 ? 'text-bee-secondary' : 'text-bee-primary'}`}>
                 {formatCurrency(monthlyStats.balance, currency)}
               </div>
             </CardContent>
@@ -176,7 +176,7 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingDown className="h-5 w-5 text-red-600" />
+                <TrendingDown className="h-5 w-5 text-bee-primary" />
                 {t.reports.expenseCategories}
               </CardTitle>
             </CardHeader>
@@ -198,7 +198,7 @@ export default function ReportsPage() {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className="bg-red-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-bee-primary h-2 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(percentage, 100)}%` }}
                           ></div>
                         </div>
@@ -218,7 +218,7 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-green-600" />
+                <TrendingUp className="h-5 w-5 text-bee-secondary" />
                 {t.reports.incomeCategories}
               </CardTitle>
             </CardHeader>
@@ -240,7 +240,7 @@ export default function ReportsPage() {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div
-                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-bee-secondary h-2 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(percentage, 100)}%` }}
                           ></div>
                         </div>

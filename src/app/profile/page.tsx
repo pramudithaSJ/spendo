@@ -64,7 +64,7 @@ export default function ProfilePage() {
       label: t.profile.reportsAnalytics,
       description: t.profile.reportsAnalyticsDesc,
       href: '/reports',
-      color: 'text-green-600 bg-green-50'
+      color: 'text-bee-secondary bg-blue-50'
     },
     {
       icon: Calculator,
@@ -190,7 +190,7 @@ export default function ProfilePage() {
         <Card className="bg-white border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-green-600 bg-green-50">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-bee-primary bg-yellow-50">
                 <DollarSign className="h-5 w-5" />
               </div>
               <div className="flex-1">

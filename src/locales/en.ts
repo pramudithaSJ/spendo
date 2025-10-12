@@ -20,13 +20,14 @@ export const en = {
     home: 'Home',
     history: 'History',
     add: 'Add',
+    askAI: 'Ask AI',
     profile: 'Profile',
   },
 
   // Auth
   auth: {
-    welcomeToSpendo: 'Welcome to Spendo',
-    signInDescription: 'Sign in to your account to track your expenses',
+    welcomeToSpendo: 'Welcome to BeeWise',
+    signInDescription: 'Sign in to your account to manage your finances wisely',
     email: 'Email',
     emailPlaceholder: 'Enter your email',
     password: 'Password',
@@ -39,7 +40,7 @@ export const en = {
     dontHaveAccount: "Don't have an account?",
     alreadyHaveAccount: 'Already have an account?',
     createAccount: 'Create Account',
-    createAccountDescription: 'Sign up for Spendo to start tracking your expenses',
+    createAccountDescription: 'Sign up for BeeWise to start your financial literacy journey',
     creatingAccount: 'Creating account...',
     invalidCredentials: 'Invalid email or password',
     emailInUse: 'Email is already registered',
@@ -56,7 +57,7 @@ export const en = {
 
   // Dashboard
   dashboard: {
-    spendo: 'Spendo',
+    spendo: 'BeeWise',
     welcomeBack: 'Welcome back',
     balance: 'Balance',
     income: 'Income',
@@ -136,8 +137,8 @@ export const en = {
     privacySecurityDesc: 'Account security settings',
     helpSupport: 'Help & Support',
     helpSupportDesc: 'Get help and contact support',
-    appVersion: 'Spendo v1.0.0',
-    builtWith: 'Built with ❤️ for better expense tracking',
+    appVersion: 'BeeWise v1.0.0',
+    builtWith: 'Powered by SLIIT Kandy Campus',
     language: 'Language',
     languageDesc: 'Choose your preferred language',
     currency: 'Currency',
