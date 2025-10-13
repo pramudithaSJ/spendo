@@ -82,7 +82,7 @@ export const GAME2_STEPS: GameStep[] = [
     titleTa: 'படி 3: நிதி நெருக்கடி - வங்கி வீழ்ச்சி',
     scenario: 'Due to a financial crisis, your bank has faced liquidity issues and collapsed',
     scenarioTa: 'நிதி நெருக்கடி காரணமாக, உங்கள் வங்கி பணப்புழக்கச் சிக்கல்களை எதிர்கொண்டு வீழ்ந்தது',
-    context: 'You can get eligible amount from CBSL liquidity support scheme (up to Rs 10,00,000)',
+    context: 'You can get eligible amount from CBSL liquidity support scheme (up to Rs 1,000,000)',
     contextTa: 'நீங்கள் CBSL பணப்புழக்க ஆதரவு திட்டத்திலிருந்து தகுதியான தொகையைப் பெறலாம் (Rs 10,00,000 வரை)',
     options: [
       {
@@ -104,6 +104,11 @@ export const GAME2_STEPS: GameStep[] = [
         id: 'D',
         text: 'D) Get the eligible amount from CBSL liquidity support scheme and deposit 50% in FD and 50% in Savings Account in 02 banks',
         textTa: 'D) திரவ சேமிப்பு - CBSL தொகையைப் பெற்று சேமிப்பு கணக்கில் டெபாசிட் செய்யவும்',
+      },
+      {
+        id: 'E',
+        text: 'E) None of the above - Do not get the CBSL amount',
+        textTa: 'D) மேலே கூறியவற்றில் எதுவும் இல்லை - CBSL தொகையைப் பெற வேண்டாம்',
       },
     ],
   },

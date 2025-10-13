@@ -1,6 +1,6 @@
 // Game Types for Student Loan Management Scenario
 
-export type OptionId = 'A' | 'B' | 'C' | 'D';
+export type OptionId = 'A' | 'B' | 'C' | 'D' | 'E';
 
 export interface GameOption {
   id: OptionId;

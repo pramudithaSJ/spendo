@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { GameResult } from '@/lib/gameTypes';
-import { Award, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Award, Clock, Send, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { submitGameResult, hasExistingSubmission } from '@/lib/gameResultsService';
 import { formatTimeWithUnits } from '@/lib/gameTimer';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface GameResultsProps {
   result: GameResult;
@@ -37,6 +38,7 @@ export default function GameResults({
   actualBalance,
 }: GameResultsProps) {
   const { user } = useAuth();
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -171,7 +173,7 @@ export default function GameResults({
       {studentAnswer && isCorrect !== undefined && actualBalance !== undefined && (
         <div className="space-y-4">
           {/* Student's Answer */}
-          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4">
+          {/* <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4">
             <h3 className="text-lg font-bold text-black mb-2">
               {language === 'ta' ? 'உங்கள் பதில்' : 'Your Answer'}
             </h3>
@@ -180,10 +182,10 @@ export default function GameResults({
                 ? (language === 'ta' ? '✓ ஆம், எனக்கு போதுமான இருப்பு உள்ளது' : '✓ Yes, I have enough balance')
                 : (language === 'ta' ? '✗ இல்லை, எனக்கு போதுமான இருப்பு இல்லை' : '✗ No, I don\'t have enough balance')}
             </p>
-          </div>
+          </div> */}
 
           {/* Actual Balance & Required Amount */}
-          <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
+          {/* <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
             <h3 className="text-lg font-bold text-gray-900 mb-3">
               {language === 'ta' ? 'நிதி விவரங்கள்' : 'Financial Details'}
             </h3>
@@ -199,10 +201,10 @@ export default function GameResults({
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Validation Result */}
-          <div className={cn(
+          {/* <div className={cn(
             'border-2 rounded-lg p-6 text-center',
             isCorrect
               ? 'bg-yellow-50 border-yellow-500'
@@ -233,12 +235,12 @@ export default function GameResults({
                 </p>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       )}
 
       {/* Refresh Warning (if page was refreshed) */}
-      {wasRefreshed && refreshCount > 0 && (
+      {/* {wasRefreshed && refreshCount > 0 && (
         <div className="bg-orange-50 border-2 border-orange-400 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <AlertCircle className="h-6 w-6 text-orange-600 flex-shrink-0 mt-0.5" />
@@ -254,7 +256,7 @@ export default function GameResults({
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Outcome Badge */}
       <div className={cn(
@@ -304,6 +306,16 @@ export default function GameResults({
             {submitError}
           </div>
         )}
+
+        {/* Back to Scenarios Button */}
+        <Button
+          onClick={() => router.push('/game-scenarios')}
+          variant="outline"
+          className="w-full"
+        >
+          <ArrowLeft size={16} className="mr-2" />
+          {language === 'ta' ? 'சூழ்நிலைகளுக்குத் திரும்பு' : 'Back to Scenarios'}
+        </Button>
       </div>
     </div>
   );
