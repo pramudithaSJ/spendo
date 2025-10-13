@@ -19,7 +19,7 @@ const TRANSACTIONS_COLLECTION = 'transactions';
 export const transactionService = {
   async getTransactions(userId: string, limitCount?: number): Promise<TransactionWithCategory[]> {
     // Use simpler query to avoid index issues
-    let q = query(
+    const q = query(
       collection(db, TRANSACTIONS_COLLECTION),
       where('userId', '==', userId)
     );
@@ -85,6 +85,7 @@ export const transactionService = {
     const updateData = { ...updates };
     
     if (updateData.date) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       updateData.date = Timestamp.fromDate(updateData.date) as any;
     }
     
