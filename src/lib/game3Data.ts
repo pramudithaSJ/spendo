@@ -86,22 +86,22 @@ export const GAME3_STEPS: GameStep[] = [
     options: [
       {
         id: 'A',
-        text: 'A) Delayed Gratification - Skip now, save specifically for a trip later',
+        text: 'A) Skip now, save specifically for a trip later',
         textTa: 'A) தாமதமான திருப்தி - இப்போது தவிர்க்கவும், பின்னர் பயணத்திற்காக சேமிக்கவும்',
       },
       {
         id: 'B',
-        text: 'B) Credit Card / Borrowing - Join using credit card or borrowed money',
+        text: 'B) Join using credit card or borrowed money',
         textTa: 'B) கிரெடிட் கார்டு / கடன் வாங்குதல் - கிரெடிட் கார்டு அல்லது கடன் பணத்தைப் பயன்படுத்தி சேரவும்',
       },
       {
         id: 'C',
-        text: 'C) Hybrid Approach - Use current savings + borrow remaining amount',
+        text: 'C) Use current savings + borrow remaining amount',
         textTa: 'C) கலப்பு அணுகுமுறை - தற்போதைய சேமிப்பு + மீதமுள்ள தொகையை கடன் வாங்கவும்',
       },
       {
         id: 'D',
-        text: 'D) Budget Alternative - Plan a cheaper local trip instead with Rs. 20,000 from savings',
+        text: 'D) Plan a cheaper local trip instead with Rs. 20,000 from savings',
         textTa: 'D) பட்ஜெட் மாற்று - சேமிப்பிலிருந்து Rs. 20,000 உடன் மலிவான உள்ளூர் பயணத்தை திட்டமிடவும்',
       },
     ],

@@ -38,7 +38,7 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
   const [loadingCategories, setLoadingCategories] = useState(true);
 
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     loadCategories();
@@ -145,11 +145,13 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">{t.forms.amount}</Label>
+            <Label htmlFor="amount" className="text-sm font-semibold">
+              {t.forms.amount}
+            </Label>
             <div className="relative">
-              <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-muted-foreground">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium text-sm">
                 LKR
-              </span>
+              </div>
               <Input
                 id="amount"
                 type="number"
@@ -157,11 +159,14 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
                 min="0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                placeholder={t.forms.amountPlaceholder}
-                className="pl-8"
+                placeholder="0.00"
+                className="pl-14 pr-4 text-lg font-semibold h-14 rounded-xl border-2 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
                 required
               />
             </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {language === 'ta' ? 'உங்கள் பரிவர்த்தனை தொகையை உள்ளிடவும்' : 'Enter your transaction amount'}
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -206,14 +211,20 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="date">{t.forms.date}</Label>
+            <Label htmlFor="date" className="text-sm font-semibold">
+              {t.forms.date}
+            </Label>
             <Input
               id="date"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+              className="h-12 rounded-xl border-2 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-base"
               required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              {language === 'ta' ? 'பரிவர்த்தனை தேதியை தேர்ந்தெடுக்கவும்' : 'Select transaction date'}
+            </p>
           </div>
 
           <div className="flex gap-2">

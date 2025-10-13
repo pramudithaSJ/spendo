@@ -203,10 +203,10 @@ export default function GamePage() {
               {language === 'ta' ? 'விளையாட்டைத் தொடங்கு' : 'Start Game'}
             </Button>
 
-            <Link href="/dashboard">
+            <Link href="/game">
               <Button variant="outline" className="w-full">
                 <ArrowLeft size={16} className="mr-2" />
-                {language === 'ta' ? 'டாஷ்போர்டுக்குத் திரும்பு' : 'Back to Dashboard'}
+                {language === 'ta' ? 'டாஷ்போர்டுக்குத் திரும்பு' : 'Back to Game'}
               </Button>
             </Link>
           </div>
@@ -277,15 +277,6 @@ export default function GamePage() {
             isCorrect={gameState.isCorrect}
             actualBalance={gameState.actualBalance}
           />
-
-          <div className="mt-6">
-            <Link href="/dashboard">
-              <Button variant="outline" className="w-full">
-                <ArrowLeft size={16} className="mr-2" />
-                {language === 'ta' ? 'டாஷ்போர்டுக்குத் திரும்பு' : 'Back to Dashboard'}
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     );
@@ -350,25 +341,25 @@ export default function GamePage() {
         <ChoiceHistory choices={gameState.choices} language={language} gameSteps={gameSteps} />
 
         {/* Current Step */}
-        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-bold mb-2">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
             {language === 'ta' ? currentStepData.titleTa : currentStepData.title}
           </h2>
 
           {currentStepData.context && (
-            <div className="mb-3 p-3 bg-yellow-50 rounded-lg text-sm text-black font-medium border border-yellow-400">
+            <div className="mb-3 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg text-sm text-black dark:text-yellow-100 font-medium border border-yellow-400 dark:border-yellow-600">
               {language === 'ta' ? currentStepData.contextTa : currentStepData.context}
             </div>
           )}
 
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-700 dark:text-gray-300 mb-4">
             {language === 'ta' ? currentStepData.scenarioTa : currentStepData.scenario}
           </p>
         </div>
 
         {/* Options */}
         <div className="space-y-3 mb-6">
-          <h3 className="font-semibold text-sm text-gray-600 mb-3">
+          <h3 className="font-semibold text-sm text-gray-600 dark:text-gray-300 mb-3">
             {language === 'ta' ? 'உங்கள் தேர்வை தேர்ந்தெடுங்கள்:' : 'Select Your Choice:'}
           </h3>
           {currentStepData.options.map((option) => {
