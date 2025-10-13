@@ -1,32 +1,35 @@
 {
-  "name": "Spendo - Expense Tracker",
-  "short_name": "Spendo",
-  "description": "A clean, mobile-first expense tracker app",
+  "name": "BeeWise - Financial Literacy App",
+  "short_name": "BeeWise",
+  "description": "The Next-Gen Financial Literacy App - Your path to financial wisdom with smart money management, expense tracking, and educational games",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFC83D",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "32x32",
-      "type": "image/x-icon"
+      "src": "/icons/BeeWise -logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "/favicon.ico",
+      "src": "/icons/BeeWise -logo.png",
       "sizes": "192x192",
-      "type": "image/x-icon",
+      "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "/favicon.ico", 
+      "src": "/icons/BeeWise -logo.png",
       "sizes": "512x512",
-      "type": "image/x-icon",
+      "type": "image/png",
       "purpose": "maskable any"
     }
   ],
-  "categories": ["finance", "utilities"],
+  "categories": ["finance", "education", "utilities", "lifestyle"],
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "scope": "/",
+  "id": "beewise-financial-literacy"
 }

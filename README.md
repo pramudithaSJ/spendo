@@ -1,6 +1,6 @@
-# 💰 Spendo - Personal Expense Tracker
+# 🐝 BeeWise - The Next-Gen Financial Literacy App
 
-A modern, mobile-first expense tracker built with Next.js, Firebase, and Tailwind CSS. Track your income and expenses with beautiful, intuitive interface designed for Sri Lankan users.
+A comprehensive financial education platform built with Next.js, Firebase, and Tailwind CSS. BeeWise helps users develop smart financial habits through intuitive expense tracking, educational games, and loan calculators, aligned with the Central Bank of Sri Lanka's financial literacy initiative.
 
 ![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)
 ![Next.js](https://img.shields.io/badge/Next.js-15.5-black)
@@ -8,7 +8,25 @@ A modern, mobile-first expense tracker built with Next.js, Firebase, and Tailwin
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+**Powered by SLIIT Kandy Campus**
+
+## 🎯 Mission
+
+BeeWise is designed to promote financial literacy among Sri Lankan citizens, aligning with the Central Bank of Sri Lanka's financial literacy roadmap. Like bees that work diligently to build their hive, BeeWise helps users build their financial future through:
+
+- **Smart Budgeting**: Track income and expenses with ease
+- **Financial Education**: Interactive games and calculators
+- **Informed Decisions**: Data-driven insights and analytics
+- **Accessible Learning**: Multi-language support (English & Tamil)
+
 ## ✨ Features
+
+### 🐝 BeeWise Unique Features
+- **Animated Bee Loading**: Professional bee-themed interface with hexagon patterns
+- **Financial Literacy Games**: Interactive scenarios for learning money management
+- **Loan Calculator**: Calculate EMI for various loan types with Sri Lankan interest rates
+- **Bilingual Support**: Full English and Tamil language support
+- **Mobile-First Design**: Optimized for smartphones with PWA capabilities
 
 ### 🔐 Authentication
 - Secure email/password authentication
@@ -47,6 +65,8 @@ A modern, mobile-first expense tracker built with Next.js, Firebase, and Tailwin
 ### 💴 Sri Lankan Localization
 - Currency formatted in Sri Lankan Rupees (LKR)
 - Proper number formatting with LKR symbols
+- Interest rates aligned with Sri Lankan banking standards
+- Educational content tailored for Sri Lankan financial landscape
 
 ## 🛠️ Tech Stack
 
@@ -75,11 +95,24 @@ A modern, mobile-first expense tracker built with Next.js, Firebase, and Tailwin
 - **Categories**: Manage income and expense categories
 - **Reports**: Monthly statistics and category breakdowns
 
+## 🎨 Design Philosophy
+
+### The Bee Theme
+- **Bees** symbolize hard work, savings, community, and financial wisdom
+- **Hexagons** represent the honeycomb structure - efficiency and organization
+- **Golden Colors** (#FFCD3F) convey warmth, prosperity, and optimism
+
+### Visual Elements
+- Clean black & white base with strategic golden accents
+- Hexagon background patterns for professional aesthetic
+- Animated bee loading screens
+- Mobile-optimized touch targets (44px+)
+
 ## 🔧 Setup Instructions
 
 1. **Clone and Install**:
    ```bash
-   cd spendo
+   cd beewise
    npm install
    ```
 
@@ -142,6 +175,20 @@ npm run build
 
 The app is optimized for production and ready to deploy!
 
+## 🏆 About SLIIT Kandy Campus
+
+BeeWise is developed and powered by **Sri Lanka Institute of Information Technology (SLIIT) Kandy Campus**, committed to advancing financial literacy through innovative technology solutions.
+
+## 🤝 Contributing
+
+We welcome contributions to improve BeeWise! Please feel free to submit issues and pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
 ---
 
-Built with ❤️ using Next.js, Firebase, and Tailwind CSS
+**BeeWise** - Building Financial Wisdom, One Decision at a Time 🐝
+
+Powered by SLIIT Kandy Campus | Aligned with Central Bank of Sri Lanka's Financial Literacy Initiative

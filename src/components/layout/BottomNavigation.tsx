@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Plus, List, User } from 'lucide-react';
+import { Home, Plus, List, User, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
@@ -14,29 +14,32 @@ export default function BottomNavigation() {
     { href: '/dashboard', icon: Home, label: t.nav.home },
     { href: '/transactions', icon: List, label: t.nav.history },
     { href: '/add', icon: Plus, label: t.nav.add, isMainAction: true },
+    { href: '/ask-ai', icon: Sparkles, label: t.nav.askAI },
     { href: '/profile', icon: User, label: t.nav.profile },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb">
-      <div className="flex items-center justify-around px-2 py-2">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-card/95 backdrop-blur-md border-t border-surface-border z-50 safe-area-pb shadow-xl">
+      <div className="flex items-center justify-around px-1 py-2 max-w-lg mx-auto">
         {navItems.map(({ href, icon: Icon, label, isMainAction }) => {
           const isActive = pathname === href;
-          
+
           if (isMainAction) {
             return (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  'flex flex-col items-center justify-center transition-all duration-200',
-                  'w-14 h-14 -mt-2 rounded-full shadow-lg',
-                  'bg-black text-white hover:bg-gray-800',
-                  'active:scale-95'
+                  'flex flex-col items-center justify-center transition-all duration-300',
+                  'w-16 h-16 -mt-4 rounded-2xl',
+                  'bg-bee-primary',
+                  'shadow-lg hover:shadow-xl hover:scale-110 hover:bg-bee-primary-hover',
+                  'active:scale-95',
+                  'text-bee-text-on-primary'
                 )}
               >
-                <Icon size={24} strokeWidth={2} />
-                <span className="text-xs mt-1 font-medium">{label}</span>
+                <Icon size={26} strokeWidth={2.5} />
+                <span className="text-[8px] mt-0.5 font-bold tracking-wide">{label}</span>
               </Link>
             );
           }
@@ -46,23 +49,23 @@ export default function BottomNavigation() {
               key={href}
               href={href}
               className={cn(
-                'flex flex-col items-center justify-center transition-all duration-200',
-                'py-2 px-3 rounded-xl min-w-[64px]',
+                'flex flex-col items-center justify-center transition-all duration-300',
+                'py-2 px-2 rounded-xl min-w-[60px]',
                 'active:scale-95',
                 isActive
-                  ? 'text-black bg-gray-100'
-                  : 'text-gray-500 hover:text-black hover:bg-gray-50'
+                  ? 'text-bee-secondary bg-gradient-to-b from-surface-accent to-transparent'
+                  : 'text-text-muted hover:text-bee-secondary hover:bg-surface-accent/50'
               )}
             >
-              <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+              <Icon size={22} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'drop-shadow-sm' : ''} />
               <span className={cn(
-                'text-xs mt-1 transition-all',
-                isActive ? 'font-semibold' : 'font-medium'
+                'text-[10px] mt-1 transition-all',
+                isActive ? 'font-bold' : 'font-medium'
               )}>
                 {label}
               </span>
               {isActive && (
-                <div className="w-1 h-1 bg-black rounded-full mt-1" />
+                <div className="w-1 h-1 bg-bee-secondary rounded-full mt-0.5 animate-pulse" />
               )}
             </Link>
           );

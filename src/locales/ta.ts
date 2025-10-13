@@ -22,13 +22,14 @@ export const ta: TranslationKeys = {
     home: 'முகப்பு',
     history: 'வரலாறு',
     add: 'சேர்',
+    askAI: 'AI கேள்வி',
     profile: 'சுயவிவரம்',
   },
 
   // Auth
   auth: {
-    welcomeToSpendo: 'Spendo க்கு வரவேற்கிறோம்',
-    signInDescription: 'உங்கள் செலவுகளை கண்காணிக்க உள்நுழையவும்',
+    welcomeToSpendo: 'BeeWise க்கு வரவேற்கிறோம்',
+    signInDescription: 'உங்கள் நிதியை புத்திசாலித்தனமாக நிர்வகிக்க உள்நுழையவும்',
     email: 'மின்னஞ்சல்',
     emailPlaceholder: 'மின்னஞ்சலை உள்ளிடவும்',
     password: 'கடவுச்சொல்',
@@ -41,7 +42,7 @@ export const ta: TranslationKeys = {
     dontHaveAccount: 'கணக்கு இல்லையா?',
     alreadyHaveAccount: 'ஏற்கனவே கணக்கு உள்ளதா?',
     createAccount: 'கணக்கை உருவாக்கு',
-    createAccountDescription: 'உங்கள் செலவுகளை கண்காணிக்க Spendo இல் பதிவு செய்யவும்',
+    createAccountDescription: 'உங்கள் நிதி கல்வி பயணத்தை தொடங்க BeeWise இல் பதிவு செய்யவும்',
     creatingAccount: 'கணக்கை உருவாக்குகிறது...',
     invalidCredentials: 'தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்',
     emailInUse: 'மின்னஞ்சல் ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது',
@@ -58,7 +59,7 @@ export const ta: TranslationKeys = {
 
   // Dashboard
   dashboard: {
-    spendo: 'Spendo',
+    spendo: 'BeeWise',
     welcomeBack: 'மீண்டும் வரவேற்கிறோம்',
     balance: 'இருப்பு',
     income: 'வருமானம்',
@@ -138,8 +139,8 @@ export const ta: TranslationKeys = {
     privacySecurityDesc: 'கணக்கு பாதுகாப்பு அமைப்புகள்',
     helpSupport: 'உதவி & ஆதரவு',
     helpSupportDesc: 'உதவி மற்றும் தொடர்பு ஆதரவு',
-    appVersion: 'Spendo v1.0.0',
-    builtWith: 'சிறந்த செலவு கண்காணிப்புக்காக ❤️ உடன் உருவாக்கப்பட்டது',
+    appVersion: 'BeeWise v1.0.0',
+    builtWith: 'SLIIT Kandy Campus மூலம் இயக்கப்படுகிறது',
     language: 'மொழி',
     languageDesc: 'உங்களுக்கு விருப்பமான மொழியை தேர்வு செய்யவும்',
     currency: 'நாணயம்',
@@ -220,6 +221,31 @@ export const ta: TranslationKeys = {
     failed: 'தோல்வி',
   },
 
+  // Ask AI
+  askAI: {
+    title: 'AI நிதி ஆலோசகர்',
+    subtitle: 'உங்கள் செலவின் அடிப்படையில் தனிப்பயனாக்கப்பட்ட ஆலோசனை பெறுங்கள்',
+    inputPlaceholder: 'உங்கள் செலவைப் பற்றி கேளுங்கள்...',
+    sendMessage: 'அனுப்பு',
+    thinking: 'சிந்திக்கிறது...',
+    suggestedQuestions: 'பரிந்துரைக்கப்பட்ட கேள்விகள்',
+    quickInsights: 'விரைவு நிதி ஸ்னாப்ஷாட்',
+    noTransactionsYet: 'தனிப்பயனாக்கப்பட்ட நிதி ஆலோசனை பெற முதலில் சில பரிவர்த்தனைகளைச் சேர்க்கவும்',
+    addTransactionsButton: 'பரிவர்த்தனைகளைச் சேர்க்கவும்',
+    errorLoadingData: 'உங்கள் நிதித் தகவலை ஏற்ற முடியவில்லை',
+    errorSendingMessage: 'செய்தியை அனுப்ப முடியவில்லை. மீண்டும் முயற்சிக்கவும்.',
+    errorNoApiKey: 'AI அம்சம் கட்டமைக்கப்படவில்லை. உங்கள் OpenAI API விசையைச் சேர்க்கவும்.',
+    setupInstructions: 'உங்கள் .env.local கோப்பில் NEXT_PUBLIC_OPENAI_API_KEY சேர்க்கவும்',
+    rateLimitError: 'பல கோரிக்கைகள். சிறிது காத்திருக்கவும்.',
+    thisMonth: 'இந்த மாதம்',
+    topSpending: 'அதிக செலவு',
+    analyzeMore: 'உங்கள் செலவு முறைகளை பகுப்பாய்வு செய்யுங்கள்',
+    chatHistory: 'அரட்டை வரலாறு',
+    newChat: 'புதிய அரட்டை',
+    clearChat: 'அரட்டையை அழிக்கவும்',
+    emptyState: 'உங்கள் நிதி பற்றிய கேள்வியைக் கேட்பதன் மூலம் தொடங்குங்கள் அல்லது மேலே பரிந்துரைக்கப்பட்ட கேள்வியைத் தட்டவும்',
+  },
+
   // Loan Calculator
   loanCalculator: {
     title: 'கடன் கால்குலேட்டர்',
@@ -266,5 +292,39 @@ export const ta: TranslationKeys = {
     lakhs: 'இலட்சங்கள்',
     crore: 'கோடி',
     clearAmount: 'அழி',
+  },
+
+  // Launch
+  launch: {
+    title: 'கூட்டை எழுப்புங்கள்',
+    subtitle: 'நிதி ஞானத்தை எழுப்புதல்',
+    activatePlatform: 'BeeWise ஐ செயல்படுத்தவும்',
+    connectEcosystem: 'அம்சங்களை இணைக்கிறது...',
+    launching: 'BeeWise நேரலையில் உள்ளது',
+    readyForUsers: '10,000+ பயனர்களுக்கு தயார்',
+    enterApp: 'BeeWise இல் நுழைக',
+    clickToActivate: 'செயல்படுத்த கிளிக் செய்யவும்',
+    clickToContinue: 'தொடர கிளிக் செய்யவும்',
+    clickToLaunch: 'தொடங்க கிளிக் செய்யவும்',
+    // Cell labels
+    aiPowered: 'AI-இயங்கும் தளம்',
+    expenseTracking: 'செலவு கண்காணிப்பு',
+    aiAdvisor: 'AI நிதி ஆலோசகர்',
+    smartBudgeting: 'ஸ்மார்ட் பட்ஜெட்',
+    learningModules: 'கற்றல் தொகுதிகள்',
+    investmentInsights: 'முதலீட்டு நுண்ணறிவுகள்',
+    reportsAnalytics: 'அறிக்கைகள் & பகுப்பாய்வு',
+    multiCurrency: 'பல நாணயங்கள்',
+    billReminders: 'பில் நினைவூட்டல்கள்',
+    goalSetting: 'இலக்கு அமைத்தல்',
+    debtManagement: 'கடன் மேலாண்மை',
+    taxCalculator: 'வரி கணக்கீடு',
+    loanAnalysis: 'கடன் பகுப்பாய்வு',
+    savingsOptimizer: 'சேமிப்பு மேம்படுத்தி',
+    creditMonitoring: 'கடன் கண்காணிப்பு',
+    exportTools: 'ஏற்றுமதி கருவிகள்',
+    community: 'சமூகம்',
+    securityFirst: 'பாதுகாப்பு முதல்',
+    crossPlatform: 'குறுக்கு தளம்',
   },
 };

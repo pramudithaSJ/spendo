@@ -1,18 +1,22 @@
 {
-  "name": "spendo",
+  "name": "beewise",
   "version": "1.0.0",
-  "description": "A modern, mobile-first expense tracker built with Next.js, Firebase, and Tailwind CSS for Sri Lankan users",
+  "description": "BeeWise: The Next-Gen Financial Literacy App - A comprehensive financial education platform built with Next.js, Firebase, and Tailwind CSS, aligned with Central Bank of Sri Lanka's financial literacy initiative",
   "private": true,
   "author": "Your Name",
   "license": "MIT",
   "keywords": [
+    "financial-literacy",
     "expense-tracker",
+    "beewise",
     "nextjs",
     "firebase",
     "tailwind",
     "pwa",
     "mobile-first",
-    "sri-lanka"
+    "sri-lanka",
+    "cbsl",
+    "financial-education"
   ],
   "scripts": {
     "dev": "next dev",

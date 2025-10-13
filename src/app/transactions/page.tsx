@@ -209,8 +209,8 @@ export default function TransactionsPage() {
                         <div className="text-right">
                           <p className={`font-medium ${
                             transaction.type === 'income'
-                              ? 'text-green-600'
-                              : 'text-red-600'
+                              ? 'text-bee-secondary'
+                              : 'text-bee-primary'
                           }`}>
                             {transaction.type === 'income' ? '+' : '-'}
                             {formatCurrency(transaction.amount, currency)}
