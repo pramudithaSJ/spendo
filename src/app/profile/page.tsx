@@ -16,9 +16,12 @@ import {
   Languages,
   DollarSign,
   Calculator,
-  Gamepad2
+  Gamepad2,
+  Sun,
+  Moon
 } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
@@ -215,6 +218,26 @@ export default function ProfilePage() {
                   LKR
                 </Button>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Theme Toggle */}
+        <Card className="bg-white border-gray-200">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center text-yellow-600 bg-yellow-50">
+                <Sun className="h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900">
+                  {language === 'ta' ? 'தீம்' : 'Theme'}
+                </h3>
+                <p className="text-sm text-gray-500">
+                  {language === 'ta' ? 'ஒளி அல்லது இருள் பயன்முறை' : 'Light or Dark mode'}
+                </p>
+              </div>
+              <ThemeToggle variant="button" />
             </div>
           </CardContent>
         </Card>

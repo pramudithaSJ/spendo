@@ -44,15 +44,15 @@ export default function GameResults({
   const getOutcomeColor = (outcome: GameResult['outcome']) => {
     switch (outcome) {
       case 'excellent':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'text-black bg-yellow-400 border-black font-bold';
       case 'good':
-        return 'text-blue-600 bg-blue-50 border-blue-200';
+        return 'text-yellow-900 bg-yellow-50 border-yellow-400';
       case 'fair':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+        return 'text-yellow-900 bg-yellow-100 border-yellow-400';
       case 'poor':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-yellow-400 bg-black border-yellow-400';
       default:
-        return 'text-gray-600 bg-gray-50 border-gray-200';
+        return 'text-yellow-400 bg-black border-yellow-400';
     }
   };
 
@@ -154,14 +154,14 @@ export default function GameResults({
 
       {/* Time Spent */}
       {result.timeSpent && (
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
+        <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Clock className="h-6 w-6 text-blue-600" />
-            <h3 className="text-lg font-bold text-blue-900">
+            <Clock className="h-6 w-6 text-yellow-600" />
+            <h3 className="text-lg font-bold text-black">
               {language === 'ta' ? 'செலவழித்த நேரம்' : 'Time Spent'}
             </h3>
           </div>
-          <p className="text-3xl font-bold text-blue-600">
+          <p className="text-3xl font-bold text-yellow-600">
             {formatTimeWithUnits(result.timeSpent, language)}
           </p>
         </div>
@@ -171,11 +171,11 @@ export default function GameResults({
       {studentAnswer && isCorrect !== undefined && actualBalance !== undefined && (
         <div className="space-y-4">
           {/* Student's Answer */}
-          <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
-            <h3 className="text-lg font-bold text-blue-900 mb-2">
+          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4">
+            <h3 className="text-lg font-bold text-black mb-2">
               {language === 'ta' ? 'உங்கள் பதில்' : 'Your Answer'}
             </h3>
-            <p className="text-blue-800 font-medium">
+            <p className="text-yellow-900 font-semibold">
               {studentAnswer === 'yes'
                 ? (language === 'ta' ? '✓ ஆம், எனக்கு போதுமான இருப்பு உள்ளது' : '✓ Yes, I have enough balance')
                 : (language === 'ta' ? '✗ இல்லை, எனக்கு போதுமான இருப்பு இல்லை' : '✗ No, I don\'t have enough balance')}
@@ -205,16 +205,16 @@ export default function GameResults({
           <div className={cn(
             'border-2 rounded-lg p-6 text-center',
             isCorrect
-              ? 'bg-green-50 border-green-500'
+              ? 'bg-yellow-50 border-yellow-500'
               : 'bg-red-50 border-red-500'
           )}>
             {isCorrect ? (
               <>
-                <CheckCircle size={64} className="mx-auto mb-3 text-green-600" />
-                <h3 className="text-2xl font-bold text-green-900 mb-2">
+                <CheckCircle size={64} className="mx-auto mb-3 text-yellow-600" />
+                <h3 className="text-2xl font-bold text-black mb-2">
                   {language === 'ta' ? '✅ சரியான மதிப்பீடு!' : '✅ CORRECT Assessment!'}
                 </h3>
-                <p className="text-green-800">
+                <p className="text-yellow-900 font-medium">
                   {language === 'ta'
                     ? 'உங்கள் மதிப்பீடு உண்மையான இருப்புடன் பொருந்துகிறது'
                     : 'Your assessment matches the actual balance'}
@@ -226,7 +226,7 @@ export default function GameResults({
                 <h3 className="text-2xl font-bold text-red-900 mb-2">
                   {language === 'ta' ? '❌ தவறான மதிப்பீடு' : '❌ INCORRECT Assessment'}
                 </h3>
-                <p className="text-red-800">
+                <p className="text-red-800 font-medium">
                   {language === 'ta'
                     ? 'உங்கள் மதிப்பீடு உண்மையான இருப்புடன் பொருந்தவில்லை'
                     : 'Your assessment doesn\'t match the actual balance'}
@@ -274,7 +274,7 @@ export default function GameResults({
           <Button
             onClick={handleSubmit}
             disabled={submitting || !result.timeSpent || !user}
-            className="w-full bg-black hover:bg-gray-800 text-white py-6 text-lg"
+            className="w-full bg-black hover:bg-gray-900 text-yellow-400 font-semibold border-2 border-yellow-400 py-6 text-lg"
           >
             {submitting ? (
               <>
@@ -289,9 +289,9 @@ export default function GameResults({
             )}
           </Button>
         ) : (
-          <div className="bg-green-50 border-2 border-green-500 rounded-lg p-4 text-center">
-            <CheckCircle size={48} className="mx-auto mb-2 text-green-600" />
-            <p className="text-green-900 font-semibold">
+          <div className="bg-yellow-50 border-2 border-yellow-500 rounded-lg p-4 text-center">
+            <CheckCircle size={48} className="mx-auto mb-2 text-yellow-600" />
+            <p className="text-black font-bold">
               {language === 'ta'
                 ? '✓ முடிவுகள் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டன!'
                 : '✓ Results submitted successfully!'}

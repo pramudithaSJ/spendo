@@ -110,6 +110,25 @@ export function makeGame2Choice(
 }
 
 /**
+ * Check if the choice path is a winning path based on game2winpath.md
+ * Winning paths (4 total):
+ * - Step 1: Must be B (Diversified Portfolio)
+ * - Step 2: Any (A, B, C, or D)
+ * - Step 3: Must be D (Liquid Savings)
+ */
+function isGame2WinningPath(choices: GameChoice[]): boolean {
+  const step1 = choices.find(c => c.step === 1);
+  const step2 = choices.find(c => c.step === 2);
+  const step3 = choices.find(c => c.step === 3);
+
+  // Must have all 3 steps
+  if (!step1 || !step2 || !step3) return false;
+
+  // Check winning path: Step1=B AND Step3=D
+  return step1.option === 'B' && step3.option === 'D';
+}
+
+/**
  * Calculate portfolio value based on investment choices
  */
 function calculatePortfolioValue(choices: GameChoice[]): {
@@ -271,12 +290,15 @@ export function calculateGame2Results(choices: GameChoice[], startTime?: string)
   const portfolio = calculatePortfolioValue(choices);
   const hasEnoughBalance = portfolio.total >= EMERGENCY_AMOUNT;
 
-  // Determine outcome
-  const outcome: GameResult['outcome'] = hasEnoughBalance ? 'excellent' : 'failed';
-  const outcomeSummary = hasEnoughBalance
+  // Check if the path taken is a winning path
+  const isWinPath = isGame2WinningPath(choices);
+
+  // Determine outcome based on winning path validation
+  const outcome: GameResult['outcome'] = isWinPath && hasEnoughBalance ? 'excellent' : 'failed';
+  const outcomeSummary = isWinPath && hasEnoughBalance
     ? 'Successful!'
     : 'Not successful, better next time';
-  const outcomeSummaryTa = hasEnoughBalance
+  const outcomeSummaryTa = isWinPath && hasEnoughBalance
     ? 'வெற்றிகரமானது!'
     : 'வெற்றிபெறவில்லை, அடுத்த முறை சிறப்பாக';
 

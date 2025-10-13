@@ -82,11 +82,11 @@ export default function GameScenariosPage() {
   const getDifficultyColor = (difficulty: Scenario['difficulty']) => {
     switch (difficulty) {
       case 'beginner':
-        return 'text-green-600 bg-green-50';
+        return 'text-yellow-700 bg-yellow-100 font-semibold';
       case 'intermediate':
-        return 'text-yellow-600 bg-yellow-50';
+        return 'text-yellow-800 bg-yellow-200 font-semibold';
       case 'advanced':
-        return 'text-red-600 bg-red-50';
+        return 'text-red-700 bg-red-100 font-semibold';
     }
   };
 
@@ -113,8 +113,8 @@ export default function GameScenariosPage() {
             </Button>
           </Link>
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-              <Gamepad2 className="h-6 w-6 text-white" />
+            <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-black">
+              <Gamepad2 className="h-6 w-6 text-black" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -137,20 +137,20 @@ export default function GameScenariosPage() {
           return (
             <Card
               key={scenario.id}
-              className={`bg-white border-gray-200 transition-all ${
+              className={`bg-white border-2 transition-all ${
                 scenario.isAvailable
-                  ? 'hover:shadow-md cursor-pointer'
-                  : 'opacity-60 cursor-not-allowed'
+                  ? 'hover:shadow-lg hover:border-yellow-400 cursor-pointer border-gray-200'
+                  : 'opacity-60 cursor-not-allowed border-gray-200'
               }`}
               onClick={() => scenario.isAvailable && router.push(scenario.route)}
             >
               <CardContent className="p-5">
                 <div className="flex items-start gap-4">
                   {/* Icon */}
-                  <div className={`w-14 h-14 rounded-lg flex items-center justify-center ${
+                  <div className={`w-14 h-14 rounded-lg flex items-center justify-center border-2 ${
                     scenario.isAvailable
-                      ? 'bg-black text-white'
-                      : 'bg-gray-200 text-gray-400'
+                      ? 'bg-yellow-500 text-black border-black'
+                      : 'bg-gray-200 text-gray-400 border-gray-300'
                   }`}>
                     {scenario.isAvailable ? (
                       <Icon className="h-7 w-7" />

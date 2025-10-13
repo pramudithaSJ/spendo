@@ -109,6 +109,25 @@ export function makeGame3Choice(
 }
 
 /**
+ * Check if the choice path is a winning path based on game3winpath.md
+ * Winning paths (4 total):
+ * - Step 1: Must be A (Balanced Approach)
+ * - Step 2: Must be A or B (Skip or Save)
+ * - Step 3: Must be A or D (Skip or Budget Alternative)
+ */
+function isGame3WinningPath(choices: GameChoice[]): boolean {
+  const step1 = choices.find(c => c.step === 1);
+  const step2 = choices.find(c => c.step === 2);
+  const step3 = choices.find(c => c.step === 3);
+
+  // Must have all 3 steps
+  if (!step1 || !step2 || !step3) return false;
+
+  // Check winning path: Step1=A AND Step2 in [A,B] AND Step3 in [A,D]
+  return step1.option === 'A' && ['A', 'B'].includes(step2.option) && ['A', 'D'].includes(step3.option);
+}
+
+/**
  * Calculate savings and expenses over 36 months based on choices
  */
 function calculateSavingsBalance(choices: GameChoice[]): number {
@@ -219,12 +238,15 @@ export function calculateGame3Results(choices: GameChoice[], startTime?: string)
   const totalBalance = calculateSavingsBalance(choices);
   const hasEnoughBalance = totalBalance >= EMERGENCY_AMOUNT;
 
-  // Determine outcome
-  const outcome: GameResult['outcome'] = hasEnoughBalance ? 'excellent' : 'failed';
-  const outcomeSummary = hasEnoughBalance
+  // Check if the path taken is a winning path
+  const isWinPath = isGame3WinningPath(choices);
+
+  // Determine outcome based on winning path validation
+  const outcome: GameResult['outcome'] = isWinPath && hasEnoughBalance ? 'excellent' : 'failed';
+  const outcomeSummary = isWinPath && hasEnoughBalance
     ? 'Successful!'
     : 'Not successful, better next time';
-  const outcomeSummaryTa = hasEnoughBalance
+  const outcomeSummaryTa = isWinPath && hasEnoughBalance
     ? 'வெற்றிகரமானது!'
     : 'வெற்றிபெறவில்லை, அடுத்த முறை சிறப்பாக';
 
