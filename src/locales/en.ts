@@ -291,6 +291,40 @@ export const en = {
     crore: 'Crore',
     clearAmount: 'Clear',
   },
+
+  // Launch
+  launch: {
+    title: 'Wake the Hive',
+    subtitle: 'Awakening Financial Wisdom',
+    activatePlatform: 'Activate BeeWise',
+    connectEcosystem: 'Connecting features...',
+    launching: 'BeeWise is Live',
+    readyForUsers: 'Ready for 10,000+ users',
+    enterApp: 'Enter BeeWise',
+    clickToActivate: 'Click to activate',
+    clickToContinue: 'Click to continue',
+    clickToLaunch: 'Click to launch',
+    // Cell labels
+    aiPowered: 'AI-Powered Platform',
+    expenseTracking: 'Expense Tracking',
+    aiAdvisor: 'AI Financial Advisor',
+    smartBudgeting: 'Smart Budgeting',
+    learningModules: 'Learning Modules',
+    investmentInsights: 'Investment Insights',
+    reportsAnalytics: 'Reports & Analytics',
+    multiCurrency: 'Multi-currency',
+    billReminders: 'Bill Reminders',
+    goalSetting: 'Goal Setting',
+    debtManagement: 'Debt Management',
+    taxCalculator: 'Tax Calculator',
+    loanAnalysis: 'Loan Analysis',
+    savingsOptimizer: 'Savings Optimizer',
+    creditMonitoring: 'Credit Monitoring',
+    exportTools: 'Export Tools',
+    community: 'Community',
+    securityFirst: 'Security First',
+    crossPlatform: 'Cross-platform',
+  },
 };
 
 export type TranslationKeys = typeof en;
