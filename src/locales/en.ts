@@ -20,7 +20,7 @@ export const en = {
     home: 'Home',
     history: 'History',
     add: 'Add',
-    askAI: 'Ask AI',
+    askAI: 'Fin Buddy',
     profile: 'Profile',
   },
 
