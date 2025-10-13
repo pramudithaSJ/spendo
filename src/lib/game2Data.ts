@@ -87,22 +87,22 @@ export const GAME2_STEPS: GameStep[] = [
     options: [
       {
         id: 'A',
-        text: 'A) Safe Fixed Income - Get CBSL amount and invest in bank FD for 5 years',
+        text: 'A) Get the eligible amount from CBSL liquidity support scheme and invest in a bank FD for 05 years.',
         textTa: 'A) பாதுகாப்பான நிலையான வருமானம் - CBSL தொகையைப் பெற்று 5 ஆண்டு வங்கி FD இல் முதலீடு செய்யவும்',
       },
       {
         id: 'B',
-        text: 'B) Equity Investment - Get CBSL amount and invest in CSE',
+        text: 'B) ) Get the eligible amount from CBSL liquidity support scheme and invest in CSE',
         textTa: 'B) பங்கு முதலீடு - CBSL தொகையைப் பெற்று CSE இல் முதலீடு செய்யவும்',
       },
       {
         id: 'C',
-        text: 'C) Real Estate - Get CBSL amount and purchase land',
+        text: 'C) Get the eligible amount from CBSL liquidity support scheme and Purchase Land',
         textTa: 'C) ரியல் எஸ்டேட் - CBSL தொகையைப் பெற்று நிலம் வாங்கவும்',
       },
       {
         id: 'D',
-        text: 'D) Liquid Savings - Get CBSL amount and deposit in savings account',
+        text: 'D) Get the eligible amount from CBSL liquidity support scheme and deposit 50% in FD and 50% in Savings Account in 02 banks',
         textTa: 'D) திரவ சேமிப்பு - CBSL தொகையைப் பெற்று சேமிப்பு கணக்கில் டெபாசிட் செய்யவும்',
       },
     ],
