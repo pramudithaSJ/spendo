@@ -198,7 +198,7 @@ export default function GamePage() {
             <Button
               onClick={handleGroupSelect}
               disabled={!groupNumber || parseInt(groupNumber) < 1 || parseInt(groupNumber) > 12}
-              className="w-full bg-black hover:bg-gray-800"
+              className="w-full bg-black hover:bg-black text-white"
             >
               {language === 'ta' ? 'விளையாட்டைத் தொடங்கு' : 'Start Game'}
             </Button>
@@ -313,10 +313,10 @@ export default function GamePage() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold">
+              <div className="w-8 h-8 rounded-full bg-black text-yellow-400 border-2 border-yellow-400 flex items-center justify-center text-sm font-bold">
                 {gameState.groupNumber}
               </div>
-              <span className="text-sm font-medium text-gray-600">
+              <span className="text-sm font-semibold text-gray-900">
                 {language === 'ta' ? `குழு ${gameState.groupNumber}` : `Group ${gameState.groupNumber}`}
               </span>
             </div>
@@ -340,14 +340,14 @@ export default function GamePage() {
         <div className="mb-6">
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-black transition-all duration-500"
+              className="h-full bg-yellow-400 transition-all duration-500"
               style={{ width: `${(gameState.currentStep / totalSteps) * 100}%` }}
             />
           </div>
         </div>
 
         {/* Choice History */}
-        <ChoiceHistory choices={gameState.choices} language={language} />
+        <ChoiceHistory choices={gameState.choices} language={language} gameSteps={gameSteps} />
 
         {/* Current Step */}
         <div className="bg-white rounded-lg p-6 mb-6 shadow-sm border border-gray-200">
@@ -356,7 +356,7 @@ export default function GamePage() {
           </h2>
 
           {currentStepData.context && (
-            <div className="mb-3 p-3 bg-blue-50 rounded-lg text-sm text-blue-900 border border-blue-200">
+            <div className="mb-3 p-3 bg-yellow-50 rounded-lg text-sm text-black font-medium border border-yellow-400">
               {language === 'ta' ? currentStepData.contextTa : currentStepData.context}
             </div>
           )}
@@ -386,6 +386,7 @@ export default function GamePage() {
                 disabled={disabledCheck.disabled}
                 disabledReason={language === 'ta' ? disabledCheck.reasonTa : disabledCheck.reason}
                 language={language}
+                selected={selectedOption?.id === option.id}
               />
             );
           })}

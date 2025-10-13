@@ -25,22 +25,22 @@ export const GAME2_STEPS: GameStep[] = [
     options: [
       {
         id: 'A',
-        text: 'A) Conservative Approach - Invest all savings in 5-year Fixed Deposit',
+        text: 'A)Invest all savings in 5-year Fixed Deposit',
         textTa: 'A) பழமைவாத அணுகுமுறை - அனைத்து சேமிப்பையும் 5 ஆண்டு நிலையான வைப்புத்தொகையில் முதலீடு செய்யவும்',
       },
       {
         id: 'B',
-        text: 'B) Diversified Portfolio - 20% CSE, 20% Money Market, 30% Land, 30% Bank Savings',
+        text: 'B)20% CSE, 20% Money Market, 30% Land, 30% Bank Savings',
         textTa: 'B) பன்முகப்படுத்தப்பட்ட போர்ட்ஃபோலியோ - 20% CSE, 20% பண சந்தை, 30% நிலம், 30% வங்கி சேமிப்பு',
       },
       {
         id: 'C',
-        text: 'C) Balanced Portfolio - 20% CSE, 40% FD, 10% Savings, 30% Treasury Bond',
+        text: 'C) 20% CSE, 40% FD, 10% Savings, 30% Treasury Bond',
         textTa: 'C) சமநிலை போர்ட்ஃபோலியோ - 20% CSE, 40% FD, 10% சேமிப்பு, 30% கருவூல பத்திரம்',
       },
       {
         id: 'D',
-        text: 'D) Aggressive Approach - Invest all savings in CSE',
+        text: 'D) Invest all savings in CSE',
         textTa: 'D) ஆக்கிரமிப்பு அணுகுமுறை - அனைத்து சேமிப்பையும் CSE இல் முதலீடு செய்யவும்',
       },
     ],
@@ -56,22 +56,22 @@ export const GAME2_STEPS: GameStep[] = [
     options: [
       {
         id: 'A',
-        text: 'A) Exit Strategy - Sell all shares and invest in savings account',
+        text: 'A) Sell all shares and invest in savings account',
         textTa: 'A) வெளியேறும் உத்தி - அனைத்து பங்குகளையும் விற்று சேமிப்பு கணக்கில் முதலீடு செய்யவும்',
       },
       {
         id: 'B',
-        text: 'B) Partial Exit - Sell 50% of shares and deposit in savings account',
+        text: 'B)  Sell 50% of shares and deposit in savings account',
         textTa: 'B) பகுதி வெளியேற்றம் - 50% பங்குகளை விற்று சேமிப்பு கணக்கில் டெபாசிட் செய்யவும்',
       },
       {
         id: 'C',
-        text: 'C) Hold Position - Keep the investment unchanged',
+        text: 'C)Keep the investment unchanged',
         textTa: 'C) நிலையை பராமரிக்கவும் - முதலீட்டை மாற்றமில்லாமல் வைத்திருக்கவும்',
       },
       {
         id: 'D',
-        text: 'D) Buy the Dip - Buy shares worth Rs. 1,00,000 in AAA graded company',
+        text: 'D)  Buy shares worth Rs. 1,00,000 in AAA graded company',
         textTa: 'D) வீழ்ச்சியில் வாங்கவும் - AAA தரமதிப்பீடு நிறுவனத்தில் Rs. 1,00,000 பங்குகளை வாங்கவும்',
       },
     ],

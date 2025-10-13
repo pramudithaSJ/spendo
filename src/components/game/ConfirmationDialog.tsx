@@ -46,12 +46,12 @@ export default function ConfirmationDialog({
               : 'Are you sure you want to select this option? This choice cannot be changed!'}
           </p>
 
-          <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400">
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center font-bold text-sm">
                 {option.id}
               </div>
-              <p className="text-sm font-medium flex-1">{text}</p>
+              <p className="text-base font-medium flex-1">{text}</p>
             </div>
           </div>
 
@@ -62,13 +62,13 @@ export default function ConfirmationDialog({
           <Button
             onClick={onCancel}
             variant="outline"
-            className="flex-1"
+            className="flex-1 min-h-[48px] touch-manipulation"
           >
             {language === 'ta' ? 'ரத்து செய்' : 'Cancel'}
           </Button>
           <Button
             onClick={onConfirm}
-            className="flex-1 bg-black hover:bg-gray-800"
+            className="flex-1 min-h-[48px] touch-manipulation bg-black hover:bg-gray-900 text-yellow-400 font-semibold border-2 border-yellow-400"
           >
             {language === 'ta' ? 'உறுதிப்படுத்து' : 'Confirm & Lock'}
           </Button>

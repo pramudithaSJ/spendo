@@ -14,8 +14,10 @@
 ## Step 2: After 06 months' Salary Hike to Rs. 100,000
 * Option A: Keep repayment same, save extra amount.
 * Option B: Increase repayment to finish early (~Rs. 40,000) & Save the remaining balance
-* Option C: Invest extra in 15 years invest Plan at a rate of 12%.
+* Option C: Invest extra in 15 years invest Plan at a rate of 12%. 
 * Option D: Keep minimum repayment, increase lifestyle spending.
+
+
 
 ## Step 3: After 01-year due to Inflation, Living Expenses Increase by Rs.7,500.00
 * Option A: Stick to plan, cut non-essential expenses.
@@ -23,11 +25,13 @@
 * Option C: Skip one month payment.
 * Option D: Take new credit card to cover shortfall.
 
+
 ## Step 4: Opportunity for Master's Abroad after 12 months.
 * Option A: Take new loan Rs. 20,000.00 new installments.
-* Option B: Delay Master's until current loan is finished.
+* Option B: Delay Master’s until current loan is finished.
 * Option C: Seek scholarship → minimize loan.
 * Option D: Drop plan → avoid over-debt completely.
+
 
 ## Step 5: Family Emergency Rs. 300,000 after 18 months
 * You have enough balance to attend emergency
