@@ -14,7 +14,7 @@ const sizeMap = {
   sm: { icon: 40, landscape: 120, text: 'text-lg' },
   md: { icon: 56, landscape: 160, text: 'text-2xl' },
   lg: { icon: 72, landscape: 200, text: 'text-3xl' },
-  xl: { icon: 96, landscape: 280, text: 'text-4xl' }
+  xl: { icon: 120, landscape: 360, text: 'text-5xl' }
 };
 
 export default function Logo({

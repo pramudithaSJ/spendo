@@ -42,9 +42,9 @@ export const GAME_STEPS: GameStep[] = [
   },
   {
     step: 2,
-    title: 'Step 2: After 6 Months - Salary Hike to Rs 1,00,000',
-    titleTa: 'படி 2: 6 மாதங்களுக்குப் பிறகு - சம்பளம் Rs 1,00,000 ஆக உயர்வு',
-    scenario: 'Your salary has increased to Rs 1,00,000 per month',
+    title: 'Step 2: After 6 Months - Salary Hike to Rs 100,000',
+    titleTa: 'படி 2: 6 மாதங்களுக்குப் பிறகு - சம்பளம் Rs 100,000 ஆக உயர்வு',
+    scenario: 'Your salary has increased to Rs 100,000 per month',
     scenarioTa: 'உங்கள் சம்பளம் மாதம் Rs 1,00,000 ஆக அதிகரித்துள்ளது',
     context: 'New Salary: Rs 1,00,000/month | Extra Income: Rs 30,000/month',
     contextTa: 'புதிய சம்பளம்: Rs 1,00,000/மாதம் | கூடுதல் வருமானம்: Rs 30,000/மாதம்',
