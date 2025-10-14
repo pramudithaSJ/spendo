@@ -71,8 +71,8 @@ export const GAME2_STEPS: GameStep[] = [
       },
       {
         id: 'D',
-        text: 'D)  Buy shares worth Rs. 1,00,000 in AAA graded company',
-        textTa: 'D) வீழ்ச்சியில் வாங்கவும் - AAA தரமதிப்பீடு நிறுவனத்தில் Rs. 1,00,000 பங்குகளை வாங்கவும்',
+        text: 'D)  Buy shares worth Rs. 100,000 in AAA graded company',
+        textTa: 'D) வீழ்ச்சியில் வாங்கவும் - AAA தரமதிப்பீடு நிறுவனத்தில் Rs. 100,000 பங்குகளை வாங்கவும்',
       },
     ],
   },
@@ -82,8 +82,8 @@ export const GAME2_STEPS: GameStep[] = [
     titleTa: 'படி 3: நிதி நெருக்கடி - வங்கி வீழ்ச்சி',
     scenario: 'Due to a financial crisis, your bank has faced liquidity issues and collapsed',
     scenarioTa: 'நிதி நெருக்கடி காரணமாக, உங்கள் வங்கி பணப்புழக்கச் சிக்கல்களை எதிர்கொண்டு வீழ்ந்தது',
-    context: 'You can get eligible amount from CBSL liquidity support scheme (up to Rs 1,000,000)',
-    contextTa: 'நீங்கள் CBSL பணப்புழக்க ஆதரவு திட்டத்திலிருந்து தகுதியான தொகையைப் பெறலாம் (Rs 10,00,000 வரை)',
+    context: 'You can get eligible amount from CBSL liquidity support scheme (up to Rs 1,100,000)',
+    contextTa: 'நீங்கள் CBSL பணப்புழக்க ஆதரவு திட்டத்திலிருந்து தகுதியான தொகையைப் பெறலாம் (Rs 1,100,000 வரை)',
     options: [
       {
         id: 'A',
