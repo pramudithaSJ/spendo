@@ -219,6 +219,7 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+              max={new Date().toISOString().split('T')[0]}
               className="h-12 rounded-xl border-2 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-base"
               required
             />
