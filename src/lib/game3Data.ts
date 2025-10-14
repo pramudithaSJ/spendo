@@ -29,12 +29,12 @@ export const GAME3_STEPS: GameStep[] = [
     options: [
       {
         id: 'A',
-        text: 'A) Balanced Approach - Rs. 15,000 savings + Rs. 10,000 investments (10% interest) + Rs. 10,000 Medical Insurance',
+        text: 'A) Balanced Approach - Rs. 15,000 savings + Rs. 10,000 investments (10% interest) + Rs. 5,000 Medical Insurance + Rs. 5,000 Entertainment',
         textTa: 'A) சமநிலை அணுகுமுறை - Rs. 15,000 சேமிப்பு + Rs. 10,000 முதலீடு (10% வட்டி) + Rs. 10,000 மருத்துவ காப்பீடு',
       },
       {
         id: 'B',
-        text: 'B) Lifestyle Priority - Rs. 25,000 leisure + Rs. 10,000 savings',
+        text: 'B) Lifestyle Priority - Rs. 25,000 Entertainment + Rs. 10,000 savings',
         textTa: 'B) வாழ்க்கை முறை முன்னுரிமை - Rs. 25,000 ஓய்வு + Rs. 10,000 சேமிப்பு',
       },
       {
