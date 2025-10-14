@@ -36,7 +36,7 @@ export default function SuggestedQuestions({
             disabled={disabled}
             className={cn(
               'text-xs px-3 py-2 h-auto',
-              'bg-white dark:bg-card',
+              'text-black dark:bg-card',
               'border-bee-secondary/30 hover:border-bee-secondary',
               'hover:bg-bee-secondary/5',
               'transition-all duration-200',
