@@ -253,7 +253,7 @@
 }
 
 .bee-gradient-text {
-  background: linear-gradient(135deg, var(--bee-gradient-start), var(--bee-secondary));
+  background: linear-gradient(135deg, var(--bee-primary), var(--bee-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

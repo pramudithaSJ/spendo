@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface DraggableBeeProps {
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  onHoverPad?: (isOver: boolean) => void;
   isDragDisabled?: boolean;
   className?: string;
 }
@@ -14,53 +16,102 @@ interface DraggableBeeProps {
 export default function DraggableBee({
   onDragStart,
   onDragEnd,
+  onHoverPad,
   isDragDisabled = false,
   className
 }: DraggableBeeProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [trail, setTrail] = useState<Array<{ x: number; y: number; id: number }>>([]);
   const beeRef = useRef<HTMLDivElement>(null);
   const trailIdRef = useRef(0);
 
-  // Handle desktop drag
-  const handleDragStart = (e: React.DragEvent) => {
+  // Handle desktop mouse drag
+  const handleMouseDown = (e: React.MouseEvent) => {
     if (isDragDisabled) return;
+    e.preventDefault();
 
     setIsDragging(true);
+    setCursorPosition({ x: e.clientX, y: e.clientY });
     onDragStart?.();
-
-    // Set drag data
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('bee', 'dragging');
-
-    // Create a transparent drag image (prevents default ghost image)
-    const canvas = document.createElement('canvas');
-    canvas.width = 1;
-    canvas.height = 1;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.clearRect(0, 0, 1, 1);
-    }
-    e.dataTransfer.setDragImage(canvas, 0, 0);
   };
 
-  const handleDrag = (e: React.DragEvent) => {
-    if (e.clientX === 0 && e.clientY === 0) return; // Ignore end position
+  // Global mouse move and mouse up listeners for desktop drag
+  useEffect(() => {
+    if (!isDragging) return;
 
-    // Add trail effect
-    setTrail(prev => [
-      ...prev,
-      { x: e.clientX, y: e.clientY, id: trailIdRef.current++ }
-    ].slice(-10)); // Keep last 10 trail points
-  };
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
 
-  const handleDragEnd = (e: React.DragEvent) => {
-    setIsDragging(false);
-    setPosition({ x: 0, y: 0 });
-    setTrail([]);
-    onDragEnd?.();
-  };
+      // Add trail effect
+      setTrail(prev => [
+        ...prev,
+        { x: e.clientX, y: e.clientY, id: trailIdRef.current++ }
+      ].slice(-10));
+
+      // Check if bee is hovering over launch pad
+      const padElement = document.querySelector('[data-launch-pad]');
+      if (padElement && onHoverPad) {
+        const padRect = padElement.getBoundingClientRect();
+        const beeRect = {
+          left: e.clientX - 80,
+          right: e.clientX + 80,
+          top: e.clientY - 80,
+          bottom: e.clientY + 80
+        };
+
+        // Check collision
+        const isColliding = !(
+          beeRect.right < padRect.left ||
+          beeRect.left > padRect.right ||
+          beeRect.bottom < padRect.top ||
+          beeRect.top > padRect.bottom
+        );
+
+        onHoverPad(isColliding);
+      }
+    };
+
+    const handleMouseUp = (e: MouseEvent) => {
+      // Check if bee was dropped on launch pad
+      const padElement = document.querySelector('[data-launch-pad]');
+      if (padElement) {
+        const padRect = padElement.getBoundingClientRect();
+        const beeRect = {
+          left: e.clientX - 80,
+          right: e.clientX + 80,
+          top: e.clientY - 80,
+          bottom: e.clientY + 80
+        };
+
+        // Check collision
+        const isColliding = !(
+          beeRect.right < padRect.left ||
+          beeRect.left > padRect.right ||
+          beeRect.bottom < padRect.top ||
+          beeRect.top > padRect.bottom
+        );
+
+        if (isColliding) {
+          onDragEnd?.();
+        }
+      }
+
+      setIsDragging(false);
+      setCursorPosition({ x: 0, y: 0 });
+      setTrail([]);
+      onHoverPad?.(false); // Reset hover state
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, onDragEnd]);
 
   // Handle mobile touch
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -107,29 +158,68 @@ export default function DraggableBee({
 
   return (
     <>
-      {/* Trail effects */}
-      {trail.map((point, index) => (
+      {/* Trail effects - rendered via portal */}
+      {typeof window !== 'undefined' && trail.length > 0 && createPortal(
+        <>
+          {trail.map((point, index) => (
+            <div
+              key={point.id}
+              className="fixed pointer-events-none z-[9998]"
+              style={{
+                left: point.x,
+                top: point.y,
+                opacity: index / trail.length * 0.5,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <div className="w-8 h-8 bg-bee-primary/30 rounded-full blur-md animate-fade-out" />
+            </div>
+          ))}
+        </>,
+        document.body
+      )}
+
+      {/* Dragging Bee - follows cursor (Desktop drag) - rendered via portal */}
+      {typeof window !== 'undefined' && isDragging && createPortal(
         <div
-          key={point.id}
-          className="fixed pointer-events-none z-40"
+          className="fixed pointer-events-none z-[9999]"
           style={{
-            left: point.x,
-            top: point.y,
-            opacity: index / trail.length * 0.5,
-            transform: 'translate(-50%, -50%)',
+            left: `${cursorPosition.x}px`,
+            top: `${cursorPosition.y}px`,
+            transform: 'translate(-50%, -50%) scale(1.15) rotate(5deg)',
           }}
         >
-          <div className="w-8 h-8 bg-bee-primary/30 rounded-full blur-md animate-fade-out" />
-        </div>
-      ))}
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-bee-primary/30 rounded-full blur-3xl scale-150 opacity-100 animate-pulse-slow" />
 
-      {/* Draggable Bee */}
+            {/* Bee logo */}
+            <div className="relative z-10">
+              <Image
+                src="/icons/BeeWise -logo.svg"
+                alt="BeeWise Mascot"
+                width={160}
+                height={160}
+                className="object-contain drop-shadow-2xl"
+                draggable={false}
+                priority
+              />
+            </div>
+
+            {/* Wing flap animation */}
+            <div className="absolute inset-0 animate-pulse">
+              <div className="absolute top-1/4 left-0 w-8 h-12 bg-bee-primary/20 rounded-full blur-sm -rotate-45" />
+              <div className="absolute top-1/4 right-0 w-8 h-12 bg-bee-primary/20 rounded-full blur-sm rotate-45" />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Original Draggable Bee (hidden during desktop drag) */}
       <div
         ref={beeRef}
-        draggable={!isDragDisabled}
-        onDragStart={handleDragStart}
-        onDrag={handleDrag}
-        onDragEnd={handleDragEnd}
+        onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -137,11 +227,12 @@ export default function DraggableBee({
           'relative group select-none',
           !isDragDisabled && 'cursor-grab active:cursor-grabbing',
           isDragDisabled && 'cursor-not-allowed opacity-50',
-          isDragging && 'z-50',
+          isDragging && 'opacity-0', // Hide original during any drag
+          !isDragging && 'z-10',
           className
         )}
         style={{
-          transform: isDragging
+          transform: isDragging && position.x !== 0
             ? `translate(${position.x}px, ${position.y}px) scale(1.15) rotate(5deg)`
             : 'translate(0, 0) scale(1) rotate(0deg)',
           transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
@@ -152,19 +243,19 @@ export default function DraggableBee({
           'relative transition-all duration-500',
           !isDragging && 'animate-float'
         )}>
-          {/* Glow effect */}
+          {/* Enhanced glow effect with pulsing */}
           <div className={cn(
-            'absolute inset-0 bg-bee-primary/20 rounded-full blur-2xl scale-150 transition-opacity duration-300',
-            isDragging ? 'opacity-100' : 'opacity-70 group-hover:opacity-90'
+            'absolute inset-0 bg-bee-primary/30 rounded-full blur-3xl scale-150 transition-all duration-300',
+            isDragging ? 'opacity-100 animate-pulse-slow' : 'opacity-80 group-hover:opacity-100 animate-pulse-slow'
           )} />
 
-          {/* Bee logo */}
+          {/* Bee logo - increased size */}
           <div className="relative z-10">
             <Image
               src="/icons/BeeWise -logo.svg"
               alt="BeeWise Mascot"
-              width={120}
-              height={120}
+              width={160}
+              height={160}
               className="object-contain drop-shadow-2xl pointer-events-none"
               draggable={false}
               priority

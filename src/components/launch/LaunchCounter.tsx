@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Sparkles, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface LaunchCounterProps {
   targetCount?: number; // Keep for backward compatibility, but we'll use percentage
@@ -54,65 +55,68 @@ export default function LaunchCounter({
   if (!isVisible) return null;
 
   return (
-    <div className="text-center space-y-6 animate-fade-slide-up w-full max-w-md">
-      {/* Progress Percentage */}
-      <div className="relative">
-        <div className="text-7xl md:text-8xl font-bold bee-gradient-text mb-2 tabular-nums">
-          {progress}%
-        </div>
-        {isComplete && (
-          <div className="absolute -top-4 -right-4 animate-bounce">
-            <Check size={48} className="text-green-500 drop-shadow-lg" />
-          </div>
-        )}
-      </div>
-
-      {/* Progress Bar */}
-      <div className="relative w-full h-4 bg-surface-accent rounded-full overflow-hidden border border-surface-border shadow-inner">
-        <div
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-bee-secondary via-bee-primary to-bee-secondary-light rounded-full transition-all duration-300 ease-out"
-          style={{
-            width: `${progress}%`,
-            boxShadow: progress > 0 ? '0 0 20px rgba(255, 205, 63, 0.6)' : 'none'
-          }}
-        >
-          {/* Animated shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
-        </div>
-
-        {/* Progress segments */}
-        <div className="absolute inset-0 flex">
-          {[...Array(10)].map((_, i) => (
-            <div key={i} className="flex-1 border-r border-surface-border/30" />
-          ))}
-        </div>
-      </div>
-
-      {/* Status Text */}
+    <div className="text-center space-y-5 md:space-y-6 animate-fade-slide-up w-full max-w-2xl">
+      {/* Status Text - TOP SECTION */}
       <div className="space-y-2">
-        <p className={`text-lg font-semibold transition-all duration-300 ${
-          isComplete ? 'text-bee-primary scale-110' : 'text-text-secondary'
-        }`}>
+        <p className={cn(
+          "text-xl md:text-2xl font-extrabold transition-all duration-300",
+          isComplete ? 'bee-gradient-text scale-105' : 'text-text-secondary'
+        )}>
           {isComplete ? (
             <span className="flex items-center justify-center gap-2">
-              <Sparkles size={20} className="animate-pulse" />
-              App Loaded Successfully!
-              <Sparkles size={20} className="animate-pulse" />
+              <Sparkles size={22} className="animate-pulse" />
+              Application is Live Now
+              <Sparkles size={22} className="animate-pulse" />
             </span>
           ) : (
             'Loading Platform...'
           )}
         </p>
 
-        {/* Loading phases */}
+        {/* Loading phases - only show when loading */}
         {!isComplete && (
-          <p className="text-sm text-text-muted">
+          <p className="text-sm md:text-base text-text-muted font-medium">
             {progress < 30 && 'Initializing modules...'}
             {progress >= 30 && progress < 60 && 'Loading AI engine...'}
             {progress >= 60 && progress < 90 && 'Preparing dashboard...'}
             {progress >= 90 && 'Finalizing launch...'}
           </p>
         )}
+      </div>
+
+      {/* Progress Bar - MIDDLE SECTION */}
+      <div className="relative w-full h-6 md:h-8 bg-surface-accent rounded-full overflow-hidden border-2 border-surface-border shadow-inner">
+        <div
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-bee-secondary via-bee-primary to-bee-secondary-light rounded-full transition-all duration-300 ease-out"
+          style={{
+            width: `${progress}%`,
+            boxShadow: progress > 0 ? '0 0 30px rgba(255, 205, 63, 0.8)' : 'none'
+          }}
+        >
+          {/* Animated shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer" />
+        </div>
+
+        {/* Progress segments with tick marks */}
+        <div className="absolute inset-0 flex">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className="flex-1 border-r-2 border-surface-border/40 relative">
+              {i % 2 === 0 && (
+                <div className="absolute -bottom-1 left-0 w-0.5 h-2 bg-surface-border" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Progress Percentage - BOTTOM SECTION */}
+      <div className="relative flex items-center justify-center">
+        <div className={cn(
+          "text-6xl md:text-7xl lg:text-8xl font-bold bee-gradient-text tabular-nums drop-shadow-xl",
+          isComplete && "animate-pulse-slow"
+        )}>
+          {progress}%
+        </div>
       </div>
     </div>
   );

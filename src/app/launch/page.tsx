@@ -20,6 +20,7 @@ export default function LaunchPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isMuted, setIsMuted] = useState(true); // Start muted by default
   const [audioAvailable, setAudioAvailable] = useState(false);
+  const [isDragOverPad, setIsDragOverPad] = useState(false);
 
   // Initialize audio with fallback
   useEffect(() => {
@@ -107,6 +108,11 @@ export default function LaunchPage() {
     advanceStage();
   };
 
+  // Handle bee hovering over launch pad
+  const handleBeeHoverPad = (isOver: boolean) => {
+    setIsDragOverPad(isOver);
+  };
+
   // Feature cards data
   const features = [
     { icon: TrendingUp, title: 'Expense Tracking', description: 'Monitor spending in real-time' },
@@ -142,49 +148,54 @@ export default function LaunchPage() {
       )}
 
       {/* Main content container */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-6 space-y-12">
+      <div className="relative z-10 h-screen overflow-hidden flex flex-col items-center justify-center p-6 md:p-8">
 
-        {/* Stage 0: Initial state with drag interaction */}
+        {/* Stage 0: Initial state with HORIZONTAL drag interaction */}
         {stage === 0 && (
-          <>
+          <div className="flex flex-col items-center justify-center h-full w-full max-w-7xl mx-auto space-y-8">
             {/* Large logo at top */}
             <div className="animate-fade-slide-up text-center">
-              <Logo size="xl" variant="landscape" className="justify-center mb-6" />
-              <p className="text-text-secondary text-lg mt-4">
-                Financial Literacy Platform
-              </p>
+              <Logo size="xl" variant="landscape" className="justify-center" />
             </div>
 
-            {/* Draggable Bee */}
-            <div className="animate-fade-slide-up" style={{ animationDelay: '200ms' }}>
-              <DraggableBee />
-              <p className="text-center text-text-secondary text-sm mt-4">
-                Drag Mr. Bee to Launch Pad
-              </p>
-            </div>
+            {/* Horizontal layout: Bee LEFT → Launch Pad RIGHT */}
+            <div className="flex items-center justify-between w-full px-4 md:px-12 lg:px-20 flex-1">
+              {/* Draggable Bee on LEFT */}
+              <div className="animate-fade-slide-up flex flex-col items-center" style={{ animationDelay: '200ms' }}>
+                <DraggableBee onDragEnd={handleBeeDrop} onHoverPad={handleBeeHoverPad} />
+                <div className="text-center mt-4">
+                  <p className="text-sm md:text-base font-semibold bee-gradient-text animate-pulse flex items-center gap-2">
+                    Drag Right
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bee-primary animate-bounce">
+                      <path d="M5 12h14m0 0l-7-7m7 7l-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </p>
+                </div>
+              </div>
 
-            {/* Launch Pad */}
-            <div className="animate-fade-slide-up" style={{ animationDelay: '400ms' }}>
-              <LaunchPadCell onDrop={handleBeeDrop} />
+              {/* Launch Pad on RIGHT */}
+              <div className="animate-fade-slide-up" style={{ animationDelay: '400ms' }}>
+                <LaunchPadCell onDrop={handleBeeDrop} isBeingDraggedOver={isDragOverPad} />
+              </div>
             </div>
-          </>
+          </div>
         )}
 
         {/* Stage 1: Features reveal */}
         {stage === 1 && (
-          <>
+          <div className="flex flex-col items-center justify-center h-full w-full max-w-7xl mx-auto space-y-6 md:space-y-8">
             {/* Title */}
             <div className="text-center animate-fade-slide-up">
-              <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary mb-3 tracking-tight">
                 Platform Activated
               </h1>
-              <p className="text-text-secondary text-lg">
+              <p className="text-text-secondary text-base md:text-lg font-medium">
                 Discover powerful financial tools at your fingertips
               </p>
             </div>
 
-            {/* Feature cards grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
+            {/* Feature cards grid - more compact */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full flex-1 max-h-[60vh] overflow-auto px-4">
               {features.map((feature, index) => (
                 <FeatureCard
                   key={index}
@@ -192,30 +203,35 @@ export default function LaunchPage() {
                   title={feature.title}
                   description={feature.description}
                   isActive={stage >= 1}
-                  delay={index * 100}
+                  delay={index * 150}
                   onClick={() => stage === 1 && advanceStage()}
                 />
               ))}
             </div>
 
-            <p className="text-text-secondary text-sm animate-pulse">
-              Click any card to continue
-            </p>
-          </>
+            <div className="flex items-center gap-2 animate-pulse">
+              <p className="text-base md:text-lg font-semibold bee-gradient-text">
+                Click any card to continue
+              </p>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-bee-primary">
+                <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
         )}
 
         {/* Stage 2: Launch complete */}
         {stage >= 2 && (
-          <div className="flex flex-col items-center justify-center space-y-8 w-full max-w-4xl mx-auto">
+          <div className="flex flex-col items-center justify-center h-full w-full max-w-5xl mx-auto space-y-6 md:space-y-8">
             {/* Logo */}
             <div className="animate-fade-slide-up">
-              <Logo size="xl" variant="landscape" className="justify-center" />
+              <Logo size="lg" variant="landscape" className="justify-center drop-shadow-2xl" />
             </div>
 
             {/* Title */}
             <div className="animate-fade-slide-up text-center" style={{ animationDelay: '100ms' }}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary">
-                {t.launch.launching || 'Launch Successful!'}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bee-gradient-text drop-shadow-lg">
+                BeeWise is Live!
               </h1>
             </div>
 
@@ -226,8 +242,8 @@ export default function LaunchPage() {
 
             {/* Description */}
             <div className="animate-fade-slide-up text-center" style={{ animationDelay: '300ms' }}>
-              <p className="text-text-secondary text-lg md:text-xl">
-                {t.launch.readyForUsers || 'Platform ready for users worldwide'}
+              <p className="text-text-secondary text-base md:text-lg font-medium leading-relaxed">
+                Your Financial Literacy Journey Starts Now
               </p>
             </div>
 
@@ -235,34 +251,53 @@ export default function LaunchPage() {
             <div className="animate-fade-slide-up" style={{ animationDelay: '400ms' }}>
               <Button
                 size="lg"
-                className="btn-bee-primary text-lg px-12 py-6 shadow-lg hover:shadow-xl transition-shadow"
+                className="btn-bee-primary text-lg md:text-xl px-12 py-6 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(255,205,63,0.6)] transition-all duration-300 hover:scale-105 active:scale-95 group"
                 onClick={() => router.push('/login')}
               >
-                {t.launch.enterApp || 'Enter Platform'}
+                <span className="flex items-center gap-2">
+                  Enter BeeWise
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="group-hover:translate-x-1 transition-transform">
+                    <path d="M5 12h14m0 0l-7-7m7 7l-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </Button>
             </div>
           </div>
         )}
 
-        {/* Stage progress indicator */}
-        <div className="flex justify-center gap-3 mt-8">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className={`h-2 rounded-full transition-all duration-500 ${
-                i <= stage ? 'bg-bee-primary w-12' : 'bg-surface-border w-2'
-              }`}
-            />
+        {/* Stage progress indicator - positioned at bottom */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex justify-center gap-3">
+          {[
+            { index: 0, label: 'Drag' },
+            { index: 1, label: 'Explore' },
+            { index: 2, label: 'Launch' }
+          ].map(({ index, label }) => (
+            <div key={index} className="flex flex-col items-center gap-1">
+              <div
+                className={`h-2 rounded-full transition-all duration-500 ease-out ${
+                  index <= stage
+                    ? 'bg-bee-primary w-12 shadow-[0_0_12px_rgba(255,205,63,0.5)]'
+                    : 'bg-surface-border w-2'
+                }`}
+              />
+              <span
+                className={`text-xs font-medium transition-all duration-300 ${
+                  index <= stage ? 'text-bee-primary' : 'text-text-muted'
+                }`}
+              >
+                {label}
+              </span>
+            </div>
           ))}
         </div>
 
-        {/* Skip button */}
+        {/* Skip button - positioned in corner */}
         {stage < 2 && (
           <button
             onClick={() => router.push('/dashboard')}
-            className="text-sm text-text-secondary hover:text-bee-primary transition-colors underline"
+            className="absolute top-6 right-6 text-xs md:text-sm text-text-secondary hover:text-bee-primary transition-colors underline"
           >
-            Skip to Dashboard
+            Skip
           </button>
         )}
       </div>

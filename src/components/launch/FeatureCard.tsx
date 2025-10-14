@@ -24,9 +24,10 @@ export default function FeatureCard({
     <div
       className={cn(
         'relative group',
-        'rounded-xl p-6',
-        'bg-surface-elevated border border-surface-border',
-        'hover:border-bee-primary/50 hover:shadow-lg hover:shadow-bee-primary/10',
+        'rounded-xl p-6 md:p-7',
+        'bg-surface-elevated border-2 border-surface-border',
+        'hover:border-bee-primary/60 hover:shadow-xl hover:shadow-bee-primary/20',
+        'hover:scale-[1.02] active:scale-[0.98]',
         'transition-all duration-500 ease-out',
         'cursor-pointer',
         isActive
@@ -38,36 +39,39 @@ export default function FeatureCard({
       }}
       onClick={onClick}
     >
+      {/* Animated border pulse */}
+      <div className="absolute inset-0 rounded-xl border-2 border-bee-primary/30 opacity-0 group-hover:opacity-100 animate-pulse-slow" />
+
       {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-bee-primary/5 to-bee-secondary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-br from-bee-primary/10 to-bee-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center gap-3">
+      <div className="relative z-10 flex flex-col items-center text-center gap-3 md:gap-4">
         {/* Icon */}
-        <div className="p-4 rounded-full bg-surface-accent group-hover:bg-bee-primary/10 transition-colors duration-300">
+        <div className="p-4 rounded-full bg-surface-accent group-hover:bg-bee-primary/15 transition-all duration-300 shadow-sm group-hover:shadow-md">
           <Icon
             size={32}
-            className="text-bee-primary group-hover:scale-110 transition-transform duration-300"
-            strokeWidth={1.5}
+            className="text-bee-primary group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-300"
+            strokeWidth={2}
           />
         </div>
 
         {/* Title */}
-        <h3 className="text-base md:text-lg font-semibold text-text-primary group-hover:text-bee-primary transition-colors duration-300">
+        <h3 className="text-base md:text-lg font-bold text-text-primary group-hover:text-bee-primary transition-colors duration-300 leading-snug">
           {title}
         </h3>
 
         {/* Description (optional) */}
         {description && (
-          <p className="text-sm text-text-secondary line-clamp-2">
+          <p className="text-sm md:text-base text-text-secondary line-clamp-2 leading-relaxed">
             {description}
           </p>
         )}
       </div>
 
       {/* Shine effect */}
-      <div className="absolute inset-0 rounded-xl overflow-hidden">
-        <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+        <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
       </div>
     </div>
   );
