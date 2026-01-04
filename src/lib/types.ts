@@ -29,6 +29,6 @@ export interface TransactionWithCategory extends Transaction {
   category: Category;
 }
 
-export type Language = 'en' | 'ta';
+export type Language = 'en' | 'ta' | 'si';
 
 export type Currency = 'USD' | 'LKR';

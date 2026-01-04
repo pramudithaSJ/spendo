@@ -184,6 +184,14 @@ export default function ProfilePage() {
                 >
                   தமிழ்
                 </Button>
+                <Button
+                  variant={language === 'si' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setLanguage('si')}
+                  className="min-w-[60px]"
+                >
+                  සිංහල
+                </Button>
               </div>
             </div>
           </CardContent>

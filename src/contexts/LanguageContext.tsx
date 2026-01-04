@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Language } from '@/lib/types';
 import { en } from '@/locales/en';
 import { ta } from '@/locales/ta';
+import { si } from '@/locales/si';
 
 type Translations = typeof en;
 
@@ -18,6 +19,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations: Record<Language, Translations> = {
   en,
   ta,
+  si,
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -27,13 +29,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Load saved language from localStorage
     const savedLanguage = localStorage.getItem('spendo-language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ta')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ta' || savedLanguage === 'si')) {
       setLanguageState(savedLanguage);
     } else {
       // Auto-detect browser language
       const browserLang = navigator.language.toLowerCase();
       if (browserLang.startsWith('ta')) {
         setLanguageState('ta');
+      } else if (browserLang.startsWith('si')) {
+        setLanguageState('si');
       }
     }
     setMounted(true);
