@@ -11,6 +11,7 @@ import {
   Tag,
   BarChart3,
   Shield,
+  ShieldAlert,
   HelpCircle,
   Mail,
   Languages,
@@ -54,6 +55,13 @@ export default function ProfilePage() {
       description: language === 'en' ? 'Play financial management scenarios' : 'நிதி மேலாண்மை சூழ்நிலைகளை விளையாடுங்கள்',
       href: '/game-scenarios',
       color: 'text-pink-600 bg-pink-50'
+    },
+    {
+      icon: ShieldAlert,
+      label: t.fraudChecker.title,
+      description: t.fraudChecker.menuDescription,
+      href: '/fraud-checker',
+      color: 'text-red-600 bg-red-50'
     },
     {
       icon: Tag,

@@ -292,6 +292,34 @@ export const en = {
     clearAmount: 'Clear',
   },
 
+  // Fraud Checker
+  fraudChecker: {
+    title: 'Red Noticed Companies',
+    subtitle: 'Check if a company is flagged as fraudulent',
+    menuDescription: 'Verify suspicious investment companies',
+    searchPlaceholder: 'Search company name...',
+    infoBanner: 'If you received an investment or business opportunity message, search the company name here to check if it has been flagged.',
+    noResults: 'No flagged companies found',
+    noResultsHint: 'This company is not in our database. Stay cautious and do your own research before investing.',
+    resultsCount: '{count} of {total} companies match',
+    totalCount: '{count} companies flagged',
+    alsoKnownAs: 'Also known as',
+    disclaimer: 'This list is for awareness purposes only. Absence from this list does not guarantee a company is legitimate. Always do thorough research before investing.',
+    riskLevels: {
+      critical: 'Critical',
+      high: 'High Risk',
+    },
+    scamTypes: {
+      pyramid: 'Pyramid',
+      ponzi: 'Ponzi',
+      investment_fraud: 'Investment Fraud',
+      forex_scam: 'Forex Scam',
+      crypto_scam: 'Crypto Scam',
+      mlm_scam: 'MLM Scam',
+    },
+    filterAll: 'All',
+  },
+
   // Launch
   launch: {
     title: 'Wake the Hive',
