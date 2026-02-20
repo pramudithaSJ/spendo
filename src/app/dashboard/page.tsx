@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, DollarSign, Plus, LogOut } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Plus, LogOut, Brain } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -212,6 +212,24 @@ export default function DashboardPage() {
                 })}
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Quiz Card */}
+        <Card className="bg-gradient-to-r from-purple-600 to-purple-700 text-white border-0">
+          <CardContent className="p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <Brain className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="font-bold text-sm">Financial Quiz</p>
+                <p className="text-xs text-purple-200">Test your financial knowledge!</p>
+              </div>
+            </div>
+            <Button asChild size="sm" className="bg-white text-purple-700 hover:bg-purple-50 font-semibold">
+              <Link href="/quiz">Play</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>

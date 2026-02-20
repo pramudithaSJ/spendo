@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   CheckCircle,
   Eye,
-  EyeOff
+  EyeOff,
+  Brain
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRouter } from 'next/navigation';
@@ -241,13 +242,48 @@ export default function SettingsPage() {
         <Card className="bg-blue-50 border-blue-200">
           <CardContent className="p-4">
             <h3 className="font-semibold text-blue-900 mb-2 text-sm">
-              {language === 'ta' ? 'குறிப்பு' : 'Note'}
+              {language === 'ta' ? 'குறிப்பு' : language === 'si' ? 'සටහන' : 'Note'}
             </h3>
             <p className="text-xs text-blue-800">
               {language === 'ta'
                 ? 'உள்ளூர் சேமிப்பகத்தை அழிப்பது சாதனத்தில் சேமிக்கப்பட்ட தரவை மட்டுமே பாதிக்கும். சர்வரில் சமர்ப்பிக்கப்பட்ட தரவு பாதுகாப்பாக உள்ளது.'
+                : language === 'si'
+                ? 'ගබඩාව හිස් කිරීම මෙම උපකරණයේ ගබඩා කළ දත්ත පමණක් බලපායි. සේවාදායකයට ඉදිරිපත් කළ දත්ත ආරක්ෂිතව ඇත.'
                 : 'Clearing local storage only affects data stored on this device. Data submitted to the server remains safe.'}
             </p>
+          </CardContent>
+        </Card>
+
+        {/* Quiz Admin Card */}
+        <Card className="bg-white border-gray-200">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Brain className="h-5 w-5 text-purple-600" />
+              {language === 'si'
+                ? 'ප්‍රශ්නාවලිය නිර්වාහක'
+                : language === 'ta'
+                ? 'வினாடி வினா நிர்வாகி'
+                : 'Quiz Admin'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-gray-600">
+              {language === 'si'
+                ? 'Kahoot වැනි ප්‍රශ්නාවලිය සැසිවාරයක් සාදා ශිෂ්‍යයන් සමඟ ක්‍රීඩා කරන්න.'
+                : language === 'ta'
+                ? 'Kahoot போன்ற வினாடி வினா அமர்வை உருவாக்கி மாணவர்களுடன் விளையாடுங்கள்.'
+                : 'Create a Kahoot-style quiz session and play with students in real-time.'}
+            </p>
+            <Button asChild className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+              <Link href="/quiz/admin">
+                <Brain className="h-4 w-4 mr-2" />
+                {language === 'si'
+                  ? 'ප්‍රශ්නාවලිය පාලකය විවෘත කරන්න'
+                  : language === 'ta'
+                  ? 'வினாடி வினா நிர்வாகியை திற'
+                  : 'Open Quiz Admin'}
+              </Link>
+            </Button>
           </CardContent>
         </Card>
       </div>

@@ -45,5 +45,14 @@ service cloud.firestore {
       // Only allow users to update/delete their own results
       allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
+
+    // Quiz sessions — public read/write (students are unauthenticated)
+    // Acceptable for a controlled classroom environment; tighten later if needed.
+    match /quiz_sessions/{sessionId} {
+      allow read, write: if true;
+      match /participants/{participantId} {
+        allow read, write: if true;
+      }
+    }
   }
 }
