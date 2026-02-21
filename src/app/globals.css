@@ -66,145 +66,144 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.85rem;
 
-  /* Professional Modern Base Colors */
-  --background: #FFFFFF;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
+  /* Minimal, Professional Base Colors */
+  --background: #D6D6D6;
+  --foreground: #202020;
+  --card: #E2E2E2;
+  --card-foreground: #202020;
+  --popover: #E2E2E2;
+  --popover-foreground: #202020;
 
-  /* NEW Professional BeeWise Brand Color System - Gold Primary */
-  --bee-primary: #FFCD3F;        /* Honey Gold (PRIMARY) - Main buttons */
-  --bee-primary-hover: #E6B12E;  /* Darker gold - Hover state */
-  --bee-primary-light: #FFD96B;  /* Lighter gold - Light accent */
-  --bee-secondary: #3BABCD;      /* BeeWise Blue (ACCENT) - Highlights */
-  --bee-secondary-light: #5BC0DD;/* Light blue */
-  --bee-dark: #232323;           /* Professional dark (from logo) */
-  --bee-text-on-primary: #232323;/* Black text on gold buttons */
+  /* BeeWise Brand Colors (New Palette) */
+  --bee-primary: #FFD100;        /* Primary: bold yellow */
+  --bee-primary-hover: #F2C100;  /* Hover: deeper yellow */
+  --bee-primary-light: #FFEE32;  /* Light accent */
+  --bee-secondary: #333533;      /* Secondary: charcoal */
+  --bee-secondary-light: #4A4C4A;/* Lighter charcoal */
+  --bee-dark: #202020;           /* Deep black */
+  --bee-text-on-primary: #202020;/* Dark text on yellow */
 
-  /* Semantic Colors - Professional Brand Colors */
-  --success: #3BABCD;            /* Blue (Income) */
-  --success-light: #D0EBEF;      /* Light Blue */
-  --warning: #F59E0B;            /* Amber (Warnings) */
-  --warning-light: #FEF3C7;      /* Amber 100 */
-  --error: #EF4444;              /* Red (Critical errors only) */
-  --error-light: #FEE2E2;        /* Red 100 */
-  --info: #FFCD3F;               /* Gold (Expenses) */
-  --info-light: #FFF7E0;         /* Light Gold */
+  /* Semantic Colors */
+  --success: #333533;
+  --success-light: #DADADA;
+  --warning: #FFD100;
+  --warning-light: #FFEE32;
+  --error: #D14343;
+  --error-light: #F4C8C8;
+  --info: #FFEE32;
+  --info-light: #F7F1A5;
 
   /* Text Hierarchy */
-  --text-primary: #0F172A;       /* Slate 900 */
-  --text-secondary: #475569;     /* Slate 600 */
-  --text-muted: #94A3B8;         /* Slate 400 */
+  --text-primary: #202020;
+  --text-secondary: #333533;
+  --text-muted: #6F6F6F;
   --text-inverse: #FFFFFF;
 
   /* Surface Colors */
-  --surface-bg: #F8FAFC;         /* Slate 50 */
-  --surface-elevated: #FFFFFF;
-  --surface-accent: #EFF6FF;     /* Blue 50 - Subtle blue theme */
-  --surface-border: #E2E8F0;     /* Slate 200 */
+  --surface-bg: #D6D6D6;
+  --surface-elevated: #E8E8E8;
+  --surface-accent: #EFEFEF;
+  --surface-border: #C5C5C5;
 
   /* Shadcn mappings for compatibility */
-  --primary: #FFCD3F;
-  --primary-foreground: #232323;
-  --secondary: #F8FAFC;
-  --secondary-foreground: #0F172A;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --accent: #EFF6FF;
-  --accent-foreground: #3BABCD;
-  --destructive: #EF4444;
-  --border: #E2E8F0;
-  --input: #E2E8F0;
-  --ring: #FFCD3F;
+  --primary: #FFD100;
+  --primary-foreground: #202020;
+  --secondary: #E8E8E8;
+  --secondary-foreground: #202020;
+  --muted: #E0E0E0;
+  --muted-foreground: #555555;
+  --accent: #FFEE32;
+  --accent-foreground: #202020;
+  --destructive: #D14343;
+  --border: #C5C5C5;
+  --input: #CFCFCF;
+  --ring: #FFD100;
 
-  --chart-1: #FFCD3F;
-  --chart-2: #3BABCD;
-  --chart-3: #10B981;
-  --chart-4: #8B5CF6;
-  --chart-5: #EC4899;
+  --chart-1: #FFD100;
+  --chart-2: #333533;
+  --chart-3: #202020;
+  --chart-4: #FFEE32;
+  --chart-5: #B5B5B5;
 
-  --sidebar: white;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #FFCD3F;
-  --sidebar-primary-foreground: #232323;
-  --sidebar-accent: #F8FAFC;
-  --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #FFCD3F;
+  --sidebar: #E8E8E8;
+  --sidebar-foreground: #202020;
+  --sidebar-primary: #FFD100;
+  --sidebar-primary-foreground: #202020;
+  --sidebar-accent: #E0E0E0;
+  --sidebar-accent-foreground: #202020;
+  --sidebar-border: #C5C5C5;
+  --sidebar-ring: #FFD100;
 
-  /* Shadows - Professional depth */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --shadow-gold: 0 10px 30px -5px rgba(255, 205, 63, 0.35);
+  /* Shadows - Subtle, Minimal */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --shadow-md: 0 6px 18px -8px rgb(0 0 0 / 0.18);
+  --shadow-lg: 0 10px 28px -10px rgb(0 0 0 / 0.2);
+  --shadow-xl: 0 18px 36px -14px rgb(0 0 0 / 0.24);
+  --shadow-gold: 0 12px 24px -10px rgba(255, 209, 0, 0.45);
 
-  /* Transitions - Smooth & Professional */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitions */
+  --transition-fast: 140ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-slow: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .dark {
-  --background: #0F172A;
-  --foreground: #F1F5F9;
-  --card: #1E293B;
-  --card-foreground: #F1F5F9;
-  --popover: #1E293B;
-  --popover-foreground: #F1F5F9;
+  --background: #202020;
+  --foreground: #D6D6D6;
+  --card: #2A2A2A;
+  --card-foreground: #D6D6D6;
+  --popover: #2A2A2A;
+  --popover-foreground: #D6D6D6;
 
-  /* NEW Professional Dark Mode Brand Colors - Gold Primary */
-  --bee-primary: #FFD96B;        /* Softer Honey Gold (PRIMARY) */
-  --bee-primary-hover: #FFCD3F;  /* Brighter gold on hover */
-  --bee-primary-light: #FFE599;  /* Even lighter gold */
-  --bee-secondary: #5BC0DD;      /* Lighter Blue (ACCENT) */
-  --bee-secondary-light: #7DD3EA;/* Light blue accent */
-  --bee-dark: #1A1A1A;           /* Dark background */
-  --bee-text-on-primary: #1A1A1A;/* Dark text on gold buttons */
+  --bee-primary: #FFD100;
+  --bee-primary-hover: #FFEE32;
+  --bee-primary-light: #FFE864;
+  --bee-secondary: #D6D6D6;
+  --bee-secondary-light: #F0F0F0;
+  --bee-dark: #202020;
+  --bee-text-on-primary: #202020;
 
-  --primary: #FFD96B;
-  --primary-foreground: #1A1A1A;
-  --secondary: #1E293B;
-  --secondary-foreground: #F1F5F9;
-  --muted: #334155;
-  --muted-foreground: #94A3B8;
-  --accent: #1E293B;
-  --accent-foreground: #60A5FA;
-  --destructive: #EF4444;
-  --border: #334155;
-  --input: #334155;
-  --ring: #FFD96B;
+  --primary: #FFD100;
+  --primary-foreground: #202020;
+  --secondary: #2A2A2A;
+  --secondary-foreground: #D6D6D6;
+  --muted: #333533;
+  --muted-foreground: #B0B0B0;
+  --accent: #333533;
+  --accent-foreground: #FFEE32;
+  --destructive: #D14343;
+  --border: #3A3A3A;
+  --input: #3A3A3A;
+  --ring: #FFD100;
 
-  --chart-1: #FFD96B;
-  --chart-2: #5BC0DD;
-  --chart-3: #10B981;
-  --chart-4: #A78BFA;
-  --chart-5: #F472B6;
+  --chart-1: #FFD100;
+  --chart-2: #D6D6D6;
+  --chart-3: #FFEE32;
+  --chart-4: #333533;
+  --chart-5: #777777;
 
-  --sidebar: #0F172A;
-  --sidebar-foreground: #F1F5F9;
-  --sidebar-primary: #FFD96B;
-  --sidebar-primary-foreground: #1A1A1A;
-  --sidebar-accent: #1E293B;
-  --sidebar-accent-foreground: #F1F5F9;
-  --sidebar-border: #334155;
-  --sidebar-ring: #FFD96B;
+  --sidebar: #202020;
+  --sidebar-foreground: #D6D6D6;
+  --sidebar-primary: #FFD100;
+  --sidebar-primary-foreground: #202020;
+  --sidebar-accent: #2A2A2A;
+  --sidebar-accent-foreground: #D6D6D6;
+  --sidebar-border: #3A3A3A;
+  --sidebar-ring: #FFD100;
 
-  --surface-bg: #0F172A;
-  --surface-elevated: #1E293B;
-  --surface-accent: #1E293B;
-  --surface-border: #334155;
+  --surface-bg: #202020;
+  --surface-elevated: #2A2A2A;
+  --surface-accent: #2F2F2F;
+  --surface-border: #3A3A3A;
 
-  --text-primary: #F1F5F9;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
+  --text-primary: #D6D6D6;
+  --text-secondary: #BEBEBE;
+  --text-muted: #8D8D8D;
 
-  --shadow-gold: 0 10px 30px -5px rgba(255, 217, 107, 0.25);
+  --shadow-gold: 0 12px 24px -10px rgba(255, 209, 0, 0.25);
 }
 
 @layer base {
@@ -220,9 +219,9 @@
 .hexagon-bg {
   background-color: var(--surface-bg);
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255, 205, 63, 0.02) 80px, rgba(255, 205, 63, 0.02) 81px),
-    repeating-linear-gradient(60deg, transparent, transparent 80px, rgba(255, 205, 63, 0.02) 80px, rgba(255, 205, 63, 0.02) 81px),
-    repeating-linear-gradient(120deg, transparent, transparent 80px, rgba(255, 205, 63, 0.02) 80px, rgba(255, 205, 63, 0.02) 81px);
+    repeating-linear-gradient(0deg, transparent, transparent 84px, rgba(32, 32, 32, 0.03) 84px, rgba(32, 32, 32, 0.03) 85px),
+    repeating-linear-gradient(60deg, transparent, transparent 84px, rgba(255, 209, 0, 0.06) 84px, rgba(255, 209, 0, 0.06) 85px),
+    repeating-linear-gradient(120deg, transparent, transparent 84px, rgba(255, 209, 0, 0.06) 84px, rgba(255, 209, 0, 0.06) 85px);
   background-size: 140px 242px;
   position: relative;
 }
@@ -231,20 +230,42 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(255, 205, 63, 0.04) 0%, rgba(59, 171, 205, 0.02) 60%, transparent 80%);
+  background: radial-gradient(circle at 50% 30%, rgba(255, 209, 0, 0.08) 0%, rgba(32, 32, 32, 0.06) 55%, transparent 78%);
   pointer-events: none;
 }
 
 .dark .hexagon-bg {
   background-color: var(--surface-bg);
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255, 217, 107, 0.03) 80px, rgba(255, 217, 107, 0.03) 81px),
-    repeating-linear-gradient(60deg, transparent, transparent 80px, rgba(255, 217, 107, 0.03) 80px, rgba(255, 217, 107, 0.03) 81px),
-    repeating-linear-gradient(120deg, transparent, transparent 80px, rgba(255, 217, 107, 0.03) 80px, rgba(255, 217, 107, 0.03) 81px);
+    repeating-linear-gradient(0deg, transparent, transparent 84px, rgba(214, 214, 214, 0.03) 84px, rgba(214, 214, 214, 0.03) 85px),
+    repeating-linear-gradient(60deg, transparent, transparent 84px, rgba(255, 209, 0, 0.08) 84px, rgba(255, 209, 0, 0.08) 85px),
+    repeating-linear-gradient(120deg, transparent, transparent 84px, rgba(255, 209, 0, 0.08) 84px, rgba(255, 209, 0, 0.08) 85px);
 }
 
 .dark .hexagon-bg::before {
-  background: radial-gradient(circle at 50% 30%, rgba(255, 217, 107, 0.06) 0%, rgba(91, 192, 221, 0.03) 60%, transparent 80%);
+  background: radial-gradient(circle at 50% 30%, rgba(255, 209, 0, 0.12) 0%, rgba(214, 214, 214, 0.05) 55%, transparent 78%);
+}
+
+@layer utilities {
+  /* Theme-aware overrides for common hardcoded grayscale utilities */
+  .bg-white { background-color: var(--surface-elevated); }
+  .bg-gray-50 { background-color: var(--surface-bg); }
+  .bg-gray-100 { background-color: var(--surface-accent); }
+  .bg-gray-200 { background-color: var(--surface-accent); }
+  .bg-gray-900 { background-color: var(--bee-dark); }
+  .bg-black { background-color: var(--bee-secondary); }
+
+  .text-black { color: var(--text-primary); }
+  .text-gray-900 { color: var(--text-primary); }
+  .text-gray-800 { color: var(--text-primary); }
+  .text-gray-700 { color: var(--text-secondary); }
+  .text-gray-600 { color: var(--text-secondary); }
+  .text-gray-500 { color: var(--text-muted); }
+  .text-gray-400 { color: var(--text-muted); }
+
+  .border-gray-100 { border-color: var(--surface-border); }
+  .border-gray-200 { border-color: var(--surface-border); }
+  .border-gray-300 { border-color: var(--surface-border); }
 }
 
 /* ===== UTILITY CLASSES ===== */
