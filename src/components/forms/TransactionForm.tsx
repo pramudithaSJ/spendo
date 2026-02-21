@@ -165,9 +165,9 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
               {t.forms.amount}
             </Label>
             <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] font-semibold text-sm select-none">
+              {/* <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] font-semibold text-sm select-none">
                 LKR
-              </div>
+              </div> */}
               <input
                 id="amount"
                 type="text"
