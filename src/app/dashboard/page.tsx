@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, DollarSign, Plus, LogOut, Brain } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Plus } from 'lucide-react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as LucideIcons from 'lucide-react';
 import Logo from '@/components/branding/Logo';
+import { SkeletonDashboard } from '@/components/ui/Skeleton';
 
 export default function DashboardPage() {
   const [monthlyStats, setMonthlyStats] = useState({
@@ -88,8 +89,18 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>{t.dashboard.loadingDashboard}</p>
+      <div className="min-h-screen bg-gray-50">
+        <header className="bg-white/95 dark:bg-[var(--card)]/95 backdrop-blur-sm border-b border-[var(--surface-border)] sticky top-0 z-40 shadow-sm">
+          <div className="flex items-center justify-between p-4">
+            <div className="flex items-center gap-3">
+              <Logo size="sm" variant="icon" className="flex-shrink-0" />
+              <div>
+                <h1 className="text-lg font-bold text-[var(--text-primary)]">BeeWise</h1>
+              </div>
+            </div>
+          </div>
+        </header>
+        <SkeletonDashboard />
       </div>
     );
   }
@@ -215,35 +226,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Quiz Card */}
-        <Card className="bg-gradient-to-r from-purple-600 to-purple-700 text-white border-0">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                <Brain className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="font-bold text-sm">Financial Quiz</p>
-                <p className="text-xs text-purple-200">Test your financial knowledge!</p>
-              </div>
-            </div>
-            <Button asChild size="sm" className="bg-white text-purple-700 hover:bg-purple-50 font-semibold">
-              <Link href="/quiz">Play</Link>
-            </Button>
-          </CardContent>
-        </Card>
       </div>
-
-      {/* Floating Action Button */}
-      <Button
-        size="lg"
-        className="fixed bottom-20 right-4 rounded-full w-14 h-14 bee-shadow hover:scale-110 transition-transform btn-bee-primary"
-        asChild
-      >
-        <Link href="/add">
-          <Plus className="h-6 w-6" />
-        </Link>
-      </Button>
 
       <BottomNavigation />
     </div>

@@ -69,11 +69,11 @@
   --radius: 0.85rem;
 
   /* Minimal, Professional Base Colors */
-  --background: #D6D6D6;
+  --background: #F0F2F5;
   --foreground: #202020;
-  --card: #E2E2E2;
+  --card: #FFFFFF;
   --card-foreground: #202020;
-  --popover: #E2E2E2;
+  --popover: #FFFFFF;
   --popover-foreground: #202020;
 
   /* BeeWise Brand Colors (New Palette) */
@@ -102,23 +102,23 @@
   --text-inverse: #FFFFFF;
 
   /* Surface Colors */
-  --surface-bg: #D6D6D6;
-  --surface-elevated: #E8E8E8;
-  --surface-accent: #EFEFEF;
-  --surface-border: #C5C5C5;
+  --surface-bg: #F0F2F5;
+  --surface-elevated: #FFFFFF;
+  --surface-accent: #F5F6F8;
+  --surface-border: #E2E5EA;
 
   /* Shadcn mappings for compatibility */
   --primary: #FFD100;
   --primary-foreground: #202020;
-  --secondary: #E8E8E8;
+  --secondary: #F5F6F8;
   --secondary-foreground: #202020;
-  --muted: #E0E0E0;
+  --muted: #EEF0F3;
   --muted-foreground: #555555;
   --accent: #FFEE32;
   --accent-foreground: #202020;
   --destructive: #D14343;
-  --border: #C5C5C5;
-  --input: #CFCFCF;
+  --border: #E2E5EA;
+  --input: #E8ECF0;
   --ring: #FFD100;
 
   --chart-1: #FFD100;
@@ -127,13 +127,13 @@
   --chart-4: #FFEE32;
   --chart-5: #B5B5B5;
 
-  --sidebar: #E8E8E8;
+  --sidebar: #F5F6F8;
   --sidebar-foreground: #202020;
   --sidebar-primary: #FFD100;
   --sidebar-primary-foreground: #202020;
-  --sidebar-accent: #E0E0E0;
+  --sidebar-accent: #EEF0F3;
   --sidebar-accent-foreground: #202020;
-  --sidebar-border: #C5C5C5;
+  --sidebar-border: #E2E5EA;
   --sidebar-ring: #FFD100;
 
   /* Shadows - Subtle, Minimal */
@@ -266,6 +266,11 @@
   .border-gray-100 { border-color: var(--surface-border); }
   .border-gray-200 { border-color: var(--surface-border); }
   .border-gray-300 { border-color: var(--surface-border); }
+
+  /* Hover state fixes — dark mode safe */
+  .hover\:bg-white:hover    { background-color: var(--surface-elevated); }
+  .hover\:bg-gray-50:hover  { background-color: var(--surface-accent); }
+  .hover\:bg-gray-100:hover { background-color: var(--surface-accent); }
 }
 
 /* ===== UTILITY CLASSES ===== */

@@ -44,9 +44,9 @@ export default function AddTransactionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-28">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-[var(--surface-elevated)] border-b border-[var(--surface-border)] sticky top-0 z-10">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-3">
             <Button
@@ -58,8 +58,8 @@ export default function AddTransactionPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{t.transactions.addTransaction}</h1>
-              <p className="text-sm text-gray-500">{t.transactions.recordNew}</p>
+              <h1 className="text-xl font-bold text-[var(--text-primary)]">{t.transactions.addTransaction}</h1>
+              <p className="text-sm text-[var(--text-muted)]">{t.transactions.recordNew}</p>
             </div>
           </div>
         </div>
