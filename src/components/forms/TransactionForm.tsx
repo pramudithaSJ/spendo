@@ -12,6 +12,8 @@ import { categoryService } from '@/lib/categoryService';
 import { Category, Transaction } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import * as LucideIcons from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 interface TransactionFormProps {
   transaction?: Transaction;
@@ -27,7 +29,10 @@ interface TransactionFormProps {
 }
 
 export default function TransactionForm({ transaction, onSubmit, onCancel, loading }: TransactionFormProps) {
-  const [amount, setAmount] = useState(transaction?.amount?.toString() || '');
+  const [amountCents, setAmountCents] = useState<number>(
+    transaction?.amount ? Math.round(transaction.amount * 100) : 0
+  );
+  const displayAmount = (amountCents / 100).toFixed(2);
   const [type, setType] = useState<'income' | 'expense'>(transaction?.type || 'expense');
   const [selectedCategoryId, setSelectedCategoryId] = useState(transaction?.categoryId || '');
   const [description, setDescription] = useState(transaction?.description || '');
@@ -73,11 +78,22 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
     }
   }, [type, categories, selectedCategoryId]);
 
+  const handleAmountKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (/^[0-9]$/.test(e.key)) {
+      setAmountCents(prev => {
+        const next = prev * 10 + parseInt(e.key, 10);
+        return next > 9999999 ? prev : next; // cap at 99,999.99
+      });
+    } else if (e.key === 'Backspace') {
+      setAmountCents(prev => Math.floor(prev / 10));
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount) || numAmount <= 0) {
+
+    if (amountCents <= 0) {
       alert(t.forms.enterValidAmount);
       return;
     }
@@ -86,9 +102,9 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
       alert(t.forms.selectCategory);
       return;
     }
-    
+
     onSubmit({
-      amount: numAmount,
+      amount: amountCents / 100,
       type,
       categoryId: selectedCategoryId,
       description: description.trim(),
@@ -105,11 +121,11 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
 
   if (loadingCategories) {
     return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardContent className="flex items-center justify-center p-8">
-          <p>{t.categories.loadingCategories}</p>
-        </CardContent>
-      </Card>
+      <div className="space-y-4 p-4">
+        <Skeleton className="h-14 w-full rounded-xl" />
+        <Skeleton className="h-48 w-full rounded-xl" />
+        <Skeleton className="h-14 w-full rounded-xl" />
+      </div>
     );
   }
 
@@ -149,24 +165,23 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
               {t.forms.amount}
             </Label>
             <div className="relative">
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium text-sm">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] font-semibold text-sm select-none">
                 LKR
               </div>
-              <Input
+              <input
                 id="amount"
-                type="number"
-                step="0.01"
-                min="0"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="0.00"
-                className="pl-14 pr-4 text-lg font-semibold h-14 rounded-xl border-2 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
-                required
+                type="text"
+                inputMode="decimal"
+                value={displayAmount}
+                onKeyDown={handleAmountKey}
+                onChange={() => {}}
+                className="w-full pl-14 pr-4 text-right text-3xl font-bold h-16 rounded-xl border-2
+                  bg-[var(--surface-elevated)] border-[var(--surface-border)] text-[var(--text-primary)]
+                  focus:ring-2 focus:ring-bee-primary focus:border-bee-primary focus:outline-none
+                  transition-all cursor-text"
+                aria-label={t.forms.amount}
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">
-              {language === 'ta' ? 'உங்கள் பரிவர்த்தனை தொகையை உள்ளிடவும்' : 'Enter your transaction amount'}
-            </p>
           </div>
 
           <div className="space-y-3">
@@ -241,9 +256,12 @@ export default function TransactionForm({ transaction, onSubmit, onCancel, loadi
             <Button
               type="submit"
               className="flex-1"
-              disabled={loading || !amount || !selectedCategoryId || filteredCategories.length === 0}
+              disabled={loading || amountCents <= 0 || !selectedCategoryId}
             >
-              {loading ? t.forms.saving : t.common.save}
+              {loading
+                ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t.forms.saving}</>
+                : t.common.save
+              }
             </Button>
           </div>
         </form>

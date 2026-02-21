@@ -16,13 +16,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage on mount - Default to light mode
+  // Initialize theme from localStorage on mount - Default to dark mode
   useEffect(() => {
     setMounted(true);
     const savedTheme = localStorage.getItem('beewise-theme') as Theme | null;
 
-    // Always default to light mode unless explicitly saved as dark
-    const initialTheme = savedTheme || 'light';
+    // Default to dark mode unless explicitly saved otherwise
+    const initialTheme = savedTheme || 'dark';
     setThemeState(initialTheme);
 
     // Apply theme to document
